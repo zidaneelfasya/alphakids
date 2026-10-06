@@ -1,58 +1,86 @@
-import { DeployButton } from "@/components/deploy-button";
-import { EnvVarWarning } from "@/components/env-var-warning";
-import { AuthButton } from "@/components/auth-button";
-import { Hero } from "@/components/hero";
-import { ThemeSwitcher } from "@/components/theme-switcher";
-import { ConnectSupabaseSteps } from "@/components/tutorial/connect-supabase-steps";
-import { SignUpUserSteps } from "@/components/tutorial/sign-up-user-steps";
-import { hasEnvVars } from "@/lib/utils";
-import Link from "next/link";
-import { Suspense } from "react";
+import { createClient } from '@/lib/supabase/server';
+import { db, programs, categories } from '@/lib/db';
+import { eq, desc } from 'drizzle-orm';
+import { getAllCmsData } from '@/lib/cms';
+import { LandingNavbar } from '@/components/landing/landing-navbar';
+import { LandingHero } from '@/components/landing/landing-hero';
+import { LandingInteractiveFeatures } from '@/components/landing/landing-interactive-features';
+import { LandingProgramShowcase } from '@/components/landing/landing-program-showcase';
+import { LandingStorySection } from '@/components/landing/landing-story-section';
+import { LandingBlogSection } from '@/components/landing/landing-blog-section';
+import { LandingMentorsBlock } from '@/components/landing/landing-mentors-block';
+import { LandingFaq } from '@/components/landing/landing-faq';
+import { LandingFinalCta } from '@/components/landing/landing-final-cta';
+import { LandingFooter } from '@/components/landing/landing-footer';
 
-export default function Home() {
+export const metadata = {
+  title: 'Alpha Kids — Platform Program Belajar Digital & Eksplorasi Kreatif Anak',
+  description:
+    'Eksplorasi coding, robotika, logika, dan kreativitas digital anak usia 4-15 tahun melalui metode gamifikasi seru dan mentor bersertifikat.',
+};
+
+export const dynamic = 'force-dynamic';
+
+export default async function HomePage() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  // 1. Fetch CMS Section Data (dynamic from db with fallbacks)
+  const cmsData = await getAllCmsData();
+
+  // 2. Fetch Active Programs with Category relation
+  const activePrograms = await db.query.programs.findMany({
+    where: eq(programs.isActive, true),
+    orderBy: [desc(programs.createdAt)],
+    with: {
+      category: true,
+    },
+  });
+
+  // 3. Fetch Active Categories
+  const activeCategories = await db.query.categories.findMany({
+    where: eq(categories.isActive, true),
+    orderBy: [categories.name],
+  });
+
   return (
-    <main className="min-h-screen flex flex-col items-center">
-      <div className="flex-1 w-full flex flex-col gap-20 items-center">
-        <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-          <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
-            <div className="flex gap-5 items-center font-semibold">
-              <Link href={"/"}>Next.js Supabase Starter</Link>
-              <div className="flex items-center gap-2">
-                <DeployButton />
-              </div>
-            </div>
-            {!hasEnvVars ? (
-              <EnvVarWarning />
-            ) : (
-              <Suspense>
-                <AuthButton />
-              </Suspense>
-            )}
-          </div>
-        </nav>
-        <div className="flex-1 flex flex-col gap-20 max-w-5xl p-5">
-          <Hero />
-          <main className="flex-1 flex flex-col gap-6 px-4">
-            <h2 className="font-medium text-xl mb-4">Next steps</h2>
-            {hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-          </main>
-        </div>
+    <div className="min-h-screen flex flex-col bg-background text-foreground font-sans antialiased selection:bg-cyan-200 selection:text-cyan-900">
+      {/* 1. Floating Capsule Navbar */}
+      <LandingNavbar user={user} />
 
-        <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
-          <p>
-            Powered by{" "}
-            <a
-              href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-              target="_blank"
-              className="font-bold hover:underline"
-              rel="noreferrer"
-            >
-              Supabase
-            </a>
-          </p>
-          <ThemeSwitcher />
-        </footer>
-      </div>
-    </main>
+      <main className="flex-1">
+        {/* 1. Hero Section (Image 1 Centered Hero) */}
+        <LandingHero content={cmsData.hero} />
+
+        {/* 2. Interactive Features (Image 1: 3 Contrast Cards) */}
+        <LandingInteractiveFeatures content={cmsData.features} />
+
+        {/* 3. Enjoyable Learning Materials (Image 2 Top) */}
+        <LandingStorySection content={cmsData.story} />
+
+        {/* 3.5. Read Our Blog (Image 2 Bottom Style - Pink Theme) */}
+        <LandingBlogSection content={cmsData.blogs} />
+
+        {/* 4. Mentors Block (Image 2 Middle: Solid Royal Purple) */}
+        <LandingMentorsBlock content={cmsData.mentors} />
+
+        {/* 5. Product Catalog (Image 2 Bottom: Katalog Program Pilihan) */}
+        <LandingProgramShowcase
+          programs={activePrograms}
+          categories={activeCategories}
+        />
+
+        {/* 6. Tanya Jawab (FAQ) */}
+        <LandingFaq content={cmsData.faq} />
+
+        {/* 7. Call To Action (Modern Island Card - Post-FAQ) */}
+        <LandingFinalCta content={cmsData.cta} />
+      </main>
+
+      {/* 9. Branded Footer */}
+      <LandingFooter />
+    </div>
   );
 }
