@@ -48,62 +48,61 @@ export function NavUser({
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              data-slot="user-avatar-trigger"
+              onClick={(e) => e.stopPropagation()}
+              className="text-white hover:bg-white/12 data-[state=open]:bg-white/15 rounded-xl transition-colors cursor-pointer group-data-[collapsible=icon]:!p-0 group-data-[collapsible=icon]:!size-12 group-data-[collapsible=icon]:!min-w-12 group-data-[collapsible=icon]:!min-h-12 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:mx-auto"
             >
-              <Avatar className="h-8 w-8 rounded-lg">
+              <Avatar className="h-9 w-9 group-data-[collapsible=icon]:!h-10 group-data-[collapsible=icon]:!w-10 rounded-full ring-2 ring-white/30 bg-white shrink-0">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-full bg-white text-[#21b1db] font-semibold text-xs">
+                  {user.name.slice(0, 2).toUpperCase()}
+                </AvatarFallback>
               </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+              <div className="grid flex-1 text-left text-sm leading-tight text-white group-data-[collapsible=icon]:hidden">
+                <span className="truncate font-semibold text-sm">{user.name}</span>
+                <span className="truncate text-xs text-white/70">{user.email}</span>
               </div>
-              <ChevronsUpDown className="ml-auto size-4" />
+              <ChevronsUpDown className="ml-auto size-4 text-white/70 group-data-[collapsible=icon]:hidden" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-2xl p-2 shadow-xl border border-slate-200 dark:border-slate-800"
             side={isMobile ? "bottom" : "right"}
             align="end"
-            sideOffset={4}
+            sideOffset={8}
           >
             <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
+              <div className="flex items-center gap-2.5 px-2 py-2 text-left text-sm">
+                <Avatar className="h-9 w-9 rounded-full ring-1 ring-slate-200">
                   <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-full bg-cyan-100 text-[#21b1db] font-semibold text-xs">
+                    {user.name.slice(0, 2).toUpperCase()}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-semibold text-slate-900 dark:text-white">{user.name}</span>
+                  <span className="truncate text-xs text-slate-500">{user.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
+              <DropdownMenuItem asChild className="rounded-lg cursor-pointer">
+                <a href="/dashboard/profile" className="flex items-center gap-2">
+                  <BadgeCheck className="size-4 text-slate-500" />
+                  <span>Profil Akun</span>
+                </a>
               </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
+              <DropdownMenuItem asChild className="rounded-lg cursor-pointer">
+                <a href="/dashboard/transactions" className="flex items-center gap-2">
+                  <CreditCard className="size-4 text-slate-500" />
+                  <span>Riwayat Transaksi</span>
+                </a>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              className="text-red-600 focus:text-red-600 focus:bg-red-50 cursor-pointer"
+              className="text-red-600 focus:text-red-600 focus:bg-red-50 dark:focus:bg-red-950/40 rounded-lg cursor-pointer flex items-center gap-2"
               onClick={async () => {
                 const { createClient } = await import('@/lib/supabase/client');
                 const supabase = createClient();
@@ -111,8 +110,8 @@ export function NavUser({
                 window.location.href = '/auth/login';
               }}
             >
-              <LogOut className="text-red-600" />
-              Keluar
+              <LogOut className="size-4 text-red-600" />
+              <span>Keluar</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -191,17 +191,17 @@ export function ProgramsManager({ programs, categories }: ProgramsManagerProps) 
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-base font-bold font-heading text-slate-900">
+          <h2 className="text-base font-semibold font-sans text-slate-900 dark:text-white">
             Daftar Program Pelatihan
           </h2>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
             Total {programs.length} program pembelajaran aktif dan arsip.
           </p>
         </div>
 
         <Button
           onClick={openCreateDialog}
-          className="bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-xl"
+          className="bg-[#21b1db] hover:bg-[#1da0c7] text-white font-semibold text-xs rounded-xl shadow-sm"
         >
           <Plus className="w-3.5 h-3.5 mr-1.5" />
           Tambah Program
@@ -336,7 +336,7 @@ export function ProgramsManager({ programs, categories }: ProgramsManagerProps) 
                   id="progCategory"
                   value={categoryId}
                   onChange={(e) => setCategoryId(e.target.value)}
-                  className="w-full px-3 py-2 rounded-md border border-slate-200 text-xs bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/20"
+                  className="w-full px-3 py-2 rounded-md border border-slate-200 dark:border-slate-800 text-xs bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-[#21b1db]/20 focus:border-[#21b1db]"
                 >
                   <option value="">-- Tanpa Kategori --</option>
                   {categories.map((c) => (
@@ -415,7 +415,7 @@ export function ProgramsManager({ programs, categories }: ProgramsManagerProps) 
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Jelaskan kurikulum, target capaian, dan keunggulan program..."
-                className="w-full p-3 rounded-md border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-amber-500/20"
+                className="w-full p-3 rounded-md border border-slate-200 dark:border-slate-800 text-xs bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-[#21b1db]/20 focus:border-[#21b1db]"
               />
             </div>
 
@@ -425,7 +425,7 @@ export function ProgramsManager({ programs, categories }: ProgramsManagerProps) 
                 type="checkbox"
                 checked={isActive}
                 onChange={(e) => setIsActive(e.target.checked)}
-                className="rounded border-slate-300 text-amber-500 focus:ring-amber-400"
+                className="rounded border-slate-300 dark:border-slate-700 text-[#21b1db] focus:ring-[#21b1db]/30"
               />
               <Label htmlFor="progActive" className="text-xs font-medium cursor-pointer">
                 Publikasikan Program di Katalog Publik
@@ -444,7 +444,7 @@ export function ProgramsManager({ programs, categories }: ProgramsManagerProps) 
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl text-xs"
+                className="bg-[#21b1db] hover:bg-[#1da0c7] text-white font-semibold rounded-xl text-xs shadow-sm"
               >
                 {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-1" /> : null}
                 {editingProgram ? 'Simpan Perubahan' : 'Buat Program'}

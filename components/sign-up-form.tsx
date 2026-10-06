@@ -17,6 +17,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Sparkles } from "lucide-react";
+import { getDicebearMoodsAvatar } from "@/lib/avatar";
 
 export function SignUpForm({
   className,
@@ -56,6 +57,7 @@ export function SignUpForm({
         options: {
           data: {
             full_name: fullName,
+            avatar_url: getDicebearMoodsAvatar(fullName || email),
           },
           emailRedirectTo: `${window.location.origin}/dashboard`,
         },

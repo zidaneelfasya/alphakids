@@ -170,18 +170,18 @@ export function VouchersManager({ vouchers }: VouchersManagerProps) {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold font-heading text-slate-900 flex items-center gap-2">
-            <Ticket className="w-5 h-5 text-amber-500" />
+          <h1 className="text-xl font-semibold font-sans text-slate-900 dark:text-white flex items-center gap-2">
+            <Ticket className="w-5 h-5 text-[#21b1db]" />
             Kelola Voucher Diskon
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Buat dan atur kode promo untuk checkout program Alpha Kids.
           </p>
         </div>
 
         <Button
           onClick={openCreateDialog}
-          className="bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-xl"
+          className="bg-[#21b1db] hover:bg-[#1da0c7] text-white font-semibold text-xs rounded-xl shadow-sm"
         >
           <Plus className="w-3.5 h-3.5 mr-1.5" />
           Tambah Voucher
@@ -305,7 +305,7 @@ export function VouchersManager({ vouchers }: VouchersManagerProps) {
                 onChange={(e) =>
                   setDiscountType(e.target.value as 'percentage' | 'fixed')
                 }
-                className="w-full px-3 py-2 rounded-md border border-slate-200 text-xs bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/20"
+                className="w-full px-3 py-2 rounded-md border border-slate-200 dark:border-slate-800 text-xs bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-[#21b1db]/20 focus:border-[#21b1db]"
               >
                 <option value="percentage">Persentase (%)</option>
                 <option value="fixed">Potongan Tetap Nominal (Rp)</option>
@@ -337,7 +337,7 @@ export function VouchersManager({ vouchers }: VouchersManagerProps) {
                 id="vActive"
                 checked={isActive}
                 onChange={(e) => setIsActive(e.target.checked)}
-                className="rounded border-slate-300 text-amber-500 focus:ring-amber-500 h-4 w-4"
+                className="rounded border-slate-300 dark:border-slate-700 text-[#21b1db] focus:ring-[#21b1db]/30 h-4 w-4"
               />
               <Label htmlFor="vActive" className="text-xs font-medium cursor-pointer">
                 Aktifkan voucher ini segera
@@ -356,7 +356,7 @@ export function VouchersManager({ vouchers }: VouchersManagerProps) {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl text-xs"
+                className="bg-[#21b1db] hover:bg-[#1da0c7] text-white font-semibold rounded-xl text-xs shadow-sm"
               >
                 {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-1" /> : null}
                 {editingVoucher ? 'Simpan Perubahan' : 'Buat Voucher'}

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, BookOpen } from 'lucide-react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Badge } from '@/components/ui/badge';
 import { formatRupiah } from '@/lib/utils';
 
@@ -41,6 +42,7 @@ export function LandingProgramShowcase({
   categories,
 }: LandingProgramShowcaseProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const shouldReduceMotion = useReducedMotion();
 
   const filteredPrograms =
     selectedCategory === 'all'
@@ -53,7 +55,13 @@ export function LandingProgramShowcase({
     <section id="programs" className="py-20 sm:py-28 bg-white dark:bg-slate-950">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Section Heading (Matching "Read our blog" typography from Image 2) */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
+        <motion.div
+          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12"
+        >
           <div>
             <h2 className="text-4xl sm:text-5xl font-semibold font-sans tracking-tight text-slate-950 dark:text-white">
               Katalog{' '}
@@ -66,18 +74,25 @@ export function LandingProgramShowcase({
             </p>
           </div>
 
-          {/* Category Filter Capsule Pills */}
+          {/* Category Filter Capsule Pills with Sliding Active Indicator */}
           {categories.length > 0 && (
             <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
                 onClick={() => setSelectedCategory('all')}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                className={`relative px-4 py-1.5 rounded-full text-xs font-semibold transition-colors ${
                   selectedCategory === 'all'
-                    ? 'bg-[#21b1db] text-white shadow-sm'
+                    ? 'text-white'
                     : 'border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-[#21b1db] hover:text-[#21b1db]'
                 }`}
               >
+                {selectedCategory === 'all' && (
+                  <motion.span
+                    layoutId="activeCategoryPill"
+                    className="absolute inset-0 rounded-full bg-[#21b1db] -z-10 shadow-sm"
+                    transition={{ type: 'spring', stiffness: 450, damping: 35 }}
+                  />
+                )}
                 Semua
               </button>
               {categories.map((cat) => (
@@ -85,20 +100,27 @@ export function LandingProgramShowcase({
                   key={cat.id}
                   type="button"
                   onClick={() => setSelectedCategory(cat.slug)}
-                  className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                  className={`relative px-4 py-1.5 rounded-full text-xs font-semibold transition-colors ${
                     selectedCategory === cat.slug
-                      ? 'bg-[#21b1db] text-white shadow-sm'
+                      ? 'text-white'
                       : 'border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-[#21b1db] hover:text-[#21b1db]'
                   }`}
                 >
+                  {selectedCategory === cat.slug && (
+                    <motion.span
+                      layoutId="activeCategoryPill"
+                      className="absolute inset-0 rounded-full bg-[#21b1db] -z-10 shadow-sm"
+                      transition={{ type: 'spring', stiffness: 450, damping: 35 }}
+                    />
+                  )}
                   {cat.name}
                 </button>
               ))}
             </div>
           )}
-        </div>
+        </motion.div>
 
-        {/* 3 Clean Rounded Cards (WonderKids Bottom Cards Style) */}
+        {/* 3 Clean Rounded Cards with Fluid Animated Layout Reordering */}
         {filteredPrograms.length === 0 ? (
           <div className="text-center py-16 px-4 bg-slate-50 dark:bg-slate-900 rounded-3xl border border-dashed border-slate-200">
             <BookOpen className="size-10 mx-auto text-[#21b1db] mb-3" />
@@ -107,8 +129,16 @@ export function LandingProgramShowcase({
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {filteredPrograms.slice(0, 6).map((prog) => {
+          <motion.div
+            layout={!shouldReduceMotion}
+            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.55, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          >
+            <AnimatePresence mode="popLayout">
+              {filteredPrograms.slice(0, 6).map((prog) => {
               const ageLabel =
                 prog.ageMin && prog.ageMax
                   ? `Usia ${prog.ageMin}–${prog.ageMax} Thn`
@@ -120,8 +150,13 @@ export function LandingProgramShowcase({
               const hasDiscount = prog.promoPrice && prog.promoPrice < prog.price;
 
               return (
-                <div
+                <motion.div
                   key={prog.id}
+                  layout={!shouldReduceMotion}
+                  initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.28, ease: 'easeOut' }}
                   className="group rounded-[2rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-950/5 p-4 sm:p-5 flex flex-col justify-between overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl"
                 >
                   <div>
@@ -183,10 +218,11 @@ export function LandingProgramShowcase({
                       </span>
                     </Link>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
-          </div>
+            </AnimatePresence>
+          </motion.div>
         )}
 
         {/* View All Programs Link */}

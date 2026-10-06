@@ -178,17 +178,17 @@ export function ProgramContentsManager({
             <ArrowLeft className="w-3.5 h-3.5" />
             Kembali ke Daftar Program
           </Link>
-          <h2 className="text-base font-bold font-heading text-slate-900">
+          <h2 className="text-base font-semibold font-sans text-slate-900 dark:text-white">
             Kelola Konten & Tautan Kelas: {programTitle}
           </h2>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
             Atur tautan grup WhatsApp, ruang tatap muka Zoom/Meet, dan modul Google Drive.
           </p>
         </div>
 
         <Button
           onClick={openCreateDialog}
-          className="bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-xl"
+          className="bg-[#21b1db] hover:bg-[#1da0c7] text-white font-semibold text-xs rounded-xl shadow-sm"
         >
           <Plus className="w-3.5 h-3.5 mr-1.5" />
           Tambah Konten
@@ -247,7 +247,7 @@ export function ProgramContentsManager({
                         href={item.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-amber-600 hover:underline inline-flex items-center gap-1"
+                        className="text-[#21b1db] hover:underline inline-flex items-center gap-1"
                       >
                         <span className="truncate max-w-[180px]">{item.url}</span>
                         <ExternalLink className="w-3 h-3 flex-shrink-0" />
@@ -318,7 +318,7 @@ export function ProgramContentsManager({
                   id="contType"
                   value={contentType}
                   onChange={(e) => setContentType(e.target.value)}
-                  className="w-full px-3 py-2 rounded-md border border-slate-200 text-xs bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/20"
+                  className="w-full px-3 py-2 rounded-md border border-slate-200 dark:border-slate-800 text-xs bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-[#21b1db]/20 focus:border-[#21b1db]"
                 >
                   <option value="whatsapp_group">WhatsApp Group Link</option>
                   <option value="zoom_link">Zoom / Live Session Link</option>
@@ -336,7 +336,7 @@ export function ProgramContentsManager({
                   id="contVis"
                   value={visibility}
                   onChange={(e) => setVisibility(e.target.value as 'public' | 'member')}
-                  className="w-full px-3 py-2 rounded-md border border-slate-200 text-xs bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/20"
+                  className="w-full px-3 py-2 rounded-md border border-slate-200 dark:border-slate-800 text-xs bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-[#21b1db]/20 focus:border-[#21b1db]"
                 >
                   <option value="member">Khusus Member (Berbayar)</option>
                   <option value="public">Publik (Katalog Umum)</option>
@@ -367,7 +367,7 @@ export function ProgramContentsManager({
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="Petunjuk penggunaan atau jadwal sesi..."
-                className="w-full p-2.5 rounded-md border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-amber-500/20"
+                className="w-full p-2.5 rounded-md border border-slate-200 dark:border-slate-800 text-xs bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-[#21b1db]/20 focus:border-[#21b1db]"
               />
             </div>
 
@@ -396,7 +396,7 @@ export function ProgramContentsManager({
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl text-xs"
+                className="bg-[#21b1db] hover:bg-[#1da0c7] text-white font-semibold rounded-xl text-xs shadow-sm"
               >
                 {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-1" /> : null}
                 {editingContent ? 'Simpan Perubahan' : 'Tambah Konten'}

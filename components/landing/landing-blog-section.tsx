@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, BookOpen } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
 import type { BlogSectionContent } from '@/lib/cms';
 
 interface LandingBlogSectionProps {
@@ -10,15 +11,21 @@ interface LandingBlogSectionProps {
 }
 
 export function LandingBlogSection({ content }: LandingBlogSectionProps) {
+  const shouldReduceMotion = useReducedMotion();
   const fallbackImage = '/assets/img/hero1.png';
 
   return (
     <section id="blog" className="py-20 sm:py-28 bg-[#FFFDF9] dark:bg-slate-950 overflow-hidden">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
+        <motion.div
+          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12"
+        >
           <div>
-            
             <h2 className="text-4xl sm:text-5xl font-semibold font-sans tracking-tight text-slate-950 dark:text-white leading-[1.15]">
               {content.titlePart1 || 'Read our'}{' '}
               <span className="font-sans italic font-normal text-[#ef599a]">
@@ -40,7 +47,7 @@ export function LandingBlogSection({ content }: LandingBlogSectionProps) {
               <ArrowRight className="size-4" />
             </Link>
           </div>
-        </div>
+        </motion.div>
 
         {/* 3 Clean Rounded Cards in Pink Theme (Matching User's Reference Layout) */}
         {!content.items || content.items.length === 0 ? (
@@ -52,9 +59,13 @@ export function LandingBlogSection({ content }: LandingBlogSectionProps) {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
-            {content.items.slice(0, 3).map((item) => (
-              <article
+            {content.items.slice(0, 3).map((item, idx) => (
+              <motion.article
                 key={item.id}
+                initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 className="group rounded-[2rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-xl shadow-pink-950/5 p-4 sm:p-5 flex flex-col justify-between overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
               >
                 <div>
@@ -104,7 +115,7 @@ export function LandingBlogSection({ content }: LandingBlogSectionProps) {
                     <ArrowRight className="size-4 stroke-[2.5]" />
                   </span>
                 </div>
-              </article>
+              </motion.article>
             ))}
           </div>
         )}

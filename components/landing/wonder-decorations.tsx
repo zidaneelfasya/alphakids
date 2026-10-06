@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { motion, useReducedMotion } from 'motion/react';
 import { cn } from '@/lib/utils';
 
 // 1. Scalloped 12-Petal Starburst Badge (Bottle Cap / Seal)
@@ -159,6 +160,8 @@ export function YellowLoop({
 }: {
   className?: string;
 } = {}) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <svg
       aria-hidden="true"
@@ -171,13 +174,20 @@ export function YellowLoop({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path
+      <motion.path
         d="M 22,54 C 14,28 42,10 160,8 C 278,6 310,24 308,52 C 306,80 268,92 160,92 C 52,92 12,78 14,48 C 16,18 64,12 220,14"
         stroke="currentColor"
         strokeWidth="3.5"
         strokeLinecap="round"
         strokeLinejoin="round"
         vectorEffect="non-scaling-stroke"
+        initial={shouldReduceMotion ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+        whileInView={{ pathLength: 1, opacity: 1 }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{
+          pathLength: { duration: 0.75, ease: [0.16, 1, 0.3, 1] },
+          opacity: { duration: 0.15 },
+        }}
       />
     </svg>
   );

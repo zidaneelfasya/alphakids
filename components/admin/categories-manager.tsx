@@ -151,17 +151,17 @@ export function CategoriesManager({ categories }: CategoriesManagerProps) {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-base font-bold font-heading text-slate-900">
+          <h2 className="text-base font-semibold font-sans text-slate-900 dark:text-white">
             Daftar Kategori
           </h2>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
             Total {categories.length} kategori program terdaftar.
           </p>
         </div>
 
         <Button
           onClick={openCreateDialog}
-          className="bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-xl"
+          className="bg-[#21b1db] hover:bg-[#1da0c7] text-white font-semibold text-xs rounded-xl shadow-sm"
         >
           <Plus className="w-3.5 h-3.5 mr-1.5" />
           Tambah Kategori
@@ -295,7 +295,7 @@ export function CategoriesManager({ categories }: CategoriesManagerProps) {
                 type="checkbox"
                 checked={isActive}
                 onChange={(e) => setIsActive(e.target.checked)}
-                className="rounded border-slate-300 text-amber-500 focus:ring-amber-400"
+                className="rounded border-slate-300 dark:border-slate-700 text-[#21b1db] focus:ring-[#21b1db]/30"
               />
               <Label htmlFor="catActive" className="text-xs font-medium cursor-pointer">
                 Kategori Aktif & Ditampilkan di Katalog
@@ -314,7 +314,7 @@ export function CategoriesManager({ categories }: CategoriesManagerProps) {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl text-xs"
+                className="bg-[#21b1db] hover:bg-[#1da0c7] text-white font-semibold rounded-xl text-xs shadow-sm"
               >
                 {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-1" /> : null}
                 {editingCategory ? 'Simpan Perubahan' : 'Buat Kategori'}

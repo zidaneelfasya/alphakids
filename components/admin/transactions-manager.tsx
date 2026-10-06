@@ -110,24 +110,24 @@ export function TransactionsManager({ orders }: TransactionsManagerProps) {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold font-heading text-slate-900 flex items-center gap-2">
-            <CreditCard className="w-5 h-5 text-amber-500" />
+          <h1 className="text-xl font-semibold font-sans text-slate-900 dark:text-white flex items-center gap-2">
+            <CreditCard className="w-5 h-5 text-[#21b1db]" />
             Monitoring Transaksi
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Daftar seluruh riwayat pesanan dan status penyelesaian pembayaran peserta.
           </p>
         </div>
 
         {/* Quick Summary Pill */}
         <div className="flex items-center gap-2 text-xs">
-          <div className="bg-white border border-slate-200 px-3 py-1.5 rounded-xl shadow-sm">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3 py-1.5 rounded-xl shadow-sm">
             <span className="text-slate-400 font-medium">Total Pesanan: </span>
-            <span className="font-bold text-slate-900">{orders.length}</span>
+            <span className="font-semibold text-slate-900 dark:text-white">{orders.length}</span>
           </div>
-          <div className="bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl shadow-sm">
-            <span className="text-emerald-600 font-medium">Lunas: </span>
-            <span className="font-bold text-emerald-800">
+          <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900 px-3 py-1.5 rounded-xl shadow-sm">
+            <span className="text-emerald-600 dark:text-emerald-400 font-medium">Lunas: </span>
+            <span className="font-semibold text-emerald-800 dark:text-emerald-300">
               {orders.filter((o) => o.status === 'paid').length}
             </span>
           </div>
@@ -135,14 +135,14 @@ export function TransactionsManager({ orders }: TransactionsManagerProps) {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-center gap-3">
+      <div className="bg-white dark:bg-slate-900 p-3.5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-center gap-3">
         <div className="relative flex-1 w-full">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Cari nomor pesanan, nama peserta, email, atau judul program..."
-            className="pl-9 text-xs h-9"
+            className="pl-9 text-xs h-9 focus-visible:ring-[#21b1db]/20"
           />
         </div>
 
@@ -151,7 +151,7 @@ export function TransactionsManager({ orders }: TransactionsManagerProps) {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-1.5 rounded-md border border-slate-200 text-xs bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500/20 w-full sm:w-auto"
+            className="px-3 py-1.5 rounded-md border border-slate-200 dark:border-slate-800 text-xs bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-[#21b1db]/20 focus:border-[#21b1db] w-full sm:w-auto"
           >
             <option value="all">Semua Status</option>
             <option value="paid">Lunas (Paid)</option>
@@ -213,7 +213,7 @@ export function TransactionsManager({ orders }: TransactionsManagerProps) {
                     <td className="py-3.5 px-4 font-bold text-slate-900 font-mono">
                       Rp {order.total.toLocaleString('id-ID')}
                       {order.discountTotal > 0 && (
-                        <span className="block text-[10px] text-amber-600 font-sans font-normal">
+                        <span className="block text-[10px] text-emerald-600 font-sans font-normal">
                           Hemat Rp {order.discountTotal.toLocaleString('id-ID')}
                         </span>
                       )}
@@ -318,7 +318,7 @@ export function TransactionsManager({ orders }: TransactionsManagerProps) {
                     </span>
                   </div>
                   {selectedOrder.discountTotal > 0 && (
-                    <div className="flex justify-between text-amber-700">
+                    <div className="flex justify-between text-emerald-700 dark:text-emerald-400">
                       <span>Potongan Diskon:</span>
                       <span className="font-mono font-semibold">
                         - Rp {selectedOrder.discountTotal.toLocaleString('id-ID')}

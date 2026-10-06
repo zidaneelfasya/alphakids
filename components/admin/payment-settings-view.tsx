@@ -157,30 +157,30 @@ export function PaymentSettingsView({ configs, siteUrl }: PaymentSettingsViewPro
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Midtrans Card */}
           <div
-            className={`p-5 rounded-xl border transition-all ${
+            className={`p-5 rounded-2xl border transition-all ${
               activeProvider === 'MIDTRANS'
-                ? 'border-amber-500 bg-amber-50/30 ring-2 ring-amber-500/20'
-                : 'border-slate-200 bg-white hover:border-slate-300'
+                ? 'border-[#21b1db] bg-[#E8F8FA]/30 dark:bg-cyan-950/20 ring-2 ring-[#21b1db]/20'
+                : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300'
             }`}
           >
             <div className="flex items-center justify-between mb-3">
-              <span className="font-bold text-sm text-slate-900">Midtrans</span>
+              <span className="font-semibold text-sm text-slate-900 dark:text-white">Midtrans</span>
               {activeProvider === 'MIDTRANS' ? (
-                <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300">
                   Aktif
                 </span>
               ) : (
                 <span className="text-xs text-slate-400">Non-aktif</span>
               )}
             </div>
-            <p className="text-xs text-slate-500 mb-4 leading-relaxed">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">
               Integrasi pembayaran via Snap API (QRIS, VA Bank, GoPay, Kartu Kredit).
             </p>
             {activeProvider !== 'MIDTRANS' && (
               <Button
                 variant="outline"
                 size="sm"
-                className="w-full text-xs font-semibold"
+                className="w-full text-xs font-semibold rounded-xl text-[#21b1db] hover:text-[#1da0c7] hover:border-[#21b1db]/40 hover:bg-[#E8F8FA]/30"
                 onClick={() => setPendingProviderSwitch('MIDTRANS')}
               >
                 Aktifkan Midtrans
@@ -190,16 +190,16 @@ export function PaymentSettingsView({ configs, siteUrl }: PaymentSettingsViewPro
 
           {/* Mayar Card */}
           <div
-            className={`p-5 rounded-xl border transition-all ${
+            className={`p-5 rounded-2xl border transition-all ${
               activeProvider === 'MAYAR'
-                ? 'border-amber-500 bg-amber-50/30 ring-2 ring-amber-500/20'
-                : 'border-slate-200 bg-white hover:border-slate-300'
+                ? 'border-[#21b1db] bg-[#E8F8FA]/30 dark:bg-cyan-950/20 ring-2 ring-[#21b1db]/20'
+                : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300'
             }`}
           >
             <div className="flex items-center justify-between mb-3">
-              <span className="font-bold text-sm text-slate-900">Mayar</span>
+              <span className="font-semibold text-sm text-slate-900 dark:text-white">Mayar</span>
               {activeProvider === 'MAYAR' ? (
-                <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300">
                   Aktif
                 </span>
               ) : (
@@ -270,7 +270,7 @@ export function PaymentSettingsView({ configs, siteUrl }: PaymentSettingsViewPro
               type="checkbox"
               checked={midtransIsProduction}
               onChange={(e) => setMidtransIsProduction(e.target.checked)}
-              className="rounded border-slate-300 text-amber-500 focus:ring-amber-400"
+              className="rounded border-slate-300 dark:border-slate-700 text-[#21b1db] focus:ring-[#21b1db]/30"
             />
             <Label htmlFor="midtransProduction" className="text-xs font-medium cursor-pointer">
               Gunakan Lingkungan Production (Centang jika akun live, hapus centang untuk Sandbox)
@@ -369,7 +369,7 @@ export function PaymentSettingsView({ configs, siteUrl }: PaymentSettingsViewPro
               type="checkbox"
               checked={mayarIsProduction}
               onChange={(e) => setMayarIsProduction(e.target.checked)}
-              className="rounded border-slate-300 text-amber-500 focus:ring-amber-400"
+              className="rounded border-slate-300 dark:border-slate-700 text-[#21b1db] focus:ring-[#21b1db]/30"
             />
             <Label htmlFor="mayarProduction" className="text-xs font-medium cursor-pointer">
               Lingkungan Production (Centang untuk api.mayar.id, hapus centang untuk sandbox)
@@ -430,7 +430,7 @@ export function PaymentSettingsView({ configs, siteUrl }: PaymentSettingsViewPro
             <AlertDialogAction
               onClick={handleConfirmSwitch}
               disabled={isSwitching}
-              className="bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold"
+              className="bg-[#21b1db] hover:bg-[#1da0c7] text-white rounded-xl text-xs font-semibold shadow-sm"
             >
               {isSwitching ? <Loader2 className="w-4 h-4 animate-spin mr-1" /> : null}
               Ya, Aktifkan {pendingProviderSwitch}

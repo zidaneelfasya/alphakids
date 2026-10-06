@@ -140,23 +140,23 @@ export function CmsManager({ initialData }: CmsManagerProps) {
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-gradient-to-r from-purple-50 via-white to-amber-50 p-6 rounded-2xl border border-purple-100 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-100/80 text-purple-700 text-xs font-semibold mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E8F8FA] dark:bg-cyan-950/60 text-[#21b1db] text-xs font-semibold mb-2">
             <Sparkles className="w-3.5 h-3.5" />
             Content Management System (CMS)
           </div>
-          <h1 className="text-2xl font-bold font-heading text-slate-900">
+          <h1 className="text-2xl font-semibold font-sans text-slate-900 dark:text-white">
             Kelola Konten Landing Page
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 font-normal">
             Ubah teks, judul, statistik, ulasan, mentor, dan FAQ halaman depan secara dinamis tanpa perlu deploy ulang.
           </p>
         </div>
         <div className="flex items-center gap-3">
           <Button
             variant="outline"
-            className="rounded-xl border-purple-200 text-purple-700 hover:bg-purple-50"
+            className="rounded-full border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-[#21b1db] hover:border-[#21b1db]/40 text-xs font-semibold"
             asChild
           >
             <a href="/" target="_blank" rel="noopener noreferrer">

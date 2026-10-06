@@ -155,18 +155,18 @@ export function CertificatesManager({
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold font-heading text-slate-900 flex items-center gap-2">
-            <Award className="w-5 h-5 text-amber-500" />
+          <h1 className="text-xl font-semibold font-sans text-slate-900 dark:text-white flex items-center gap-2">
+            <Award className="w-5 h-5 text-[#21b1db]" />
             Penerbitan Sertifikat
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Terbitkan dan kelola sertifikat kelulusan digital resmi untuk peserta program Alpha Kids.
           </p>
         </div>
 
         <Button
           onClick={openIssueDialog}
-          className="bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-xl"
+          className="bg-[#21b1db] hover:bg-[#1da0c7] text-white font-semibold text-xs rounded-xl shadow-sm"
         >
           <Plus className="w-3.5 h-3.5 mr-1.5" />
           Terbitkan Sertifikat
@@ -209,7 +209,7 @@ export function CertificatesManager({
               ) : (
                 filteredCerts.map((cert) => (
                   <tr key={cert.id} className="hover:bg-slate-50/50 transition-colors">
-                    <td className="py-3.5 px-4 font-mono font-bold text-amber-700">
+                    <td className="py-3.5 px-4 font-mono font-semibold text-[#21b1db]">
                       {cert.certificateNumber}
                     </td>
                     <td className="py-3.5 px-4 font-semibold text-slate-900">
@@ -274,7 +274,7 @@ export function CertificatesManager({
                 id="cProgram"
                 value={selectedProgramId}
                 onChange={(e) => setSelectedProgramId(e.target.value)}
-                className="w-full px-3 py-2 rounded-md border border-slate-200 text-xs bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/20"
+                className="w-full px-3 py-2 rounded-md border border-slate-200 dark:border-slate-800 text-xs bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-[#21b1db]/20 focus:border-[#21b1db]"
                 required
               >
                 {programs.map((p) => (
@@ -293,7 +293,7 @@ export function CertificatesManager({
                 id="cStudent"
                 value={selectedStudentId}
                 onChange={(e) => handleStudentSelect(e.target.value)}
-                className="w-full px-3 py-2 rounded-md border border-slate-200 text-xs bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/20"
+                className="w-full px-3 py-2 rounded-md border border-slate-200 dark:border-slate-800 text-xs bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-[#21b1db]/20 focus:border-[#21b1db]"
                 required
               >
                 {students.map((s) => (
@@ -346,7 +346,7 @@ export function CertificatesManager({
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl text-xs"
+                className="bg-[#21b1db] hover:bg-[#1da0c7] text-white font-semibold rounded-xl text-xs shadow-sm"
               >
                 {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-1" /> : null}
                 Terbitkan Sekarang
@@ -361,18 +361,18 @@ export function CertificatesManager({
         open={!!previewCert}
         onOpenChange={(open) => !open && setPreviewCert(null)}
       >
-        <DialogContent className="rounded-3xl max-w-xl p-0 overflow-hidden bg-white border border-amber-200 shadow-xl">
+        <DialogContent className="rounded-3xl max-w-xl p-0 overflow-hidden bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl">
           {previewCert && (
             <div>
               {/* Certificate Border Frame */}
-              <div className="p-8 border-8 border-amber-100/60 m-3 rounded-2xl relative text-center space-y-5 bg-gradient-to-b from-amber-50/30 to-white">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold tracking-wider uppercase">
+              <div className="p-8 border-4 border-[#21b1db]/20 m-3 rounded-2xl relative text-center space-y-5 bg-[#FFFDF9] dark:bg-slate-900">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E8F8FA] dark:bg-cyan-950/60 text-[#21b1db] text-[11px] font-semibold tracking-wider uppercase">
                   <Sparkles className="w-3.5 h-3.5" />
                   Piagam Penghargaan Resmi
                 </div>
 
                 <div className="space-y-1">
-                  <h3 className="text-2xl font-black font-heading text-slate-900 tracking-tight">
+                  <h3 className="text-2xl font-bold font-sans text-slate-900 dark:text-white tracking-tight">
                     SERTIFIKAT KELULUSAN
                   </h3>
                   <p className="text-xs text-slate-500 font-mono">
@@ -382,25 +382,25 @@ export function CertificatesManager({
 
                 <div className="space-y-1 py-3">
                   <p className="text-xs text-slate-500">Diberikan dengan bangga kepada:</p>
-                  <h4 className="text-2xl font-extrabold text-amber-600 font-heading">
+                  <h4 className="text-2xl font-bold text-[#21b1db] font-sans">
                     {previewCert.recipientNameSnapshot}
                   </h4>
                 </div>
 
-                <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-slate-300 max-w-md mx-auto leading-relaxed">
                   Telah berhasil menyelesaikan seluruh kurikulum pembelajaran dan praktik pada program:
                 </p>
 
-                <div className="font-bold text-sm text-slate-900 bg-white py-2 px-4 rounded-xl border border-slate-200 inline-block">
+                <div className="font-semibold text-sm text-slate-900 dark:text-white bg-white dark:bg-slate-800 py-2 px-4 rounded-xl border border-slate-200 dark:border-slate-700 inline-block shadow-sm">
                   {previewCert.programNameSnapshot}
                 </div>
 
-                <div className="pt-6 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                <div className="pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500">
                   <div className="text-left">
-                    <span className="block text-[10px] uppercase font-bold text-slate-400">
+                    <span className="block text-[10px] uppercase font-semibold text-slate-400">
                       Tanggal Penerbitan
                     </span>
-                    <span className="font-medium text-slate-800">
+                    <span className="font-medium text-slate-800 dark:text-slate-200">
                       {new Date(previewCert.issuedAt).toLocaleDateString('id-ID', {
                         day: 'numeric',
                         month: 'long',
@@ -410,10 +410,10 @@ export function CertificatesManager({
                   </div>
 
                   <div className="text-right">
-                    <span className="block text-[10px] uppercase font-bold text-slate-400">
+                    <span className="block text-[10px] uppercase font-semibold text-slate-400">
                       Penyelenggara
                     </span>
-                    <span className="font-bold text-slate-900">
+                    <span className="font-semibold text-slate-900 dark:text-white">
                       Alpha Kids Academy
                     </span>
                   </div>
@@ -425,7 +425,7 @@ export function CertificatesManager({
                       href={previewCert.certificateUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-700 hover:underline"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#21b1db] hover:underline"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
                       Buka Tautan Dokumen Eksternal

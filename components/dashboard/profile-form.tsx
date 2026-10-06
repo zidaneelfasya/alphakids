@@ -47,10 +47,10 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-sm max-w-xl">
+    <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 p-6 sm:p-8 shadow-sm max-w-xl">
       <form onSubmit={handleSubmit} className="space-y-5 text-xs">
         <div className="space-y-1.5">
-          <Label htmlFor="profName" className="text-xs font-semibold text-slate-800">
+          <Label htmlFor="profName" className="text-xs font-semibold text-slate-800 dark:text-slate-200">
             Nama Lengkap / Nama Anak
           </Label>
           <div className="relative">
@@ -60,7 +60,7 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="Contoh: Muhammad Zidane"
-              className="pl-9 text-xs"
+              className="pl-9 text-xs rounded-xl"
               required
             />
           </div>
@@ -70,7 +70,7 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="profEmail" className="text-xs font-semibold text-slate-800">
+          <Label htmlFor="profEmail" className="text-xs font-semibold text-slate-800 dark:text-slate-200">
             Alamat Email
           </Label>
           <div className="relative">
@@ -79,7 +79,7 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
               id="profEmail"
               value={initialData.email || '-'}
               disabled
-              className="pl-9 text-xs bg-slate-50 text-slate-500 font-mono"
+              className="pl-9 text-xs bg-slate-50 dark:bg-slate-800 text-slate-500 font-mono rounded-xl"
             />
           </div>
           <span className="text-[11px] text-slate-400">
@@ -88,7 +88,7 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="profPhone" className="text-xs font-semibold text-slate-800">
+          <Label htmlFor="profPhone" className="text-xs font-semibold text-slate-800 dark:text-slate-200">
             Nomor WhatsApp / Telepon
           </Label>
           <div className="relative">
@@ -98,7 +98,7 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="081234567890"
-              className="pl-9 text-xs font-mono"
+              className="pl-9 text-xs font-mono rounded-xl"
             />
           </div>
           <span className="text-[11px] text-slate-400">
@@ -106,10 +106,10 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
           </span>
         </div>
 
-        <div className="pt-2 flex items-center justify-between border-t border-slate-100">
+        <div className="pt-2 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
           <div className="flex items-center gap-1.5">
             <span className="text-slate-400">Status Akun:</span>
-            <span className="font-semibold text-slate-800 capitalize bg-slate-100 px-2 py-0.5 rounded-full text-[10px]">
+            <span className="font-semibold text-slate-800 dark:text-slate-200 capitalize bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full text-[10px]">
               {initialData.role}
             </span>
           </div>
@@ -117,7 +117,7 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-xl"
+            className="bg-[#21b1db] hover:bg-[#1da0c7] text-white font-semibold text-xs rounded-full shadow-md shadow-[#21b1db]/20 px-5"
           >
             {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-1.5" /> : null}
             Simpan Perubahan

@@ -77,23 +77,23 @@ export function UsersManager({ users, currentUserId }: UsersManagerProps) {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold font-heading text-slate-900 flex items-center gap-2">
-            <Users className="w-5 h-5 text-amber-500" />
+          <h1 className="text-xl font-semibold font-sans text-slate-900 dark:text-white flex items-center gap-2">
+            <Users className="w-5 h-5 text-[#21b1db]" />
             Kelola Pengguna
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Daftar akun peserta dan administrator platform Alpha Kids.
           </p>
         </div>
 
         <div className="flex items-center gap-2 text-xs">
-          <div className="bg-white border border-slate-200 px-3 py-1.5 rounded-xl shadow-sm">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3 py-1.5 rounded-xl shadow-sm">
             <span className="text-slate-400 font-medium">Total Akun: </span>
-            <span className="font-bold text-slate-900">{users.length}</span>
+            <span className="font-semibold text-slate-900 dark:text-white">{users.length}</span>
           </div>
-          <div className="bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-xl shadow-sm">
-            <span className="text-amber-700 font-medium">Admin: </span>
-            <span className="font-bold text-amber-900">
+          <div className="bg-[#E8F8FA] dark:bg-cyan-950/40 border border-[#21b1db]/30 dark:border-cyan-800 px-3 py-1.5 rounded-xl shadow-sm">
+            <span className="text-[#21b1db] dark:text-cyan-400 font-medium">Admin: </span>
+            <span className="font-semibold text-[#1891b4] dark:text-cyan-300">
               {users.filter((u) => u.role === 'admin').length}
             </span>
           </div>
@@ -145,24 +145,24 @@ export function UsersManager({ users, currentUserId }: UsersManagerProps) {
                   </td>
                   <td className="py-3.5 px-4">
                     {u.role === 'admin' ? (
-                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-800 bg-amber-100/70 px-2 py-0.5 rounded-full border border-amber-300/60">
-                        <ShieldCheck className="w-3 h-3 text-amber-700" />
+                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#21b1db] dark:text-cyan-400 bg-[#E8F8FA] dark:bg-cyan-950/60 px-2.5 py-0.5 rounded-full border border-[#21b1db]/30">
+                        <ShieldCheck className="w-3 h-3 text-[#21b1db] dark:text-cyan-400" />
                         Admin
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-full border border-slate-200">
+                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-200 dark:border-slate-700">
                         <User className="w-3 h-3 text-slate-400" />
                         Peserta
                       </span>
                     )}
                   </td>
                   <td className="py-3.5 px-4">
-                    <span className="inline-flex items-center gap-1 text-slate-700 font-medium">
+                    <span className="inline-flex items-center gap-1 text-slate-700 dark:text-slate-300 font-medium">
                       <GraduationCap className="w-3.5 h-3.5 text-slate-400" />
                       {u.enrollmentCount} Program
                     </span>
                   </td>
-                  <td className="py-3.5 px-4 text-slate-500">
+                  <td className="py-3.5 px-4 text-slate-500 dark:text-slate-400">
                     {new Date(u.createdAt).toLocaleDateString('id-ID', {
                       day: 'numeric',
                       month: 'short',
@@ -190,7 +190,7 @@ export function UsersManager({ users, currentUserId }: UsersManagerProps) {
                         onClick={() =>
                           setPendingChange({ user: u, targetRole: 'admin' })
                         }
-                        className="text-xs h-8 text-amber-700 hover:text-amber-800 hover:border-amber-300"
+                        className="text-xs h-8 text-[#21b1db] hover:text-[#1da0c7] hover:border-[#21b1db]/40 hover:bg-[#E8F8FA]/30"
                       >
                         Jadikan Admin
                       </Button>
@@ -228,9 +228,9 @@ export function UsersManager({ users, currentUserId }: UsersManagerProps) {
             <AlertDialogAction
               onClick={handleConfirmRoleChange}
               disabled={isUpdating}
-              className={`rounded-xl text-xs font-bold ${
+              className={`rounded-xl text-xs font-semibold ${
                 pendingChange?.targetRole === 'admin'
-                  ? 'bg-amber-500 hover:bg-amber-600 text-white'
+                  ? 'bg-[#21b1db] hover:bg-[#1da0c7] text-white shadow-sm'
                   : 'bg-red-600 hover:bg-red-700 text-white'
               }`}
             >

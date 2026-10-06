@@ -122,7 +122,13 @@ export function LandingMentorsBlock({ content }: LandingMentorsBlockProps) {
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative z-20">
         {/* Centered Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-18">
+        <motion.div
+          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center max-w-3xl mx-auto mb-14 sm:mb-18"
+        >
           <h2 className="text-3xl sm:text-5xl lg:text-[3.25rem] font-semibold font-sans tracking-tight leading-[1.2] text-white">
             Misi kami adalah membantu anak <br />
             <span className="font-sans italic font-normal text-[#FFCC07]">
@@ -131,10 +137,16 @@ export function LandingMentorsBlock({ content }: LandingMentorsBlockProps) {
             <br />
             dan tumbuh menjadi generasi juara.
           </h2>
-        </div>
+        </motion.div>
 
         {/* Mentors Row with Navigation Controls */}
-        <div className="relative flex items-center justify-center px-0 sm:px-6 md:px-10">
+        <motion.div
+          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.55, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+          className="relative flex items-center justify-center px-0 sm:px-6 md:px-10"
+        >
           {/* Left Arrow Button */}
           <button
             type="button"
@@ -234,7 +246,7 @@ export function LandingMentorsBlock({ content }: LandingMentorsBlockProps) {
           >
             <ChevronRight className="size-6 transition-transform group-hover:translate-x-0.5" />
           </button>
-        </div>
+        </motion.div>
 
         {/* Carousel Dot Indicators */}
         <div className="flex items-center justify-center gap-2 pt-6 sm:pt-8 z-30">

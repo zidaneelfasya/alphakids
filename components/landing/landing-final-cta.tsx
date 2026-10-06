@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
 import type { CtaSectionContent } from '@/lib/cms';
 
 interface LandingFinalCtaProps {
@@ -24,6 +25,8 @@ function WhatsAppIcon({ className }: { className?: string }) {
 }
 
 export function LandingFinalCta({ content }: LandingFinalCtaProps) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section
       id="cta"
@@ -44,7 +47,13 @@ export function LandingFinalCta({ content }: LandingFinalCtaProps) {
           {/* ============================================================= */}
           {/* LEFT COLUMN: Student Illustration Cutout (cta.png)             */}
           {/* ============================================================= */}
-          <div className="lg:col-span-5 xl:col-span-5 flex items-center justify-center lg:justify-start">
+          <motion.div
+            initial={shouldReduceMotion ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.94, y: 24 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 xl:col-span-5 flex items-center justify-center lg:justify-start"
+          >
             <div className="relative w-full max-w-[380px] sm:max-w-[440px] lg:max-w-[480px] xl:max-w-[520px] aspect-[1293/1217] select-none transition-transform duration-500 hover:scale-[1.02]">
               {/* Soft radiance behind cutout */}
               <div
@@ -60,12 +69,18 @@ export function LandingFinalCta({ content }: LandingFinalCtaProps) {
                 sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 520px"
               />
             </div>
-          </div>
+          </motion.div>
 
           {/* ============================================================= */}
           {/* RIGHT COLUMN: Copy & Dual Action Buttons (Aligned to the RIGHT)*/}
           {/* ============================================================= */}
-          <div className="lg:col-span-7 xl:col-span-7 flex flex-col items-center sm:items-end text-center sm:text-right space-y-6">
+          <motion.div
+            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7 xl:col-span-7 flex flex-col items-center sm:items-end text-center sm:text-right space-y-6"
+          >
             {/* Playful Pink Badge */}
             
 
@@ -113,7 +128,7 @@ export function LandingFinalCta({ content }: LandingFinalCtaProps) {
                 <span>Tanya via WhatsApp</span>
               </a>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

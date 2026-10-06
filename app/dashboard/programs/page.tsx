@@ -48,17 +48,17 @@ export default async function MemberProgramsPage() {
         </div>
 
         {activePrograms.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-slate-200/80 p-12 text-center max-w-lg mx-auto shadow-sm my-8">
-            <div className="w-16 h-16 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center mx-auto mb-4">
-              <GraduationCap className="w-8 h-8" />
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 p-12 text-center max-w-lg mx-auto shadow-sm my-8">
+            <div className="w-16 h-16 rounded-2xl bg-[#E8F8FA] dark:bg-cyan-950/60 text-[#21b1db] flex items-center justify-center mx-auto mb-4">
+              <GraduationCap className="w-8 h-8 stroke-[1.75]" />
             </div>
-            <h2 className="text-lg font-bold text-slate-900 mb-2 font-heading">
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-2 font-sans">
               Belum Ada Program Terdaftar
             </h2>
-            <p className="text-sm text-slate-500 mb-6">
+            <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 font-normal">
               Anda belum terdaftar dalam program pelatihan Alpha Kids. Temukan program seru yang sesuai dengan minat dan usia si kecil sekarang!
             </p>
-            <Button asChild className="bg-amber-500 hover:bg-amber-600 font-bold text-white shadow-md shadow-amber-500/20">
+            <Button asChild className="bg-[#21b1db] hover:bg-[#1da0c7] font-semibold text-white rounded-full shadow-md shadow-[#21b1db]/20">
               <Link href="/programs">
                 <BookOpen className="w-4 h-4 mr-2" />
                 Jelajahi Katalog Program
@@ -70,20 +70,20 @@ export default async function MemberProgramsPage() {
             {activePrograms.map((prog) => (
               <div
                 key={prog.id}
-                className="bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group"
+                className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group"
               >
-                <div className="h-36 bg-gradient-to-br from-amber-400/20 via-orange-400/10 to-amber-100 p-5 flex flex-col justify-between border-b border-slate-100">
+                <div className="h-32 bg-slate-50 dark:bg-slate-800/60 p-5 flex flex-col justify-between border-b border-slate-100 dark:border-slate-800">
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800">
+                    <span className="text-[11px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300">
                       Akses Aktif
                     </span>
                     {prog.level && (
-                      <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-white/80 text-slate-700">
+                      <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200/60 dark:border-slate-600">
                         {prog.level}
                       </span>
                     )}
                   </div>
-                  <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                  <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-normal">
                     <Calendar className="w-3.5 h-3.5" />
                     <span>
                       Terdaftar:{' '}
@@ -99,24 +99,24 @@ export default async function MemberProgramsPage() {
                 <div className="p-5 flex-1 flex flex-col justify-between">
                   <div>
                     {prog.ageRange && (
-                      <span className="text-xs font-semibold text-amber-700 block mb-1">
+                      <span className="text-xs font-semibold text-[#21b1db] block mb-1">
                         Usia {prog.ageRange}
                       </span>
                     )}
-                    <h3 className="font-bold text-slate-900 group-hover:text-amber-600 transition-colors line-clamp-2">
+                    <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-[#21b1db] transition-colors line-clamp-2">
                       {prog.title}
                     </h3>
                     {prog.description && (
-                      <p className="text-xs text-slate-500 mt-2 line-clamp-2 leading-relaxed">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed font-normal">
                         {prog.description}
                       </p>
                     )}
                   </div>
 
-                  <div className="pt-5 mt-4 border-t border-slate-100">
+                  <div className="pt-5 mt-4 border-t border-slate-100 dark:border-slate-800">
                     <Button
                       asChild
-                      className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs rounded-xl"
+                      className="w-full bg-[#21b1db] hover:bg-[#1da0c7] text-white font-semibold text-xs rounded-full shadow-xs"
                     >
                       <Link href={`/dashboard/programs/${prog.slug}`}>
                         <span>Masuk Ruang Kelas</span>
