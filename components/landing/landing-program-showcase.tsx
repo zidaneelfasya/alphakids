@@ -13,11 +13,14 @@ export interface ShowcaseProgram {
   title: string;
   slug: string;
   shortDescription?: string | null;
+  description?: string | null;
   price: number;
   promoPrice?: number | null;
+  coverImage?: string | null;
   thumbnailUrl?: string | null;
   ageMin?: number | null;
   ageMax?: number | null;
+  ageRange?: string | null;
   level?: string | null;
   category?: {
     id: string;
@@ -140,11 +143,12 @@ export function LandingProgramShowcase({
             <AnimatePresence mode="popLayout">
               {filteredPrograms.slice(0, 6).map((prog) => {
               const ageLabel =
-                prog.ageMin && prog.ageMax
+                prog.ageRange ||
+                (prog.ageMin && prog.ageMax
                   ? `Usia ${prog.ageMin}–${prog.ageMax} Thn`
                   : prog.ageMin
                   ? `Mulai ${prog.ageMin} Thn`
-                  : null;
+                  : null);
 
               const activePrice = prog.promoPrice ?? prog.price;
               const hasDiscount = prog.promoPrice && prog.promoPrice < prog.price;
@@ -163,7 +167,7 @@ export function LandingProgramShowcase({
                     {/* Thumbnail Image */}
                     <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 mb-4">
                       <Image
-                        src={prog.thumbnailUrl || fallbackImage}
+                        src={prog.coverImage || prog.thumbnailUrl || fallbackImage}
                         alt={prog.title}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -185,7 +189,8 @@ export function LandingProgramShowcase({
 
                     {/* Description */}
                     <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed mb-4">
-                      {prog.shortDescription ||
+                      {prog.description ||
+                        prog.shortDescription ||
                         'Kurikulum interaktif dengan proyek langsung, sertifikat resmi, dan bimbingan mentor.'}
                     </p>
                   </div>

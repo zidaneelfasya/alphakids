@@ -48,7 +48,7 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans antialiased selection:bg-cyan-200 selection:text-cyan-900">
       {/* 1. Floating Capsule Navbar */}
-      <LandingNavbar user={user} />
+      <LandingNavbar user={user} programs={activePrograms} />
 
       <main className="flex-1">
         {/* 1. Hero Section (Image 1 Centered Hero) */}

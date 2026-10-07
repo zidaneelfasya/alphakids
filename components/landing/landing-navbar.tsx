@@ -18,16 +18,33 @@ import {
   MobileNavMenu,
 } from '@/components/ui/resizable-navbar';
 
+import { formatRupiah } from '@/lib/utils';
+
+export interface NavbarProgramItem {
+  id: string;
+  title: string;
+  slug: string;
+  description?: string | null;
+  price: number;
+  coverImage?: string | null;
+  ageRange?: string | null;
+  level?: string | null;
+}
+
 interface LandingNavbarProps {
   user?: {
     id: string;
     email?: string | null;
   } | null;
+  programs?: NavbarProgramItem[];
 }
 
-export function LandingNavbar({ user }: LandingNavbarProps) {
+export function LandingNavbar({ user, programs = [] }: LandingNavbarProps) {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Take top 3 featured programs for the sleek 3-column popover
+  const displayPrograms = programs.slice(0, 3);
 
   return (
     <Navbar>
@@ -46,7 +63,7 @@ export function LandingNavbar({ user }: LandingNavbarProps) {
             href="/"
           />
 
-          {/* Program Belajar (Showcasing Product Cards in 3-col grid - matching user's image 2) */}
+          {/* Program Belajar (Dynamic Product Cards from Supabase DB) */}
           <NavMenuItem
             setActive={setActiveMenu}
             active={activeMenu}
@@ -61,37 +78,38 @@ export function LandingNavbar({ user }: LandingNavbarProps) {
                   href="/programs"
                   className="text-xs font-semibold text-slate-500 hover:text-[#21b1db] transition-colors"
                 >
-                  Buka Semua Kelas &rarr;
+                  Buka Semua Kelas ({programs.length}) &rarr;
                 </Link>
               </div>
 
               {/* Grid of Program Product Cards */}
-              <div className="grid grid-cols-3 gap-4">
-                <NavProductItem
-                  title="Coding & Game Dev"
-                  description="Belajar logika pemrograman & buat game visual 2D sendiri."
-                  href="/programs"
-                  src="/assets/img/kid-tablet.png"
-                  badge="Usia 7–12 Thn"
-                  price="Rp 299.000"
-                />
-                <NavProductItem
-                  title="Sains & Robotika Pintar"
-                  description="Eksperimen sensor, sirkuit aman, dan robotika cerdas anak."
-                  href="/programs"
-                  src="/assets/img/alpha-kids-hero.jpg"
-                  badge="Usia 8–15 Thn"
-                  price="Rp 349.000"
-                />
-                <NavProductItem
-                  title="Seni Digital & Animasi"
-                  description="Kembangkan imajinasi karakter dan ilustrasi kreatif si kecil."
-                  href="/programs"
-                  src="/assets/img/kid-teddy.png"
-                  badge="Usia 5–10 Thn"
-                  price="Rp 249.000"
-                />
-              </div>
+              {displayPrograms.length > 0 ? (
+                <div className="grid grid-cols-3 gap-4">
+                  {displayPrograms.map((prog) => (
+                    <NavProductItem
+                      key={prog.id}
+                      title={prog.title}
+                      description={
+                        prog.description ||
+                        'Kurikulum interaktif dengan proyek langsung dan bimbingan mentor.'
+                      }
+                      href={`/programs/${prog.slug}`}
+                      src={
+                        prog.coverImage ||
+                        '/assets/img/Konten Piramida AlphaKids_revisi0.png'
+                      }
+                      badge={prog.ageRange || prog.level || 'Semua Usia'}
+                      price={
+                        prog.price === 0 ? 'Gratis' : formatRupiah(prog.price)
+                      }
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="py-6 px-8 text-center text-xs text-slate-500">
+                  Belum ada program aktif yang tersedia saat ini.
+                </div>
+              )}
             </div>
           </NavMenuItem>
 
@@ -208,8 +226,25 @@ export function LandingNavbar({ user }: LandingNavbarProps) {
               onClick={() => setMobileMenuOpen(false)}
               className="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-800 hover:bg-[#E8F8FA] hover:text-[#21b1db]"
             >
-              Katalog Semua Program
+              Katalog Semua Program ({programs.length})
             </Link>
+            {displayPrograms.length > 0 && (
+              <div className="flex flex-col pl-3 space-y-1 py-0.5 border-l-2 border-[#E8F8FA] ml-3">
+                {displayPrograms.map((prog) => (
+                  <Link
+                    key={prog.id}
+                    href={`/programs/${prog.slug}`}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:bg-[#E8F8FA] hover:text-[#21b1db] flex items-center justify-between transition-colors"
+                  >
+                    <span className="truncate">{prog.title}</span>
+                    <span className="text-[10px] text-[#ef599a] font-semibold shrink-0 ml-2">
+                      {prog.price === 0 ? 'Gratis' : formatRupiah(prog.price)}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            )}
             <Link
               href="#fitur"
               onClick={() => setMobileMenuOpen(false)}

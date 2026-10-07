@@ -12,7 +12,6 @@ interface LandingBlogSectionProps {
 
 export function LandingBlogSection({ content }: LandingBlogSectionProps) {
   const shouldReduceMotion = useReducedMotion();
-  const fallbackImage = '/assets/img/hero1.png';
 
   return (
     <section id="blog" className="py-20 sm:py-28 bg-[#FFFDF9] dark:bg-slate-950 overflow-hidden">

@@ -6,7 +6,6 @@ import { ArrowUpRight } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import {
   CurvedArrow,
-  ConcentricRings,
   YellowBrushUnderline,
 } from '@/components/landing/wonder-decorations';
 import type { HeroSectionContent } from '@/lib/cms';

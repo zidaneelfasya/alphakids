@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowUpRight, Sparkles } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import type { CtaSectionContent } from '@/lib/cms';
 

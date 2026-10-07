@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronDown, MessageCircle, ArrowRight } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion, type Transition } from 'motion/react';
 import type { FaqSectionContent } from '@/lib/cms';
 
