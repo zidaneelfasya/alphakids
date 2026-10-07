@@ -23,7 +23,7 @@ export function LandingStorySection({ content }: LandingStorySectionProps) {
   return (
     <section id="keunggulan" className="py-14 sm:py-20 lg:py-28 bg-white dark:bg-slate-950 overflow-hidden">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 lg:gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 lg:gap-10 xl:gap-14 items-center">
           {/* =============================================================== */}
           {/* LEFT COLUMN: HEADLINE WITH YELLOW OVAL LOOP & CTA               */}
           {/* =============================================================== */}
@@ -34,7 +34,7 @@ export function LandingStorySection({ content }: LandingStorySectionProps) {
             transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-7 space-y-5 sm:space-y-6"
           >
-            <h2 className="text-3xl xs:text-4xl sm:text-5xl lg:text-[3.25rem] xl:text-[3.5rem] font-semibold font-sans tracking-tight text-slate-900 dark:text-white leading-[1.28] sm:leading-[1.24] lg:leading-[1.2]">
+            <h2 className="text-3xl xs:text-4xl sm:text-5xl lg:text-4xl xl:text-[3.25rem] 2xl:text-[3.5rem] font-semibold font-sans tracking-tight text-slate-900 dark:text-white leading-[1.28] sm:leading-[1.24] lg:leading-[1.2]">
               <span className="inline-block whitespace-normal xs:whitespace-nowrap">
                 Materi belajar yang
               </span>{' '}
@@ -79,7 +79,7 @@ export function LandingStorySection({ content }: LandingStorySectionProps) {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="relative w-full max-w-[320px] xs:max-w-sm sm:max-w-md flex justify-end"
+              className="relative w-full max-w-[320px] xs:max-w-sm lg:max-w-[380px] xl:max-w-md flex justify-end"
             >
               {/* Alpha Yellow Scalloped Sunburst Badge on Top-Right */}
               <div className="absolute -top-7 sm:-top-10 right-2 sm:right-10 z-20">
@@ -94,7 +94,7 @@ export function LandingStorySection({ content }: LandingStorySectionProps) {
                 </div>
 
                 {/* Kid cutout on the right */}
-                <div className="absolute -top-4 sm:-top-6 right-6 sm:right-12 size-24 sm:size-28 md:size-32 rounded-full overflow-hidden">
+                <div className="absolute -top-4 sm:-top-6 right-6 sm:right-12 size-24 sm:size-28 lg:size-28 xl:size-32 rounded-full overflow-hidden">
                   <Image
                     src="/assets/img/hero1.png"
                     alt="Anak Senang Belajar"
@@ -112,7 +112,7 @@ export function LandingStorySection({ content }: LandingStorySectionProps) {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
-              className="relative w-full max-w-[320px] xs:max-w-sm sm:max-w-md flex justify-end"
+              className="relative w-full max-w-[320px] xs:max-w-sm lg:max-w-[380px] xl:max-w-md flex justify-end"
             >
               <div className="w-full h-20 sm:h-24 md:h-28 rounded-full bg-[#ef599a] flex items-center justify-between px-4 sm:px-8 md:px-10 relative overflow-visible shadow-lg shadow-[#ef599a]/25">
                 {/* Decorative wavy pattern on the left of the pink strip */}
@@ -121,7 +121,7 @@ export function LandingStorySection({ content }: LandingStorySectionProps) {
                 </div>
 
                 {/* Kid cutout on the right */}
-                <div className="absolute -top-4 sm:-top-6 right-2 sm:right-4 size-24 sm:size-28 md:size-32 rounded-full overflow-hidden">
+                <div className="absolute -top-4 sm:-top-6 right-2 sm:right-4 size-24 sm:size-28 lg:size-28 xl:size-32 rounded-full overflow-hidden">
                   <Image
                     src="/assets/img/hero2.png"
                     alt="Anak Cerdas Koding"
@@ -139,7 +139,7 @@ export function LandingStorySection({ content }: LandingStorySectionProps) {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
-              className="relative w-full max-w-[320px] xs:max-w-sm sm:max-w-md flex justify-end"
+              className="relative w-full max-w-[320px] xs:max-w-sm lg:max-w-[380px] xl:max-w-md flex justify-end"
             >
               <div className="w-4/5 h-20 sm:h-24 md:h-28 rounded-full bg-[#FFCC07] flex items-center justify-between px-4 sm:px-7 md:px-8 relative overflow-visible shadow-lg shadow-[#FFCC07]/30">
                 {/* Square dot grid pattern (titik berbentuk persegi) on the left of the yellow strip */}
@@ -153,7 +153,7 @@ export function LandingStorySection({ content }: LandingStorySectionProps) {
                 </div>
 
                 {/* Kid cutout on the right */}
-                <div className="absolute -top-3.5 sm:-top-5 right-8 sm:right-14 size-24 sm:size-28 md:size-32 rounded-full overflow-hidden">
+                <div className="absolute -top-3.5 sm:-top-5 right-8 sm:right-14 size-24 sm:size-28 lg:size-28 xl:size-32 rounded-full overflow-hidden">
                   <Image
                     src="/assets/img/hero3.png"
                     alt="Anak Belajar Tablet"

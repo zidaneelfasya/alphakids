@@ -28,7 +28,7 @@ export function LandingFooter() {
       {/* ================================================================= */}
       <div
         aria-hidden="true"
-        className="pointer-events-none select-none absolute right-0 top-1/2 -translate-y-1/2 translate-x-[18%] sm:translate-x-[12%] w-[440px] sm:w-[600px] md:w-[740px] lg:w-[880px] h-[440px] sm:h-[600px] md:h-[740px] lg:h-[880px] opacity-15 dark:opacity-10 z-0 overflow-hidden"
+        className="pointer-events-none select-none absolute right-0 top-1/2 -translate-y-1/2 translate-x-[18%] sm:translate-x-[12%] w-[440px] sm:w-[600px] md:w-[740px] lg:w-[760px] xl:w-[880px] h-[440px] sm:h-[600px] md:h-[740px] lg:h-[760px] xl:h-[880px] opacity-15 dark:opacity-10 z-0 overflow-hidden"
         style={{
           maskImage: 'linear-gradient(to left, rgba(0,0,0,0.85) 15%, rgba(0,0,0,0) 80%)',
           WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,0.85) 15%, rgba(0,0,0,0) 80%)',
@@ -52,7 +52,7 @@ export function LandingFooter() {
         {/* ================================================================= */}
         <div className="flex flex-col lg:flex-row items-start justify-between gap-10 lg:gap-14 pt-1 sm:pt-2">
           {/* Left: 5 Themed Navigation Columns (Biru Muda, Pink, Kuning) */}
-          <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-3 md:grid-cols-5 gap-6 sm:gap-8 flex-1 w-full items-start">
+          <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-3 md:grid-cols-5 gap-5 sm:gap-6 lg:gap-5 xl:gap-8 flex-1 w-full items-start">
             {/* Column 1: Biru Muda (#21b1db) */}
             <div className="space-y-4">
               <h4 className="font-sans font-semibold text-xs sm:text-sm tracking-wider uppercase text-[#21b1db]">

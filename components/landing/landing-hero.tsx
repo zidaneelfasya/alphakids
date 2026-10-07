@@ -22,7 +22,7 @@ export function LandingHero({ content }: LandingHeroProps) {
       {/* 1. Left Background Puzzle: 50% in, 50% out of screen (Fully Responsive Scaling) */}
       <div
         aria-hidden="true"
-        className="absolute left-0 top-[45%] sm:top-[50%] -translate-y-1/2 -translate-x-1/2 w-[220px] h-[220px] xs:w-[280px] xs:h-[280px] sm:w-[480px] sm:h-[480px] lg:w-[700px] lg:h-[700px] xl:w-[840px] xl:h-[840px] pointer-events-none select-none z-[1]"
+        className="absolute left-0 top-[45%] sm:top-[50%] -translate-y-1/2 -translate-x-1/2 w-[220px] h-[220px] xs:w-[280px] xs:h-[280px] sm:w-[460px] sm:h-[460px] lg:w-[560px] lg:h-[560px] xl:w-[720px] xl:h-[720px] 2xl:w-[840px] 2xl:h-[840px] pointer-events-none select-none z-[1]"
       >
         <div className="relative w-full h-full rotate-12 filter blur-[2px] sm:blur-[3px] opacity-70 sm:opacity-85 dark:opacity-60 transition-all">
           <Image
@@ -38,7 +38,7 @@ export function LandingHero({ content }: LandingHeroProps) {
       {/* 2. Right Background Puzzle: 50% in, 50% out of screen (180 derajat) */}
       <div
         aria-hidden="true"
-        className="absolute right-0 top-[65%] sm:top-[60%] -translate-y-1/2 translate-x-1/2 w-[220px] h-[220px] xs:w-[280px] xs:h-[280px] sm:w-[480px] sm:h-[480px] lg:w-[700px] lg:h-[700px] xl:w-[840px] xl:h-[840px] pointer-events-none select-none z-[1]"
+        className="absolute right-0 top-[65%] sm:top-[60%] -translate-y-1/2 translate-x-1/2 w-[220px] h-[220px] xs:w-[280px] xs:h-[280px] sm:w-[460px] sm:h-[460px] lg:w-[560px] lg:h-[560px] xl:w-[720px] xl:h-[720px] 2xl:w-[840px] 2xl:h-[840px] pointer-events-none select-none z-[1]"
       >
         <div className="relative w-full h-full -rotate-12 filter blur-[2px] sm:blur-[3px] opacity-70 sm:opacity-90 dark:opacity-60 transition-all">
           <Image
@@ -63,7 +63,7 @@ export function LandingHero({ content }: LandingHeroProps) {
         initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.55, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute left-2 xl:left-6 2xl:left-24 top-1/2 -translate-y-[30%] w-[260px] h-[260px] lg:w-[300px] lg:h-[300px] xl:w-[380px] xl:h-[380px] 2xl:w-[450px] 2xl:h-[450px] pointer-events-none select-none z-10 hidden lg:block"
+        className="absolute left-2 xl:left-4 2xl:left-24 top-1/2 -translate-y-[30%] w-[260px] h-[260px] xl:w-[320px] xl:h-[320px] 2xl:w-[450px] 2xl:h-[450px] pointer-events-none select-none z-10 hidden xl:block"
       >
         <div className="relative w-full h-full drop-shadow-2xl">
           <Image
@@ -82,7 +82,7 @@ export function LandingHero({ content }: LandingHeroProps) {
         initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.55, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute right-2 xl:right-6 2xl:right-24 top-1/2 -translate-y-[60%] w-[260px] h-[260px] lg:w-[300px] lg:h-[300px] xl:w-[380px] xl:h-[380px] 2xl:w-[450px] 2xl:h-[450px] pointer-events-none select-none z-10 hidden lg:block"
+        className="absolute right-2 xl:right-4 2xl:right-24 top-1/2 -translate-y-[60%] w-[260px] h-[260px] xl:w-[320px] xl:h-[320px] 2xl:w-[450px] 2xl:h-[450px] pointer-events-none select-none z-10 hidden xl:block"
       >
         <div className="relative w-full h-full drop-shadow-2xl">
           <Image
@@ -132,12 +132,12 @@ export function LandingHero({ content }: LandingHeroProps) {
             initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.48, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
-            className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-[5.25rem] font-semibold font-sans tracking-tight text-slate-900 dark:text-white leading-[1.18] sm:leading-[1.12]"
+            className="text-3xl xs:text-4xl sm:text-5xl md:text-5xl lg:text-[3.5rem] xl:text-[4.25rem] 2xl:text-[5.25rem] font-semibold font-sans tracking-tight text-slate-900 dark:text-white leading-[1.18] sm:leading-[1.14] xl:leading-[1.12]"
           >
             Tempat terbaik{' '}
             <span className="whitespace-nowrap inline-flex items-center gap-2 sm:gap-3.5 align-baseline">
               <span>untuk</span>
-              <span className="relative inline-block size-7 xs:size-8 sm:size-10 lg:size-12 shrink-0 select-none pointer-events-none drop-shadow-md rotate-12 -mt-1 sm:-mt-2">
+              <span className="relative inline-block size-7 xs:size-8 sm:size-10 lg:size-11 xl:size-12 shrink-0 select-none pointer-events-none drop-shadow-md rotate-12 -mt-1 sm:-mt-2">
                 <Image
                   src="/assets/img/Ornamen Puzzle Kuning AlphaKids_revisi0.png"
                   alt="Puzzle Kuning"
@@ -160,14 +160,14 @@ export function LandingHero({ content }: LandingHeroProps) {
             anak hebat
           </motion.h1>
 
-          {/* Mobile & Tablet: Hero Characters Row (< lg screens) */}
+          {/* Mobile, Tablet & Compact Laptop: Hero Characters Row (< xl screens) */}
           <motion.div
             initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.45, delay: 0.16, ease: 'easeOut' }}
-            className="flex lg:hidden justify-center items-center gap-4 xs:gap-6 sm:gap-10 my-4 sm:my-6 z-20"
+            className="flex xl:hidden justify-center items-center gap-4 xs:gap-6 sm:gap-8 lg:gap-10 my-4 sm:my-6 z-20"
           >
-            <div className="relative w-32 h-32 xs:w-40 xs:h-40 sm:w-52 sm:h-52 drop-shadow-xl">
+            <div className="relative w-28 h-28 xs:w-36 xs:h-36 sm:w-48 sm:h-48 lg:w-56 lg:h-56 drop-shadow-xl">
               <Image
                 src="/assets/img/hero1.png"
                 alt="Siswa Alpha Kids"
@@ -176,7 +176,7 @@ export function LandingHero({ content }: LandingHeroProps) {
                 priority
               />
             </div>
-            <div className="relative w-32 h-32 xs:w-40 xs:h-40 sm:w-52 sm:h-52 drop-shadow-xl">
+            <div className="relative w-28 h-28 xs:w-36 xs:h-36 sm:w-48 sm:h-48 lg:w-56 lg:h-56 drop-shadow-xl">
               <Image
                 src="/assets/img/hero2.png"
                 alt="Siswa Alpha Kids"

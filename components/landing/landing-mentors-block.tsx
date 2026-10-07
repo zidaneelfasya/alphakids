@@ -151,7 +151,7 @@ export function LandingMentorsBlock({ content }: LandingMentorsBlockProps) {
           <button
             type="button"
             onClick={handlePrev}
-            className="flex absolute -left-2 sm:-left-6 md:-left-8 lg:-left-12 z-30 size-11 sm:size-12 rounded-full bg-white/15 hover:bg-white/30 active:scale-90 text-white items-center justify-center transition-all shadow-xl backdrop-blur-md  cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white"
+            className="flex absolute -left-2 sm:-left-4 md:-left-6 lg:-left-6 xl:-left-12 z-30 size-11 sm:size-12 rounded-full bg-white/15 hover:bg-white/30 active:scale-90 text-white items-center justify-center transition-all shadow-xl backdrop-blur-md cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white"
             aria-label="Mentor sebelumnya"
           >
             <ChevronLeft className="size-6 transition-transform group-hover:-translate-x-0.5" />
@@ -241,7 +241,7 @@ export function LandingMentorsBlock({ content }: LandingMentorsBlockProps) {
           <button
             type="button"
             onClick={handleNext}
-            className="flex absolute -right-2 sm:-right-6 md:-right-8 lg:-right-12 z-30 size-11 sm:size-12 rounded-full bg-white/15 hover:bg-white/30 active:scale-90 text-white items-center justify-center transition-all shadow-xl backdrop-blur-md cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white"
+            className="flex absolute -right-2 sm:-right-4 md:-right-6 lg:-right-6 xl:-right-12 z-30 size-11 sm:size-12 rounded-full bg-white/15 hover:bg-white/30 active:scale-90 text-white items-center justify-center transition-all shadow-xl backdrop-blur-md cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white"
             aria-label="Mentor selanjutnya"
           >
             <ChevronRight className="size-6 transition-transform group-hover:translate-x-0.5" />

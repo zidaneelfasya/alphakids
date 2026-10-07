@@ -22,7 +22,7 @@ export default async function AdminCmsPage() {
         { label: 'CMS & Landing Page' },
       ]}
     >
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto space-y-6">
         <CmsManager initialData={cmsData} />
       </div>
     </AdminShell>

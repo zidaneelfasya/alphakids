@@ -97,7 +97,7 @@ export const NavBody = ({ children, className, visible: propVisible }: NavBodyPr
         borderRadius: "9999px",
       }}
       animate={{
-        width: visible ? "72%" : "92%",
+        width: visible ? "86%" : "92%",
         maxWidth: visible ? "880px" : "1200px",
         y: visible ? 10 : 14,
         borderRadius: "9999px",
@@ -188,7 +188,7 @@ export const NavMenuItem = ({
       <motion.span
         transition={{ duration: 0.2 }}
         className={cn(
-          "px-4 py-2 rounded-full text-xs sm:text-sm font-semibold tracking-tight transition-all duration-200 inline-block",
+          "px-3.5 xl:px-4 py-2 rounded-full text-xs xl:text-sm font-semibold tracking-tight transition-all duration-200 inline-block",
           isItemActive
             ? "bg-[#E8F8FA] text-[#21b1db] shadow-sm"
             : "text-slate-700 dark:text-slate-200 hover:text-[#21b1db] hover:bg-[#21b1db]/5"
@@ -396,7 +396,7 @@ export const NavbarButton = ({
   | React.ComponentPropsWithoutRef<"button">
 )) => {
   const baseStyles =
-    "px-5 py-2 rounded-full text-xs font-semibold relative cursor-pointer transition-all duration-200 inline-flex items-center justify-center gap-2 active:scale-95 text-center";
+    "px-4 xl:px-5 py-2 rounded-full text-xs font-semibold relative cursor-pointer transition-all duration-200 inline-flex items-center justify-center gap-2 active:scale-95 text-center";
 
   const variantStyles = {
     primary:

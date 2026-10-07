@@ -109,7 +109,7 @@ export function LandingInteractiveFeatures({ content }: LandingInteractiveFeatur
         {/* ================================================================= */}
         {/* 3 ICONIC ALPHA KIDS CONTRAST CARDS WITH INTERACTIVE 3D TILT       */}
         {/* ================================================================= */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
           {/* --------------------------------------------------------------- */}
           {/* CARD 1: Alpha Cyan #21b1db (Quiz Interaktif)                   */}
           {/* --------------------------------------------------------------- */}
@@ -120,7 +120,7 @@ export function LandingInteractiveFeatures({ content }: LandingInteractiveFeatur
             transition={{ duration: 0.55, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
             className="h-full"
           >
-            <InteractiveTiltCard className="relative rounded-[2.5rem] bg-[#21b1db] text-white p-8 sm:p-9 min-h-[380px] h-full flex flex-col justify-between overflow-hidden shadow-2xl shadow-[#21b1db]/25 select-none cursor-default">
+            <InteractiveTiltCard className="relative rounded-[2.5rem] bg-[#21b1db] text-white p-6 sm:p-7 lg:p-7 xl:p-9 min-h-[380px] h-full flex flex-col justify-between overflow-hidden shadow-2xl shadow-[#21b1db]/25 select-none cursor-default">
               {/* Top Row: Left Scalloped Badge + Right Concentric Circles */}
               <div className="flex items-start justify-between relative z-10">
                 {/* White Scalloped Starburst Badge with Quiz Icon */}
@@ -137,7 +137,7 @@ export function LandingInteractiveFeatures({ content }: LandingInteractiveFeatur
 
               {/* Bottom Content */}
               <div className="relative z-10 pt-16">
-                <h3 className="text-2xl sm:text-3xl font-semibold font-sans text-white mb-2 leading-tight">
+                <h3 className="text-xl sm:text-2xl xl:text-3xl font-semibold font-sans text-white mb-2 leading-tight">
                   Quiz{' '}
                   <span className="font-sans italic font-normal text-white">
                     Interaktif
@@ -161,7 +161,7 @@ export function LandingInteractiveFeatures({ content }: LandingInteractiveFeatur
             transition={{ duration: 0.55, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="h-full"
           >
-            <InteractiveTiltCard className="relative rounded-[2.5rem] bg-[#ef599a] text-white p-8 sm:p-9 min-h-[380px] h-full flex flex-col justify-between overflow-hidden shadow-2xl shadow-[#ef599a]/25 select-none cursor-default">
+            <InteractiveTiltCard className="relative rounded-[2.5rem] bg-[#ef599a] text-white p-6 sm:p-7 lg:p-7 xl:p-9 min-h-[380px] h-full flex flex-col justify-between overflow-hidden shadow-2xl shadow-[#ef599a]/25 select-none cursor-default">
               {/* Top Row: Left Scalloped Badge + Right Caterpillar Wave */}
               <div className="flex items-start justify-between relative z-10">
                 {/* White Scalloped Starburst Badge with Idea Icon */}
@@ -178,7 +178,7 @@ export function LandingInteractiveFeatures({ content }: LandingInteractiveFeatur
 
               {/* Bottom Content */}
               <div className="relative z-10 pt-16">
-                <h3 className="text-2xl sm:text-3xl font-semibold font-sans text-white mb-2 leading-tight">
+                <h3 className="text-xl sm:text-2xl xl:text-3xl font-semibold font-sans text-white mb-2 leading-tight">
                   Aktivitas{' '}
                   <span className="font-sans italic font-normal text-white">
                     Kreatif
@@ -202,7 +202,7 @@ export function LandingInteractiveFeatures({ content }: LandingInteractiveFeatur
             transition={{ duration: 0.55, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="h-full"
           >
-            <InteractiveTiltCard className="relative rounded-[2.5rem] bg-[#FFCC07] p-8 sm:p-9 min-h-[380px] h-full flex flex-col justify-between overflow-hidden shadow-lg shadow-amber-950/5 select-none cursor-default">
+            <InteractiveTiltCard className="relative rounded-[2.5rem] bg-[#FFCC07] p-6 sm:p-7 lg:p-7 xl:p-9 min-h-[380px] h-full flex flex-col justify-between overflow-hidden shadow-lg shadow-amber-950/5 select-none cursor-default">
               {/* Top Row: Left Pale Yellow Badge + Right 4x5 Dot Grid */}
               <div className="flex items-start justify-between relative z-10">
                 {/* Pale Yellow Scalloped Starburst Badge with Gamepad Icon */}
@@ -219,7 +219,7 @@ export function LandingInteractiveFeatures({ content }: LandingInteractiveFeatur
 
               {/* Bottom Content */}
               <div className="relative z-10 pt-16">
-                <h3 className="text-2xl sm:text-3xl font-semibold font-sans text-slate-950 mb-2 leading-tight">
+                <h3 className="text-xl sm:text-2xl xl:text-3xl font-semibold font-sans text-slate-950 mb-2 leading-tight">
                   Belajar dengan{' '}
                   <span className="font-sans italic font-normal text-slate-950">
                     Game

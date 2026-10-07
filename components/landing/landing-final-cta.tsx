@@ -54,7 +54,7 @@ export function LandingFinalCta({ content }: LandingFinalCtaProps) {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 xl:col-span-5 flex items-center justify-center lg:justify-start"
           >
-            <div className="relative w-full max-w-[380px] sm:max-w-[440px] lg:max-w-[480px] xl:max-w-[520px] aspect-[1293/1217] select-none transition-transform duration-500 hover:scale-[1.02]">
+            <div className="relative w-full max-w-[340px] sm:max-w-[400px] lg:max-w-[420px] xl:max-w-[480px] 2xl:max-w-[520px] aspect-[1293/1217] select-none transition-transform duration-500 hover:scale-[1.02]">
               {/* Soft radiance behind cutout */}
               <div
                 aria-hidden="true"
@@ -87,7 +87,7 @@ export function LandingFinalCta({ content }: LandingFinalCtaProps) {
             {/* Headline with Brand Accent Star */}
             <div className="relative w-full">
               
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold font-sans tracking-tight text-slate-950 leading-[1.15]">
+              <h2 className="text-3xl sm:text-4xl lg:text-[2.5rem] xl:text-5xl font-semibold font-sans tracking-tight text-slate-950 leading-[1.15]">
                 {content.title || 'Mulai Petualangan Belajar Digital Buah Hati Anda!'}
               </h2>
             </div>
