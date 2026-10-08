@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/resizable-navbar';
 
 import { formatRupiah } from '@/lib/utils';
+import { formatWhatsAppUrl } from '@/lib/cms-types';
 
 export interface NavbarProgramItem {
   id: string;
@@ -37,14 +38,25 @@ interface LandingNavbarProps {
     email?: string | null;
   } | null;
   programs?: NavbarProgramItem[];
+  whatsappNumber?: string;
+  supportEmail?: string;
 }
 
-export function LandingNavbar({ user, programs = [] }: LandingNavbarProps) {
+export function LandingNavbar({
+  user,
+  programs = [],
+  whatsappNumber,
+  supportEmail = 'halo@alphakids.id',
+}: LandingNavbarProps) {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Take top 3 featured programs for the sleek 3-column popover
   const displayPrograms = programs.slice(0, 3);
+  const whatsappUrl = formatWhatsAppUrl(
+    whatsappNumber,
+    'Halo Admin Alpha Kids, saya ingin bertanya seputar program belajar anak.'
+  );
 
   return (
     <Navbar>
@@ -55,7 +67,7 @@ export function LandingNavbar({ user, programs = [] }: LandingNavbarProps) {
 
         {/* Center Hover Menu with Smooth Aceternity Animated Popovers */}
         <NavMenu setActive={setActiveMenu}>
-          {/* Beranda */}
+          {/* 1. Beranda */}
           <NavMenuItem
             setActive={setActiveMenu}
             active={activeMenu}
@@ -63,11 +75,12 @@ export function LandingNavbar({ user, programs = [] }: LandingNavbarProps) {
             href="/"
           />
 
-          {/* Program Belajar (Dynamic Product Cards from Supabase DB) */}
+          {/* 2. Program (Click -> /programs, Hover -> Preview Classes) */}
           <NavMenuItem
             setActive={setActiveMenu}
             active={activeMenu}
             item="Program"
+            href="/programs"
           >
             <div className="flex flex-col space-y-3">
               <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
@@ -96,7 +109,7 @@ export function LandingNavbar({ user, programs = [] }: LandingNavbarProps) {
                       href={`/programs/${prog.slug}`}
                       src={
                         prog.coverImage ||
-                        '/assets/img/Konten Piramida AlphaKids_revisi0.png'
+                        '/assets/img/hero1.png'
                       }
                       badge={prog.ageRange || prog.level || 'Semua Usia'}
                       price={
@@ -113,63 +126,75 @@ export function LandingNavbar({ user, programs = [] }: LandingNavbarProps) {
             </div>
           </NavMenuItem>
 
-          {/* Keunggulan (Vertical Submenu - matching user's image 1) */}
+          {/* 3. Blog (Click -> /blog, Hover -> Topik Pilihan) */}
           <NavMenuItem
             setActive={setActiveMenu}
             active={activeMenu}
-            item="Keunggulan"
+            item="Blog"
+            href="/blog"
           >
             <div className="flex flex-col space-y-1.5 w-64 text-sm">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#21b1db] px-2.5 pb-1 border-b border-slate-100 dark:border-slate-800">
-                Metode Belajar Kami
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#ef599a] px-2.5 pb-1 border-b border-slate-100 dark:border-slate-800">
+                Artikel & Edukasi Digital
               </span>
               <NavHoveredLink
-                href="#fitur"
-                badge="Interaktif"
-                description="Kuis gamifikasi & poin petualang seru"
+                href="/blog"
+                badge="Semua"
+                description="Panduan belajar & inspirasi era digital"
               >
-                Gamifikasi & Kuis
+                Kumpulan Artikel
               </NavHoveredLink>
               <NavHoveredLink
-                href="#keunggulan"
-                badge="Praktik"
-                description="Kurikulum berbasis proyek karya nyata"
+                href="/blog?category=Gamifikasi"
+                badge="Populer"
+                description="Belajar seru lewat game dan teka-teki"
               >
-                Proyek Langsung
+                Gamifikasi & Logika
               </NavHoveredLink>
               <NavHoveredLink
-                href="#mentor"
-                description="Didampingi mentor ramah & bersertifikat"
+                href="/blog?category=Aktivitas+Seru"
+                description="Ide eksperimen & aktivitas anak di rumah"
               >
-                Kakak Mentor Ahli
+                Aktivitas Seru
               </NavHoveredLink>
               <NavHoveredLink
-                href="#faq"
-                description="Pertanyaan seputar metode & kelas"
+                href="/blog?category=Parenting+Digital"
+                description="Tips mendampingi buah hati di era AI"
               >
-                Tanya Jawab (FAQ)
+                Parenting Digital
               </NavHoveredLink>
             </div>
           </NavMenuItem>
 
-          {/* Kontak & Bantuan */}
+          {/* 4. Bantuan (Click -> /bantuan, Hover -> Opsi Bantuan Langsung) */}
           <NavMenuItem
             setActive={setActiveMenu}
             active={activeMenu}
             item="Bantuan"
+            href="/bantuan"
           >
             <div className="flex flex-col space-y-1.5 w-60 text-sm">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#21b1db] px-2.5 pb-1 border-b border-slate-100 dark:border-slate-800">
+                Pusat Bantuan & Layanan
+              </span>
               <NavHoveredLink
-                href="https://wa.me/6281234567890"
-                target="_blank"
-                rel="noopener noreferrer"
-                badge="24/7"
-                description="Konsultasi program via WhatsApp"
+                href="/bantuan"
+                badge="Lengkap"
+                description="Pertanyaan umum seputar kelas & sertifikat"
               >
-                Layanan Orang Tua
+                Pusat Bantuan & FAQ
               </NavHoveredLink>
               <NavHoveredLink
-                href="mailto:halo@alphakids.id"
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                badge="Admin"
+                description="Chat langsung dengan tim kami"
+              >
+                WhatsApp Admin
+              </NavHoveredLink>
+              <NavHoveredLink
+                href={`mailto:${supportEmail}`}
                 description="Kirim pertanyaan via email resmi"
               >
                 Email Dukungan
@@ -217,16 +242,16 @@ export function LandingNavbar({ user, programs = [] }: LandingNavbarProps) {
             <Link
               href="/"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-800 hover:bg-[#E8F8FA] hover:text-[#21b1db]"
+              className="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-[#E8F8FA] hover:text-[#21b1db]"
             >
               Beranda
             </Link>
             <Link
               href="/programs"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-800 hover:bg-[#E8F8FA] hover:text-[#21b1db]"
+              className="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-[#E8F8FA] hover:text-[#21b1db]"
             >
-              Katalog Semua Program ({programs.length})
+              Program ({programs.length})
             </Link>
             {displayPrograms.length > 0 && (
               <div className="flex flex-col pl-3 space-y-1 py-0.5 border-l-2 border-[#E8F8FA] ml-3">
@@ -235,7 +260,7 @@ export function LandingNavbar({ user, programs = [] }: LandingNavbarProps) {
                     key={prog.id}
                     href={`/programs/${prog.slug}`}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:bg-[#E8F8FA] hover:text-[#21b1db] flex items-center justify-between transition-colors"
+                    className="px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-[#E8F8FA] hover:text-[#21b1db] flex items-center justify-between transition-colors"
                   >
                     <span className="truncate">{prog.title}</span>
                     <span className="text-[10px] text-[#ef599a] font-semibold shrink-0 ml-2">
@@ -246,25 +271,18 @@ export function LandingNavbar({ user, programs = [] }: LandingNavbarProps) {
               </div>
             )}
             <Link
-              href="#fitur"
+              href="/blog"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-800 hover:bg-[#E8F8FA] hover:text-[#21b1db]"
+              className="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-[#E8F8FA] hover:text-[#21b1db]"
             >
-              Fitur Unggulan
+              Blog & Artikel
             </Link>
             <Link
-              href="#mentor"
+              href="/bantuan"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-800 hover:bg-[#E8F8FA] hover:text-[#21b1db]"
+              className="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-[#E8F8FA] hover:text-[#21b1db]"
             >
-              Kakak Mentor
-            </Link>
-            <Link
-              href="#faq"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-800 hover:bg-[#E8F8FA] hover:text-[#21b1db]"
-            >
-              Tanya Jawab (FAQ)
+              Bantuan & FAQ
             </Link>
           </div>
 

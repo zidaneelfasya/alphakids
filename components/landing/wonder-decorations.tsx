@@ -154,19 +154,37 @@ export function YellowBrushUnderline({
   );
 }
 
-// 7. Yellow Hand-Drawn Oval Loop (encircling "menyenangkan" with Alpha Yellow #FFCC07)
+// 7. Yellow Hand-Drawn Oval Loop (encircling dynamic highlight word with Alpha Yellow #FFCC07)
 export function YellowLoop({
   className,
+  size = 'normal',
+  scale = 100,
 }: {
   className?: string;
+  size?: 'compact' | 'normal' | 'spacious';
+  scale?: number;
 } = {}) {
   const shouldReduceMotion = useReducedMotion();
+
+  // Dynamic dimension presets adapting to font metrics
+  const sizeClasses = {
+    compact: 'w-[calc(100%+1.5rem)] sm:w-[calc(100%+2.25rem)] h-[calc(100%+1.5rem)] sm:h-[calc(100%+2rem)]',
+    normal: 'w-[calc(100%+2.5rem)] sm:w-[calc(100%+3.5rem)] h-[calc(100%+2.25rem)] sm:h-[calc(100%+3rem)]',
+    spacious: 'w-[calc(100%+3.75rem)] sm:w-[calc(100%+5rem)] h-[calc(100%+3rem)] sm:h-[calc(100%+3.75rem)]',
+  }[size] || 'w-[calc(100%+2.5rem)] sm:w-[calc(100%+3.5rem)] h-[calc(100%+2.25rem)] sm:h-[calc(100%+3rem)]';
+
+  const transformStyle =
+    scale && scale !== 100
+      ? { transform: `translate(-50%, -50%) scale(${scale / 100}) rotate(-1deg)` }
+      : undefined;
 
   return (
     <svg
       aria-hidden="true"
+      style={transformStyle}
       className={cn(
-        'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%+2.5rem)] sm:w-[calc(100%+3.5rem)] h-[calc(100%+2.25rem)] sm:h-[calc(100%+3rem)] pointer-events-none select-none text-[#FFCC07] -rotate-1',
+        'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none text-[#FFCC07] -rotate-1 min-w-[75px]',
+        sizeClasses,
         className
       )}
       viewBox="0 0 320 100"

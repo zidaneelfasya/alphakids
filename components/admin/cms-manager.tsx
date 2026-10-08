@@ -46,9 +46,12 @@ import type {
   BlogItem,
   FaqSectionContent,
   CtaSectionContent,
+  ContactSectionContent,
   FaqItem,
   CmsSectionContent,
-} from '@/lib/cms';
+} from '@/lib/cms-types';
+import { DEFAULT_CONTACT, DEFAULT_STORY, formatWhatsAppUrl } from '@/lib/cms-types';
+import { YellowLoop } from '@/components/landing/wonder-decorations';
 
 interface CmsManagerProps {
   initialData: {
@@ -59,6 +62,7 @@ interface CmsManagerProps {
     blogs: BlogSectionContent;
     faq: FaqSectionContent;
     cta: CtaSectionContent;
+    contact?: ContactSectionContent;
   };
 }
 
@@ -69,11 +73,17 @@ export function CmsManager({ initialData }: CmsManagerProps) {
   // Section States
   const [hero, setHero] = useState<HeroSectionContent>(initialData.hero);
   const [features, setFeatures] = useState<FeaturesSectionContent>(initialData.features);
-  const [story, setStory] = useState<StorySectionContent>(initialData.story);
+  const [story, setStory] = useState<StorySectionContent>({
+    ...DEFAULT_STORY,
+    ...initialData.story,
+  });
   const [mentors, setMentors] = useState<MentorsSectionContent>(initialData.mentors);
   const [blogs, setBlogs] = useState<BlogSectionContent>(initialData.blogs);
   const [faq, setFaq] = useState<FaqSectionContent>(initialData.faq);
   const [cta, setCta] = useState<CtaSectionContent>(initialData.cta);
+  const [contact, setContact] = useState<ContactSectionContent>(
+    initialData.contact || DEFAULT_CONTACT
+  );
 
   // Modal Deletion States
   const [deletingBlogIdx, setDeletingBlogIdx] = useState<number | null>(null);
@@ -102,11 +112,14 @@ export function CmsManager({ initialData }: CmsManagerProps) {
         {
           id: Date.now().toString(),
           title: 'Judul Artikel Baru',
-          slug: 'judul-artikel-baru',
+          slug: `judul-artikel-baru-${Date.now()}`,
           excerpt: 'Ringkasan singkat tentang topik artikel yang dibahas.',
-          imageUrl: '/assets/img/kid-tablet.png',
+          imageUrl: '/assets/img/hero1.png',
           tag: 'Edukasi',
           readTime: '3 mnt baca',
+          author: 'Tim Kurikulum Alpha Kids',
+          publishedAt: '8 Okt 2026',
+          content: '## Pendahuluan\n\nTulis isi konten artikel lengkap menggunakan format Markdown...',
         },
       ],
     }));
@@ -229,7 +242,7 @@ export function CmsManager({ initialData }: CmsManagerProps) {
             value="story"
             className="rounded-xl text-xs font-semibold px-4 py-2 data-[state=active]:bg-white data-[state=active]:text-[#21b1db] data-[state=active]:shadow-xs dark:data-[state=active]:bg-slate-900"
           >
-            Keunggulan
+            Section Story
           </TabsTrigger>
           <TabsTrigger
             value="blogs"
@@ -254,6 +267,12 @@ export function CmsManager({ initialData }: CmsManagerProps) {
             className="rounded-xl text-xs font-semibold px-4 py-2 data-[state=active]:bg-white data-[state=active]:text-[#21b1db] data-[state=active]:shadow-xs dark:data-[state=active]:bg-slate-900"
           >
             Call To Action
+          </TabsTrigger>
+          <TabsTrigger
+            value="contact"
+            className="rounded-xl text-xs font-semibold px-4 py-2 data-[state=active]:bg-white data-[state=active]:text-[#21b1db] data-[state=active]:shadow-xs dark:data-[state=active]:bg-slate-900"
+          >
+            Kontak & WhatsApp
           </TabsTrigger>
         </TabsList>
 
@@ -600,108 +619,264 @@ export function CmsManager({ initialData }: CmsManagerProps) {
         </TabsContent>
 
         {/* ================================================================= */}
-        {/* TAB 3: KEUNGGULAN (STORY)                                         */}
+        {/* TAB 3: SECTION STORY                                              */}
         {/* ================================================================= */}
         <TabsContent value="story">
           <Card className="border border-slate-200/80 dark:border-slate-800 rounded-2xl shadow-xs bg-white dark:bg-slate-900">
             <CardHeader className="border-b border-slate-100 dark:border-slate-800 pb-4 flex flex-row items-center justify-between space-y-0">
               <div>
                 <CardTitle className="text-base font-semibold text-slate-900 dark:text-white">
-                  Pengaturan Bagian Keunggulan (Story)
+                  Pengaturan Section Story (Materi Menyenangkan)
                 </CardTitle>
                 <CardDescription className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                  Headline materi menyenangkan, narasi deskripsi, dan 4 poin keunggulan utama.
+                  Atur teks headline 4-baris, kata highlight dengan lingkaran kuning dinamis, subjudul, tombol aksi, dan gambar piramida bertingkat.
                 </CardDescription>
               </div>
               {renderSaveButton('story', story)}
             </CardHeader>
             <CardContent className="pt-6 space-y-6">
+              {/* Pratinjau Interaktif Langsung */}
+              <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-b from-[#FFFDF9] to-slate-50/80 dark:from-slate-950 dark:to-slate-900 border border-cyan-100 dark:border-slate-800 shadow-xs flex flex-col items-center text-center relative overflow-hidden">
+                <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-[#0e7490] dark:text-cyan-400 uppercase tracking-wider bg-[#E8F8FA] dark:bg-cyan-950/60 px-3 py-1 rounded-full mb-4">
+                  Pratinjau Langsung Headline & Lingkaran Kuning
+                </span>
+
+                <div className="py-2 max-w-xl">
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold font-sans tracking-tight text-slate-900 dark:text-white leading-[1.3]">
+                    <span className="inline-block">{story.titleLine1 || 'Materi belajar yang'}</span>{' '}
+                    <br />
+                    <span>{story.titleLine2 || 'disediakan'}</span>{' '}
+                    <br />
+                    <span className="relative inline-flex items-center justify-center align-baseline whitespace-nowrap mx-1.5 my-1.5 px-3.5 py-1">
+                      <span className="relative z-10 font-sans italic font-normal text-[#ef599a]">
+                        {story.titleHighlight || 'menyenangkan'}
+                      </span>
+                      <YellowLoop
+                        size={story.loopSize || 'normal'}
+                        scale={story.loopScale ?? 100}
+                      />
+                    </span>{' '}
+                    <br />
+                    <span>{story.titleLine3 || 'untuk anak'}</span>
+                  </h2>
+                </div>
+
+                <p className="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-lg leading-relaxed">
+                  {story.subtitle ||
+                    story.desc1 ||
+                    'Jangan khawatir! Buah hati Anda akan menikmati setiap sesi pembelajaran dengan materi interaktif yang mudah dipahami, aplikatif, dan menyenangkan.'}
+                </p>
+
+                <div className="mt-4">
+                  <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#21b1db] text-white text-xs font-semibold shadow-md shadow-[#21b1db]/20">
+                    <span>{story.ctaText || 'Pelajari Lebih Lanjut'}</span>
+                    <ExternalLink className="size-3.5" />
+                  </span>
+                </div>
+              </div>
+
+              {/* Grup 1: Headline 4 Baris & Kata Highlight */}
               <div className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  Headline 4-Baris & Kata Highlight
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Badge</Label>
+                    <Label className="text-xs font-medium">Baris 1 Headline</Label>
                     <Input
-                      value={story.badge}
-                      onChange={(e) => setStory({ ...story, badge: e.target.value })}
+                      value={story.titleLine1}
+                      onChange={(e) => setStory({ ...story, titleLine1: e.target.value })}
+                      placeholder="Materi belajar yang"
                       className="text-xs"
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Judul Utama</Label>
+                    <Label className="text-xs font-medium">Baris 2 Headline</Label>
                     <Input
-                      value={story.title}
-                      onChange={(e) => setStory({ ...story, title: e.target.value })}
+                      value={story.titleLine2}
+                      onChange={(e) => setStory({ ...story, titleLine2: e.target.value })}
+                      placeholder="disediakan"
                       className="text-xs"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Kata Highlight (Loop Kuning)</Label>
-                    <Input
-                      value={story.titleHighlight}
-                      onChange={(e) => setStory({ ...story, titleHighlight: e.target.value })}
-                      className="text-xs font-semibold text-[#ef599a]"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Paragraf 1</Label>
-                    <Textarea
-                      rows={3}
-                      value={story.desc1}
-                      onChange={(e) => setStory({ ...story, desc1: e.target.value })}
-                      className="text-xs leading-relaxed"
+                    <div className="flex items-center justify-between">
+                      <Label className="text-xs font-medium">Kata Highlight (Dilingkari Kuning)</Label>
+                      <span className="text-[10px] text-[#ef599a] font-semibold">Teks Pink Miring</span>
+                    </div>
+                    <Input
+                      value={story.titleHighlight}
+                      onChange={(e) => setStory({ ...story, titleHighlight: e.target.value })}
+                      placeholder="menyenangkan"
+                      className="text-xs font-semibold text-[#ef599a]"
                     />
+                    <p className="text-[11px] text-slate-400">
+                      Kata ini akan dilingkari oleh goresan lingkaran kuning Alpha Kids.
+                    </p>
                   </div>
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Paragraf 2</Label>
-                    <Textarea
-                      rows={3}
-                      value={story.desc2}
-                      onChange={(e) => setStory({ ...story, desc2: e.target.value })}
-                      className="text-xs leading-relaxed"
+                    <Label className="text-xs font-medium">Baris 4 (Akhir Headline)</Label>
+                    <Input
+                      value={story.titleLine3}
+                      onChange={(e) => setStory({ ...story, titleLine3: e.target.value })}
+                      placeholder="untuk anak"
+                      className="text-xs"
                     />
                   </div>
                 </div>
               </div>
 
-              {/* 4 Poin Keunggulan */}
-              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-3">
+              {/* Grup 2: Pengaturan Dinamis Lingkaran Kuning (Yellow Loop) */}
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                    Pengaturan Lingkaran Kuning (Dinamis)
+                  </h3>
+                  <span className="text-[10px] font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/50 px-2.5 py-0.5 rounded-full border border-amber-200/60 dark:border-amber-800/60">
+                    Menyesuaikan Panjang Teks
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800">
+                  {/* Preset Ukuran */}
+                  <div className="space-y-2">
+                    <Label className="text-xs font-medium">Preset Ukuran Lingkaran</Label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {[
+                        { id: 'compact', label: 'Kompak / Pas' },
+                        { id: 'normal', label: 'Standar' },
+                        { id: 'spacious', label: 'Longgar' },
+                      ].map((preset) => {
+                        const isSelected = (story.loopSize || 'normal') === preset.id;
+                        return (
+                          <button
+                            key={preset.id}
+                            type="button"
+                            onClick={() =>
+                              setStory({
+                                ...story,
+                                loopSize: preset.id as 'compact' | 'normal' | 'spacious',
+                              })
+                            }
+                            className={`px-3 py-2 rounded-xl text-xs font-semibold transition-all border cursor-pointer ${
+                              isSelected
+                                ? 'bg-white dark:bg-slate-900 border-[#FFCC07] text-amber-950 dark:text-amber-300 shadow-sm'
+                                : 'bg-transparent border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-white/50'
+                            }`}
+                          >
+                            {preset.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <p className="text-[11px] text-slate-400">
+                      Pilih proporsi ruang antara goresan lingkaran dan teks kata highlight.
+                    </p>
+                  </div>
+
+                  {/* Skala Persentase Lingkaran */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <Label className="text-xs font-medium">Skala Halus (Perbesaran)</Label>
+                      <span className="text-xs font-mono font-semibold text-slate-700 dark:text-slate-300">
+                        {story.loopScale ?? 100}%
+                      </span>
+                    </div>
+                    <input
+                      type="range"
+                      min="80"
+                      max="140"
+                      step="5"
+                      value={story.loopScale ?? 100}
+                      onChange={(e) =>
+                        setStory({ ...story, loopScale: parseInt(e.target.value, 10) })
+                      }
+                      className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-[#FFCC07]"
+                    />
+                    <div className="flex justify-between text-[10px] text-slate-400 font-mono">
+                      <span>80% (Kecil)</span>
+                      <span>100% (Normal)</span>
+                      <span>140% (Besar)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Grup 3: Subjudul / Deskripsi */}
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2">
+                <Label className="text-xs font-medium">Subjudul / Deskripsi Lengkap</Label>
+                <Textarea
+                  rows={3}
+                  value={story.subtitle || story.desc1 || ''}
+                  onChange={(e) =>
+                    setStory({ ...story, subtitle: e.target.value, desc1: e.target.value })
+                  }
+                  placeholder="Jangan khawatir! Buah hati Anda akan menikmati setiap sesi..."
+                  className="text-xs leading-relaxed"
+                />
+              </div>
+
+              {/* Grup 4: Tombol Aksi (CTA) */}
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-4">
                 <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  4 Poin Keunggulan Utama
+                  Tombol Aksi (Call To Action)
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <div className="space-y-1">
-                    <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Poin 1</Label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-medium">Teks Tombol</Label>
                     <Input
-                      value={story.point1}
-                      onChange={(e) => setStory({ ...story, point1: e.target.value })}
+                      value={story.ctaText}
+                      onChange={(e) => setStory({ ...story, ctaText: e.target.value })}
+                      placeholder="Pelajari Lebih Lanjut"
                       className="text-xs"
                     />
                   </div>
-                  <div className="space-y-1">
-                    <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Poin 2</Label>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-medium">Tautan Tombol (URL / Anchor)</Label>
                     <Input
-                      value={story.point2}
-                      onChange={(e) => setStory({ ...story, point2: e.target.value })}
-                      className="text-xs"
+                      value={story.ctaLink}
+                      onChange={(e) => setStory({ ...story, ctaLink: e.target.value })}
+                      placeholder="#programs"
+                      className="text-xs font-mono"
                     />
                   </div>
-                  <div className="space-y-1">
-                    <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Poin 3</Label>
+                </div>
+              </div>
+
+              {/* Grup 5: Gambar Piramida Bertingkat di Sisi Kanan */}
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-4">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  Gambar Piramida 3 Tingkat (Sisi Kanan)
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-medium">Tingkat 1 (Strip Biru / Cyan)</Label>
                     <Input
-                      value={story.point3}
-                      onChange={(e) => setStory({ ...story, point3: e.target.value })}
-                      className="text-xs"
+                      value={story.tier1Image || '/assets/img/hero1.png'}
+                      onChange={(e) => setStory({ ...story, tier1Image: e.target.value })}
+                      placeholder="/assets/img/hero1.png"
+                      className="text-xs font-mono"
                     />
                   </div>
-                  <div className="space-y-1">
-                    <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Poin 4</Label>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-medium">Tingkat 2 (Strip Pink)</Label>
                     <Input
-                      value={story.point4}
-                      onChange={(e) => setStory({ ...story, point4: e.target.value })}
-                      className="text-xs"
+                      value={story.tier2Image || '/assets/img/hero2.png'}
+                      onChange={(e) => setStory({ ...story, tier2Image: e.target.value })}
+                      placeholder="/assets/img/hero2.png"
+                      className="text-xs font-mono"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-medium">Tingkat 3 (Strip Kuning)</Label>
+                    <Input
+                      value={story.tier3Image || '/assets/img/hero3.png'}
+                      onChange={(e) => setStory({ ...story, tier3Image: e.target.value })}
+                      placeholder="/assets/img/hero3.png"
+                      className="text-xs font-mono"
                     />
                   </div>
                 </div>
@@ -829,6 +1004,15 @@ export function CmsManager({ initialData }: CmsManagerProps) {
 
                           <div className="grid grid-cols-2 gap-2">
                             <div className="space-y-1">
+                              <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Slug URL</Label>
+                              <Input
+                                placeholder="judul-artikel"
+                                value={item.slug}
+                                onChange={(e) => updateBlogItem(idx, 'slug', e.target.value)}
+                                className="text-xs font-mono"
+                              />
+                            </div>
+                            <div className="space-y-1">
                               <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Kategori / Tag</Label>
                               <Input
                                 placeholder="Edukasi"
@@ -837,12 +1021,24 @@ export function CmsManager({ initialData }: CmsManagerProps) {
                                 className="text-xs"
                               />
                             </div>
+                          </div>
+
+                          <div className="grid grid-cols-2 gap-2">
                             <div className="space-y-1">
-                              <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Waktu Baca</Label>
+                              <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Penulis</Label>
                               <Input
-                                placeholder="3 mnt baca"
-                                value={item.readTime || ''}
-                                onChange={(e) => updateBlogItem(idx, 'readTime', e.target.value)}
+                                placeholder="Tim Alpha Kids"
+                                value={item.author || ''}
+                                onChange={(e) => updateBlogItem(idx, 'author', e.target.value)}
+                                className="text-xs"
+                              />
+                            </div>
+                            <div className="space-y-1">
+                              <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Tanggal & Waktu Baca</Label>
+                              <Input
+                                placeholder="8 Okt 2026 • 3 mnt baca"
+                                value={item.publishedAt || item.readTime || ''}
+                                onChange={(e) => updateBlogItem(idx, 'publishedAt', e.target.value)}
                                 className="text-xs"
                               />
                             </div>
@@ -851,7 +1047,7 @@ export function CmsManager({ initialData }: CmsManagerProps) {
                           <div className="space-y-1">
                             <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Path Gambar</Label>
                             <Input
-                              placeholder="/assets/img/kid-tablet.png"
+                              placeholder="/assets/img/hero1.png"
                               value={item.imageUrl}
                               onChange={(e) => updateBlogItem(idx, 'imageUrl', e.target.value)}
                               className="text-xs font-mono"
@@ -861,11 +1057,24 @@ export function CmsManager({ initialData }: CmsManagerProps) {
                           <div className="space-y-1">
                             <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Ringkasan / Excerpt</Label>
                             <Textarea
-                              rows={3}
+                              rows={2}
                               placeholder="Ringkasan isi artikel..."
                               value={item.excerpt}
                               onChange={(e) => updateBlogItem(idx, 'excerpt', e.target.value)}
                               className="text-xs leading-relaxed"
+                            />
+                          </div>
+
+                          <div className="space-y-1">
+                            <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">
+                              Konten Lengkap Artikel (Markdown)
+                            </Label>
+                            <Textarea
+                              rows={5}
+                              placeholder="## Subjudul 1&#10;&#10;Paragraf artikel..."
+                              value={item.content || ''}
+                              onChange={(e) => updateBlogItem(idx, 'content', e.target.value)}
+                              className="text-xs font-mono leading-relaxed"
                             />
                           </div>
                         </div>
@@ -1225,6 +1434,99 @@ export function CmsManager({ initialData }: CmsManagerProps) {
                     />
                   </div>
                 </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* ================================================================= */}
+        {/* TAB 8: KONTAK & WHATSAPP ADMIN                                    */}
+        {/* ================================================================= */}
+        <TabsContent value="contact">
+          <Card className="rounded-2xl border-slate-200/80 dark:border-slate-800 shadow-xs">
+            <CardHeader className="pb-4 border-b border-slate-100 dark:border-slate-800 flex flex-row items-center justify-between">
+              <div>
+                <CardTitle className="text-base font-semibold text-slate-900 dark:text-white">
+                  Kontak Layanan & WhatsApp Admin
+                </CardTitle>
+                <CardDescription className="text-xs">
+                  Atur nomor WhatsApp resmi, pesan otomatis, email dukungan, dan jam operasional platform Alpha Kids.
+                </CardDescription>
+              </div>
+              {renderSaveButton('contact', contact)}
+            </CardHeader>
+            <CardContent className="pt-6 space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium">Nomor WhatsApp Admin</Label>
+                  <Input
+                    placeholder="6281234567890"
+                    value={contact.whatsappNumber}
+                    onChange={(e) => setContact({ ...contact, whatsappNumber: e.target.value })}
+                    className="text-xs font-mono"
+                  />
+                  <p className="text-[11px] text-slate-400">
+                    Gunakan format internasional tanpa spasi atau tanda plus (contoh: <strong>6281234567890</strong>).
+                  </p>
+                </div>
+
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium">Email Dukungan Resmi</Label>
+                  <Input
+                    placeholder="halo@alphakids.id"
+                    value={contact.supportEmail}
+                    onChange={(e) => setContact({ ...contact, supportEmail: e.target.value })}
+                    className="text-xs"
+                  />
+                  <p className="text-[11px] text-slate-400">
+                    Alamat email yang ditampilkan di navbar, footer, dan pusat bantuan.
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <Label className="text-xs font-medium">Pesan Otomatis WhatsApp (Greeting / Template)</Label>
+                <Textarea
+                  rows={2}
+                  placeholder="Halo Admin Alpha Kids, saya ingin tanya seputar program belajar anak..."
+                  value={contact.whatsappDefaultText}
+                  onChange={(e) => setContact({ ...contact, whatsappDefaultText: e.target.value })}
+                  className="text-xs leading-relaxed"
+                />
+                <p className="text-[11px] text-slate-400">
+                  Teks yang otomatis terisi ketika orang tua atau calon peserta membuka obrolan WhatsApp.
+                </p>
+              </div>
+
+              <div className="space-y-1.5">
+                <Label className="text-xs font-medium">Jam Layanan & Operasional</Label>
+                <Input
+                  placeholder="Senin - Sabtu: 08.00 - 20.00 WIB"
+                  value={contact.operatingHours}
+                  onChange={(e) => setContact({ ...contact, operatingHours: e.target.value })}
+                  className="text-xs"
+                />
+              </div>
+
+              {/* Live Preview Box */}
+              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                    Pratinjau Tautan WhatsApp:
+                  </span>
+                  <a
+                    href={formatWhatsAppUrl(contact.whatsappNumber, contact.whatsappDefaultText)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 underline underline-offset-4"
+                  >
+                    <span>Uji Coba Tautan Langsung</span>
+                    <ExternalLink className="size-3" />
+                  </a>
+                </div>
+                <p className="text-[11px] font-mono text-slate-500 break-all bg-white dark:bg-slate-900 p-2.5 rounded-lg border border-slate-200/60 dark:border-slate-800">
+                  {formatWhatsAppUrl(contact.whatsappNumber, contact.whatsappDefaultText)}
+                </p>
               </div>
             </CardContent>
           </Card>

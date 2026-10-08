@@ -40,7 +40,7 @@ export function DashboardShell({
     >
       <AppSidebar />
       <SidebarInset className="bg-[#FFFDF9] dark:bg-slate-950 min-h-screen">
-        <header className="flex h-16 shrink-0 items-center justify-between gap-2 border-b border-slate-200/70 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-4 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-16 lg:px-6 sticky top-0 z-10">
+        <header className="flex h-16 shrink-0 items-center justify-between gap-2 border-b border-slate-200/70 dark:border-slate-800/80 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-4 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-16 lg:px-6 sticky top-0 z-20 shadow-sm shadow-slate-900/[0.04] dark:shadow-black/25">
           <div className="flex items-center gap-2">
             <SidebarTrigger className="-ml-1 text-slate-700 dark:text-slate-300 md:hidden" />
             <Separator

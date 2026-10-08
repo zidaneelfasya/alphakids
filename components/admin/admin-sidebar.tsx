@@ -151,7 +151,7 @@ export function AdminSidebar({
       {/* Expanded: Logo + Alpha Kids Admin + Internal Close Button          */}
       {/* Collapsed: Centered Logo Card (Clicking opens sidebar)             */}
       {/* =================================================================== */}
-      <SidebarHeader className={`border-b border-white/15 ${isCollapsed ? 'p-3 flex justify-center items-center' : 'p-3'}`}>
+      <SidebarHeader className={`${isCollapsed ? 'p-3 flex justify-center items-center' : 'p-3'}`}>
         {isCollapsed ? (
           /* Collapsed State: Logo button only (clicking opens sidebar) */
           <div className="flex justify-center items-center py-1">
@@ -283,7 +283,7 @@ export function AdminSidebar({
         </SidebarGroup>
 
         {/* Quick Switch to User / Member View */}
-        <SidebarGroup className="mt-auto border-t border-white/15 pt-3">
+        <SidebarGroup className="mt-auto pt-3">
           <SidebarMenu className={isCollapsed ? 'px-0 flex flex-col items-center w-full' : 'px-2'}>
             <SidebarMenuItem className={isCollapsed ? 'flex justify-center w-full' : ''}>
               <SidebarMenuButton
@@ -318,7 +318,7 @@ export function AdminSidebar({
       {/* =================================================================== */}
       {/* 3. ADMIN PROFILE FOOTER                                             */}
       {/* =================================================================== */}
-      <SidebarFooter className={`border-t border-white/15 ${isCollapsed ? 'p-2 flex justify-center items-center' : 'p-2'}`}>
+      <SidebarFooter className={`${isCollapsed ? 'p-2 flex justify-center items-center' : 'p-2'}`}>
         <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>

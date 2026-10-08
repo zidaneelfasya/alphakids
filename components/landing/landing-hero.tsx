@@ -57,108 +57,102 @@ export function LandingHero({ content }: LandingHeroProps) {
         className="absolute inset-0 z-[2] pointer-events-none select-none backdrop-blur-[6px] sm:backdrop-blur-md bg-white/20 dark:bg-slate-950/25"
       />
 
-      {/* 4. Desktop Flanking Left Hero Character: hero1.png (Yellow Blob Backdrop) */}
-      <motion.div
-        aria-hidden="true"
-        initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.55, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute left-0 xl:left-2 2xl:left-6 min-[1800px]:left-20 top-1/2 -translate-y-[32%] w-[220px] h-[220px] xl:w-[260px] xl:h-[260px] 2xl:w-[330px] 2xl:h-[330px] min-[1800px]:w-[430px] min-[1800px]:h-[430px] pointer-events-none select-none z-10 hidden xl:block"
-      >
-        <div className="relative w-full h-full drop-shadow-2xl">
-          <Image
-            src="/assets/img/hero1.png"
-            alt="Siswa Alpha Kids"
-            fill
-            className="object-contain"
-            priority
-          />
-        </div>
-      </motion.div>
-
-      {/* 5. Desktop Flanking Right Hero Character: hero2.png (Purple Blob Backdrop) */}
-      <motion.div
-        aria-hidden="true"
-        initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.55, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute right-0 xl:right-2 2xl:right-6 min-[1800px]:right-20 top-1/2 -translate-y-[58%] w-[220px] h-[220px] xl:w-[260px] xl:h-[260px] 2xl:w-[330px] 2xl:h-[330px] min-[1800px]:w-[430px] min-[1800px]:h-[430px] pointer-events-none select-none z-10 hidden xl:block"
-      >
-        <div className="relative w-full h-full drop-shadow-2xl">
-          <Image
-            src="/assets/img/hero2.png"
-            alt="Siswa Alpha Kids"
-            fill
-            className="object-contain"
-            priority
-          />
-        </div>
-      </motion.div>
-
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative z-10 w-full my-auto">
-        {/* ================================================================= */}
-        {/* FLOATING DECORATIONS (ALPHA KIDS THEME)                           */}
-        {/* ================================================================= */}
-
-        {/* 1. Top-Left: Official Alpha Kids Star Ornament + Curving Arrow (Desktop / Tablet) */}
-        <motion.div
-          initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.45, delay: 0.28, ease: 'easeOut' }}
-          className="absolute top-0 xl:-top-2 left-2 sm:left-6 lg:left-6 xl:left-8 2xl:left-12 z-10 pointer-events-none hidden md:flex flex-col items-center"
-        >
-          <div className="relative size-10 sm:size-12 mb-1">
-            <Image
-              src="/assets/img/Ornamen Bintang Ungu AlphaKids_revisi0.png"
-              alt="Bintang Ungu"
-              fill
-              className="object-contain"
-            />
-          </div>
-          <CurvedArrow className="w-10 h-10 sm:w-12 sm:h-12 text-[#21b1db] opacity-80 transform -rotate-12" />
-        </motion.div>
-
-        {/* 2. Mid-Left: Concentric Outline Rings (Alpha Cyan) */}
-        {/* <div className="absolute top-44 left-4 sm:left-14 lg:left-12 z-0 pointer-events-none hidden md:block opacity-60">
-          <ConcentricRings className="size-16 sm:size-24 text-[#0AB0C8]" />
-        </div> */}
-
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 w-full my-auto">
         {/* ================================================================= */}
         {/* CENTERED HERO CONTENT (ALPHA KIDS RESPONSIVE TYPOGRAPHY & LAYOUT) */}
         {/* ================================================================= */}
-        <div className="text-center max-w-2xl xl:max-w-3xl 2xl:max-w-4xl min-[1800px]:max-w-5xl mx-auto pt-2 sm:pt-6">
-          {/* Centered Master Headline */}
-          <motion.h1
-            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.48, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
-            className="text-3xl xs:text-4xl sm:text-5xl md:text-5xl lg:text-[3.25rem] xl:text-[3.65rem] 2xl:text-[4.25rem] min-[1800px]:text-[5.25rem] font-semibold font-sans tracking-tight text-slate-900 dark:text-white leading-[1.18] sm:leading-[1.15]"
-          >
-            Tempat terbaik{' '}
-            <span className="whitespace-nowrap inline-flex items-center gap-2 sm:gap-3.5 align-baseline">
-              <span>untuk</span>
-              <span className="relative inline-block size-7 xs:size-8 sm:size-9 lg:size-10 xl:size-11 shrink-0 select-none pointer-events-none drop-shadow-md rotate-12 -mt-1 sm:-mt-2">
+        <div className="text-center mx-auto pt-2 sm:pt-6">
+          {/* Relative wrapper for Headline + Flanking Characters (Anchored to text) */}
+          <div className="relative inline-block max-w-full mx-auto">
+            {/* 1. Left Flanking Hero Character: hero1.png (Yellow Blob Backdrop) */}
+            <motion.div
+              aria-hidden="true"
+              initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.55, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute right-full mr-3 xl:mr-5 2xl:mr-8 min-[1800px]:mr-12 top-1/2 -translate-y-[35%] w-[210px] h-[210px] xl:w-[260px] xl:h-[260px] 2xl:w-[320px] 2xl:h-[320px] min-[1800px]:w-[380px] min-[1800px]:h-[380px] pointer-events-none select-none z-10 hidden xl:block"
+            >
+              <div className="relative w-full h-full drop-shadow-2xl">
                 <Image
-                  src="/assets/img/Ornamen Puzzle Kuning AlphaKids_revisi0.png"
-                  alt="Puzzle Kuning"
+                  src="/assets/img/hero1.png"
+                  alt="Siswa Alpha Kids"
                   fill
                   className="object-contain"
                   priority
                 />
+              </div>
+            </motion.div>
+
+            {/* 2. Top-Left: Official Alpha Kids Star Ornament + Curving Arrow */}
+            <motion.div
+              initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.45, delay: 0.28, ease: 'easeOut' }}
+              className="absolute -top-10 sm:-top-12 -left-6 sm:-left-10 lg:-left-12 z-10 pointer-events-none hidden md:flex flex-col items-center"
+            >
+              <div className="relative size-10 sm:size-12 mb-1">
+                <Image
+                  src="/assets/img/Ornamen Bintang Ungu AlphaKids_revisi0.png"
+                  alt="Bintang Ungu"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <CurvedArrow className="w-10 h-10 sm:w-12 sm:h-12 text-[#21b1db] opacity-80 transform -rotate-12" />
+            </motion.div>
+
+            {/* 3. Centered Master Headline */}
+            <motion.h1
+              initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.48, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
+              className="text-3xl xs:text-4xl sm:text-5xl md:text-5xl lg:text-[3.25rem] xl:text-[3.65rem] 2xl:text-[4.25rem] min-[1800px]:text-[5.25rem] font-semibold font-sans tracking-tight text-slate-900 dark:text-white leading-[1.18] sm:leading-[1.15]"
+            >
+              Tempat terbaik{' '}
+              <span className="whitespace-nowrap inline-flex items-center gap-2 sm:gap-3.5 align-baseline">
+                <span>untuk</span>
+                <span className="relative inline-block size-7 xs:size-8 sm:size-9 lg:size-10 xl:size-11 shrink-0 select-none pointer-events-none drop-shadow-md rotate-12 -mt-1 sm:-mt-2">
+                  <Image
+                    src="/assets/img/Ornamen Puzzle Kuning AlphaKids_revisi0.png"
+                    alt="Puzzle Kuning"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </span>
               </span>
-            </span>
-            <br />
-            <span className="font-sans font-semibold text-[#21b1db]">
-              belajar
-            </span>{' '}
-            <span className="font-semibold font-sans">dan</span>{' '}
-            <span className="relative inline-block font-sans font-semibold text-[#ef599a]">
-              berkarya
-              <YellowBrushUnderline className="absolute -bottom-1.5 sm:-bottom-2.5 left-0 w-full text-[#FFCC07]" />
-            </span>
-            <br />
-            anak hebat
-          </motion.h1>
+              <br />
+              <span className="font-sans font-semibold text-[#21b1db]">
+                belajar
+              </span>{' '}
+              <span className="font-semibold font-sans">dan</span>{' '}
+              <span className="relative inline-block font-sans font-semibold text-[#ef599a]">
+                berkarya
+                <YellowBrushUnderline className="absolute -bottom-1.5 sm:-bottom-2.5 left-0 w-full text-[#FFCC07]" />
+              </span>
+              <br />
+              anak hebat
+            </motion.h1>
+
+            {/* 4. Right Flanking Hero Character: hero2.png (Purple Blob Backdrop) */}
+            <motion.div
+              aria-hidden="true"
+              initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.55, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute left-full ml-3 xl:ml-5 2xl:ml-8 min-[1800px]:ml-12 top-1/2 -translate-y-[55%] w-[210px] h-[210px] xl:w-[260px] xl:h-[260px] 2xl:w-[320px] 2xl:h-[320px] min-[1800px]:w-[380px] min-[1800px]:h-[380px] pointer-events-none select-none z-10 hidden xl:block"
+            >
+              <div className="relative w-full h-full drop-shadow-2xl">
+                <Image
+                  src="/assets/img/hero2.png"
+                  alt="Siswa Alpha Kids"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
+            </motion.div>
+          </div>
 
           {/* Mobile, Tablet & Compact Laptop: Hero Characters Row (< xl screens) */}
           <motion.div

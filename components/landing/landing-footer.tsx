@@ -118,6 +118,11 @@ export function LandingFooter() {
                     Portofolio
                   </Link>
                 </li>
+                <li>
+                  <Link href="/blog" className="hover:text-[#ef599a] transition-colors">
+                    Artikel & Blog
+                  </Link>
+                </li>
               </ul>
             </div>
 

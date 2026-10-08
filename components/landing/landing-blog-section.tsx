@@ -39,7 +39,7 @@ export function LandingBlogSection({ content }: LandingBlogSectionProps) {
 
           <div className="hidden sm:block shrink-0">
             <Link
-              href="#blog"
+              href="/blog"
               className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#ef599a] hover:text-[#df488a] transition-colors"
             >
               <span>Jelajahi Semua Artikel</span>
@@ -48,7 +48,7 @@ export function LandingBlogSection({ content }: LandingBlogSectionProps) {
           </div>
         </motion.div>
 
-        {/* 3 Clean Rounded Cards in Pink Theme (Matching User's Reference Layout) */}
+        {/* 3 Clean Rounded Cards in Pink Theme */}
         {!content.items || content.items.length === 0 ? (
           <div className="text-center py-16 px-4 bg-white dark:bg-slate-900 rounded-3xl border border-dashed border-slate-200">
             <BookOpen className="size-10 mx-auto text-[#ef599a] mb-3" />
@@ -71,8 +71,7 @@ export function LandingBlogSection({ content }: LandingBlogSectionProps) {
                   {/* Thumbnail Image */}
                   <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-[#FDF0F5] dark:bg-slate-800 mb-4 select-none">
                     <Image
-                      // src={item.imageUrl || fallbackImage}
-                      src="/assets/img/hero1.png"
+                      src={item.imageUrl || '/assets/img/hero1.png'}
                       alt={item.title}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -96,7 +95,9 @@ export function LandingBlogSection({ content }: LandingBlogSectionProps) {
 
                   {/* Title */}
                   <h3 className="text-lg sm:text-xl font-semibold font-sans text-slate-950 dark:text-white line-clamp-2 mb-2 group-hover:text-[#ef599a] transition-colors leading-snug">
-                    {item.title}
+                    <Link href={`/blog/${item.slug}`} className="focus:outline-none">
+                      {item.title}
+                    </Link>
                   </h3>
 
                   {/* Description / Excerpt */}
@@ -107,12 +108,17 @@ export function LandingBlogSection({ content }: LandingBlogSectionProps) {
 
                 {/* Bottom: Read More & Pink Circular Button */}
                 <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between mt-auto">
-                  <span className="text-xs sm:text-sm font-semibold text-[#ef599a] tracking-tight group-hover:text-[#df488a] transition-colors">
-                    Read More
-                  </span>
-                  <span className="size-8 rounded-full bg-[#ef599a] text-white flex items-center justify-center shrink-0 shadow-md shadow-[#ef599a]/25 transition-all duration-200 group-hover:scale-105 group-hover:bg-[#df488a] group-hover:translate-x-1">
-                    <ArrowRight className="size-4 stroke-[2.5]" />
-                  </span>
+                  <Link
+                    href={`/blog/${item.slug}`}
+                    className="inline-flex items-center justify-between w-full group/link"
+                  >
+                    <span className="text-xs sm:text-sm font-semibold text-[#ef599a] tracking-tight group-hover/link:text-[#df488a] transition-colors">
+                      Baca Selengkapnya
+                    </span>
+                    <span className="size-8 rounded-full bg-[#ef599a] text-white flex items-center justify-center shrink-0 shadow-md shadow-[#ef599a]/25 transition-all duration-200 group-hover/link:scale-105 group-hover/link:bg-[#df488a] group-hover/link:translate-x-1">
+                      <ArrowRight className="size-4 stroke-[2.5]" />
+                    </span>
+                  </Link>
                 </div>
               </motion.article>
             ))}

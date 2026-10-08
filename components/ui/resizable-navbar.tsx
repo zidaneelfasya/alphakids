@@ -180,22 +180,32 @@ export const NavMenuItem = ({
 }) => {
   const isItemActive = active === item;
 
-  const content = (
+  const triggerSpan = (
+    <motion.span
+      transition={{ duration: 0.2 }}
+      className={cn(
+        "px-3.5 xl:px-4 py-2 rounded-full text-xs xl:text-sm font-semibold tracking-tight transition-all duration-200 inline-block",
+        isItemActive
+          ? "bg-[#E8F8FA] text-[#21b1db] shadow-sm"
+          : "text-slate-700 dark:text-slate-200 hover:text-[#21b1db] hover:bg-[#21b1db]/5"
+      )}
+    >
+      {item}
+    </motion.span>
+  );
+
+  return (
     <div
       onMouseEnter={() => setActive(item)}
       className="relative cursor-pointer py-1.5"
     >
-      <motion.span
-        transition={{ duration: 0.2 }}
-        className={cn(
-          "px-3.5 xl:px-4 py-2 rounded-full text-xs xl:text-sm font-semibold tracking-tight transition-all duration-200 inline-block",
-          isItemActive
-            ? "bg-[#E8F8FA] text-[#21b1db] shadow-sm"
-            : "text-slate-700 dark:text-slate-200 hover:text-[#21b1db] hover:bg-[#21b1db]/5"
-        )}
-      >
-        {item}
-      </motion.span>
+      {href ? (
+        <Link href={href} className="focus:outline-none">
+          {triggerSpan}
+        </Link>
+      ) : (
+        triggerSpan
+      )}
 
       {/* Floating Animated Morphing Dropdown Popover */}
       {active !== null && (
@@ -222,8 +232,6 @@ export const NavMenuItem = ({
       )}
     </div>
   );
-
-  return href ? <Link href={href}>{content}</Link> : content;
 };
 
 // ============================================================================

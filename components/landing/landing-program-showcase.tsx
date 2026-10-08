@@ -79,44 +79,44 @@ export function LandingProgramShowcase({
 
           {/* Category Filter Capsule Pills with Sliding Active Indicator */}
           {categories.length > 0 && (
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2 py-2.5 px-1">
               <button
                 type="button"
                 onClick={() => setSelectedCategory('all')}
-                className={`relative px-4 py-1.5 rounded-full text-xs font-semibold transition-colors ${
+                className={`relative px-4.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer ${
                   selectedCategory === 'all'
-                    ? 'text-white'
-                    : 'border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-[#21b1db] hover:text-[#21b1db]'
+                    ? 'text-white -translate-y-0.5'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95'
                 }`}
               >
                 {selectedCategory === 'all' && (
                   <motion.span
                     layoutId="activeCategoryPill"
-                    className="absolute inset-0 rounded-full bg-[#21b1db] -z-10 shadow-sm"
+                    className="absolute inset-0 rounded-full bg-[#21b1db] shadow-md shadow-black/10 dark:shadow-black/40 z-0"
                     transition={{ type: 'spring', stiffness: 450, damping: 35 }}
                   />
                 )}
-                Semua
+                <span className="relative z-10">Semua</span>
               </button>
               {categories.map((cat) => (
                 <button
                   key={cat.id}
                   type="button"
                   onClick={() => setSelectedCategory(cat.slug)}
-                  className={`relative px-4 py-1.5 rounded-full text-xs font-semibold transition-colors ${
+                  className={`relative px-4.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer ${
                     selectedCategory === cat.slug
-                      ? 'text-white'
-                      : 'border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-[#21b1db] hover:text-[#21b1db]'
+                      ? 'text-white -translate-y-0.5'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95'
                   }`}
                 >
                   {selectedCategory === cat.slug && (
                     <motion.span
                       layoutId="activeCategoryPill"
-                      className="absolute inset-0 rounded-full bg-[#21b1db] -z-10 shadow-sm"
+                      className="absolute inset-0 rounded-full bg-[#21b1db] shadow-md shadow-black/10 dark:shadow-black/40 z-0"
                       transition={{ type: 'spring', stiffness: 450, damping: 35 }}
                     />
                   )}
-                  {cat.name}
+                  <span className="relative z-10">{cat.name}</span>
                 </button>
               ))}
             </div>
