@@ -7,7 +7,8 @@
     "lint": "eslint .",
     "make-admin": "node scripts/make-admin.mjs",
     "seed:programs": "node scripts/seed-programs.mjs",
-    "seed:blogs": "node scripts/seed-blogs.mjs"
+    "seed:blogs": "node scripts/seed-blogs.mjs",
+    "seed:cms": "node scripts/seed-storage-cms.mjs"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

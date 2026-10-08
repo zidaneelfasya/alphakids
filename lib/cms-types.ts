@@ -1,33 +1,53 @@
 export interface HeroSectionContent {
-  badgeText: string;
-  titlePart1: string;
-  titleHighlight: string;
-  titlePart2: string;
-  subtitle: string;
-  ctaPrimaryText: string;
-  ctaPrimaryLink: string;
-  ctaSecondaryText: string;
-  ctaSecondaryLink: string;
-  statsCount: string;
-  statsLabel: string;
-  ratingScore: string;
-  ratingReviewCount: string;
-  stampText: string;
+  // Real dynamic fields matching official LandingHero UI
+  titleLine1: string;          // "Tempat terbaik"
+  titleLine1Suffix: string;    // "untuk"
+  titleHighlightCyan: string;  // "belajar"
+  titleConjunction: string;    // "dan"
+  titleHighlightPink: string;  // "berkarya"
+  titleLine3: string;          // "anak hebat"
+  subtitle: string;            // Deskripsi lengkap
+  ctaText: string;             // "Mulai Petualangan"
+  ctaLink: string;             // "#programs"
+  heroImageLeft?: string;      // "/assets/img/hero1.png"
+  heroImageRight?: string;     // "/assets/img/hero2.png"
+  // Backward compatibility optional fields
+  badgeText?: string;
+  titlePart1?: string;
+  titleHighlight?: string;
+  titlePart2?: string;
+  ctaPrimaryText?: string;
+  ctaPrimaryLink?: string;
+  ctaSecondaryText?: string;
+  ctaSecondaryLink?: string;
+  statsCount?: string;
+  statsLabel?: string;
+  ratingScore?: string;
+  ratingReviewCount?: string;
+  stampText?: string;
 }
 
 export interface FeaturesSectionContent {
-  badge: string;
-  title: string;
-  subtitle: string;
-  card1Title: string;
-  card1Desc: string;
-  card1Tag: string;
-  card2Title: string;
-  card2Desc: string;
-  card2Tag: string;
-  card3Title: string;
-  card3Desc: string;
-  card3Tag: string;
+  // Real dynamic fields matching official LandingInteractiveFeatures UI
+  titlePart1: string;          // "Fitur"
+  titleHighlight: string;      // "interaktif"
+  titlePart2: string;          // "unggulan kami"
+  card1Title: string;          // "Quiz"
+  card1TitleHighlight: string; // "Interaktif"
+  card1Desc: string;           // "Uji pemahaman si kecil..."
+  card2Title: string;          // "Aktivitas"
+  card2TitleHighlight: string; // "Kreatif"
+  card2Desc: string;           // "Eksplorasi coding visual..."
+  card3Title: string;          // "Belajar dengan"
+  card3TitleHighlight: string; // "Game"
+  card3Desc: string;           // "Metode gamifikasi modern..."
+  // Backward compatibility optional fields
+  badge?: string;
+  title?: string;
+  subtitle?: string;
+  card1Tag?: string;
+  card2Tag?: string;
+  card3Tag?: string;
 }
 
 export interface StorySectionContent {
@@ -59,18 +79,29 @@ export interface StorySectionContent {
 }
 
 export interface MentorsSectionContent {
-  badge: string;
-  title: string;
-  subtitle: string;
-  mentor1Name: string;
-  mentor1Role: string;
-  mentor1Tag: string;
-  mentor2Name: string;
-  mentor2Role: string;
-  mentor2Tag: string;
-  mentor3Name: string;
-  mentor3Role: string;
-  mentor3Tag: string;
+  // Real dynamic fields matching official LandingMentorsBlock UI
+  titlePart1: string;          // "Misi kami adalah membantu anak"
+  titleHighlight: string;      // "menemukan kegembiraan belajar kreatif"
+  titlePart2: string;          // "dan tumbuh menjadi generasi juara."
+  mentor1Name: string;         // "Kak Budi Prasetyo"
+  mentor1Role: string;         // "Eksplorasi Sains & Robotika"
+  mentor2Name: string;         // "Kak Sarah Amelia"
+  mentor2Role: string;         // "Spesialis Koding & Game Dev"
+  mentor3Name: string;         // "Kak Nadia Utami"
+  mentor3Role: string;         // "Seni Digital & Animasi"
+  mentor4Name: string;         // "Kak Jacob Rama"
+  mentor4Role: string;         // "Logika & Matematika Kreatif"
+  mentor1Avatar?: string;
+  mentor2Avatar?: string;
+  mentor3Avatar?: string;
+  mentor4Avatar?: string;
+  // Backward compatibility optional fields
+  badge?: string;
+  title?: string;
+  subtitle?: string;
+  mentor1Tag?: string;
+  mentor2Tag?: string;
+  mentor3Tag?: string;
 }
 
 export interface FaqItem {
@@ -86,12 +117,14 @@ export interface FaqSectionContent {
 }
 
 export interface CtaSectionContent {
-  badge: string;
   title: string;
   subtitle: string;
   btnText: string;
   btnLink: string;
+  btnSecondaryText?: string;
   consultationLink: string;
+  ctaImage?: string;
+  badge?: string;
 }
 
 export interface BlogItem {
@@ -138,40 +171,42 @@ export type CmsSectionContent =
 // -----------------------------------------------------------------------------
 
 export const DEFAULT_HERO: HeroSectionContent = {
-  badgeText: '⭐ Platform Belajar Digital Anak #1 Indonesia',
-  titlePart1: 'Petualangan Seru',
-  titleHighlight: 'Belajar & Berkarya',
-  titlePart2: 'Masa Depan Hebat!',
+  titleLine1: 'Tempat terbaik',
+  titleLine1Suffix: 'untuk',
+  titleHighlightCyan: 'belajar',
+  titleConjunction: 'dan',
+  titleHighlightPink: 'berkarya',
+  titleLine3: 'anak hebat',
   subtitle:
     'Eksplorasi coding, robotika, logika, dan kreativitas digital anak usia 4-15 tahun melalui metode gamifikasi seru dan mentor bersertifikat internasional.',
-  ctaPrimaryText: 'Lihat Program Pilihan',
+  ctaText: 'Mulai Petualangan',
+  ctaLink: '#programs',
+  heroImageLeft: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/hero1.png',
+  heroImageRight: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/hero2.png',
+  // Backward compatibility fields
+  titlePart1: 'Tempat terbaik untuk',
+  titleHighlight: 'belajar dan berkarya',
+  titlePart2: 'anak hebat',
+  ctaPrimaryText: 'Mulai Petualangan',
   ctaPrimaryLink: '#programs',
-  ctaSecondaryText: 'Konsultasi Gratis via WA',
-  ctaSecondaryLink: 'https://wa.me/6281234567890?text=Halo%20Alpha%20Kids,%20saya%20ingin%20tanya%20program%20belajar%20anak',
-  statsCount: '12.500+',
-  statsLabel: 'Anak Hebat Aktif Belajar',
-  ratingScore: '4.9/5.0',
-  ratingReviewCount: '2.400+ Ulasan Orang Tua',
-  stampText: 'ALPHA KIDS • LEARNING & DISCOVERY • ',
 };
 
 export const DEFAULT_FEATURES: FeaturesSectionContent = {
-  badge: 'Fitur Unggulan',
-  title: 'Kenapa Anak Suka & Betah Belajar di Alpha Kids?',
-  subtitle:
-    'Kurikulum inovatif menggabungkan tantangan gamifikasi, interaktivitas tinggi, dan apresiasi karya di setiap langkah.',
-  card1Title: 'Quiz & Misi Harian Berhadiah',
+  titlePart1: 'Fitur',
+  titleHighlight: 'interaktif',
+  titlePart2: 'unggulan kami',
+  card1Title: 'Quiz',
+  card1TitleHighlight: 'Interaktif',
   card1Desc:
-    'Tantangan seru seperti bermain game. Setiap soal terpecahkan menghadiahkan koin petualang dan lencana prestasi.',
-  card1Tag: '#MisiSeru',
-  card2Title: 'Coding & Kreativitas Nyata',
+    'Uji pemahaman si kecil melalui kuis seru berhadiah poin petualang dan lencana prestasi!',
+  card2Title: 'Aktivitas',
+  card2TitleHighlight: 'Kreatif',
   card2Desc:
-    'Anak tidak cuma main game, tapi diajak merancang game sendiri, membuat animasi, dan menyusun robotika cerdas.',
-  card2Tag: '#KreatorMuda',
-  card3Title: 'Sertifikat & Portofolio Asli',
+    'Eksplorasi coding visual, perakitan robotika, dan pembuatan game yang mengasah logika komputasi.',
+  card3Title: 'Belajar dengan',
+  card3TitleHighlight: 'Game',
   card3Desc:
-    'Setiap program ditutup dengan sertifikat digital resmi bernomor unik dan portofolio karya nyata yang membanggakan.',
-  card3Tag: '#JuaraAlpha',
+    'Metode gamifikasi modern yang membuat anak antusias memecahkan tantangan setiap hari!',
 };
 
 export const DEFAULT_STORY: StorySectionContent = {
@@ -186,9 +221,9 @@ export const DEFAULT_STORY: StorySectionContent = {
   ctaLink: '#programs',
   loopSize: 'normal',
   loopScale: 100,
-  tier1Image: '/assets/img/hero1.png',
-  tier2Image: '/assets/img/hero2.png',
-  tier3Image: '/assets/img/hero3.png',
+  tier1Image: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/hero1.png',
+  tier2Image: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/hero2.png',
+  tier3Image: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/hero3.png',
   // Fallbacks
   title: 'Materi belajar yang disediakan menyenangkan untuk anak',
   desc1:
@@ -202,19 +237,21 @@ export const DEFAULT_STORY: StorySectionContent = {
 };
 
 export const DEFAULT_MENTORS: MentorsSectionContent = {
-  badge: 'Mentor Berdedikasi',
-  title: 'Didampingi Kakak Mentor Ramah & Berpengalaman',
-  subtitle:
-    'Semua instruktur melalui seleksi ketat dengan pendekatan ramah anak yang membuat suasana belajar selalu hangat dan menyenangkan.',
+  titlePart1: 'Misi kami adalah membantu anak',
+  titleHighlight: 'menemukan kegembiraan belajar kreatif',
+  titlePart2: 'dan tumbuh menjadi generasi juara.',
   mentor1Name: 'Kak Budi Prasetyo',
-  mentor1Role: 'Eksplorasi Sains & Robotika Cerdas',
-  mentor1Tag: 'STEM Specialist • Robotics Enthusiast',
+  mentor1Role: 'Eksplorasi Sains & Robotika',
+  mentor1Avatar: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang1.webp',
   mentor2Name: 'Kak Sarah Amelia',
-  mentor2Role: 'Spesialis Coding & Game Dev Anak',
-  mentor2Tag: 'Lead Instructor • Scratch & Python',
+  mentor2Role: 'Spesialis Koding & Game Dev',
+  mentor2Avatar: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang2.webp',
   mentor3Name: 'Kak Nadia Utami',
-  mentor3Role: 'Seni Digital & Animasi Karakter',
-  mentor3Tag: 'Creative Mentor • 2D Animation',
+  mentor3Role: 'Seni Digital & Animasi',
+  mentor3Avatar: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang4.webp',
+  mentor4Name: 'Kak Jacob Rama',
+  mentor4Role: 'Logika & Matematika Kreatif',
+  mentor4Avatar: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang3.webp',
 };
 
 export const DEFAULT_FAQ: FaqSectionContent = {
@@ -522,14 +559,15 @@ Mengajarkan computational thinking sejak dini adalah investasi terbaik untuk mem
 };
 
 export const DEFAULT_CTA: CtaSectionContent = {
-  badge: 'SIAP MELANGKAH?',
   title: 'Mulai Petualangan Belajar Digital Buah Hati Anda!',
   subtitle:
-    'Konsultasikan bidang dan program belajar yang paling sesuai dengan kebutuhan si kecil bersama tim Alpha Kids.',
+    'Konsultasikan kurikulum dan kelas yang paling cocok untuk si kecil bersama konsultan edukasi Alpha Kids.',
   btnText: 'Daftar Sekarang',
   btnLink: '#programs',
+  btnSecondaryText: 'Tanya di WhatsApp',
   consultationLink:
     'https://wa.me/6281234567890?text=Halo%20Alpha%20Kids,%20saya%20ingin%20konsultasi%20program%20belajar%20anak',
+  ctaImage: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/cta.png',
 };
 
 export const DEFAULT_CONTACT: ContactSectionContent = {

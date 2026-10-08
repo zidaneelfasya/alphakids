@@ -18,16 +18,16 @@ export function LandingMentorsBlock({ content }: LandingMentorsBlockProps) {
   // 8 Unique Mentors featuring orang1.webp through orang8.webp with unique abstract shapes
   const allMentors = [
     {
-      name: content.mentor1Name || 'Kak Budi Prasetyo',
-      role: content.mentor1Role || 'Eksplorasi Sains & Robotika',
-      avatar: '/assets/img/orang1.webp',
+      name: content?.mentor1Name || 'Kak Budi Prasetyo',
+      role: content?.mentor1Role || 'Eksplorasi Sains & Robotika',
+      avatar: content?.mentor1Avatar || 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang1.webp',
       shape: '63% 37% 54% 46% / 40% 58% 42% 60%',
       decoration: null,
     },
     {
-      name: content.mentor2Name || 'Kak Sarah Amelia',
-      role: content.mentor2Role || 'Spesialis Koding & Game Dev',
-      avatar: '/assets/img/orang2.webp',
+      name: content?.mentor2Name || 'Kak Sarah Amelia',
+      role: content?.mentor2Role || 'Spesialis Koding & Game Dev',
+      avatar: content?.mentor2Avatar || 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang2.webp',
       shape: '40% 60% 38% 62% / 62% 38% 62% 38%',
       decoration: (
         <svg
@@ -42,9 +42,9 @@ export function LandingMentorsBlock({ content }: LandingMentorsBlockProps) {
       ),
     },
     {
-      name: 'Kak Jacob Rama',
-      role: 'Logika & Matematika Kreatif',
-      avatar: '/assets/img/orang3.webp',
+      name: content?.mentor4Name || 'Kak Jacob Rama',
+      role: content?.mentor4Role || 'Logika & Matematika Kreatif',
+      avatar: content?.mentor4Avatar || 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang3.webp',
       shape: '68% 32% 60% 40% / 36% 64% 36% 64%',
       decoration: (
         <div className="absolute -top-4 -right-4 pointer-events-none opacity-80 scale-75 z-0">
@@ -53,9 +53,9 @@ export function LandingMentorsBlock({ content }: LandingMentorsBlockProps) {
       ),
     },
     {
-      name: content.mentor3Name || 'Kak Nadia Utami',
-      role: content.mentor3Role || 'Seni Digital & Animasi',
-      avatar: '/assets/img/orang4.webp',
+      name: content?.mentor3Name || 'Kak Nadia Utami',
+      role: content?.mentor3Role || 'Seni Digital & Animasi',
+      avatar: content?.mentor3Avatar || 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang4.webp',
       shape: '38% 62% 65% 35% / 58% 40% 60% 42%',
       decoration: null,
     },
@@ -130,12 +130,12 @@ export function LandingMentorsBlock({ content }: LandingMentorsBlockProps) {
           className="text-center max-w-3xl mx-auto mb-14 sm:mb-18"
         >
           <h2 className="text-3xl sm:text-5xl lg:text-[3.25rem] font-semibold font-sans tracking-tight leading-[1.2] text-white">
-            Misi kami adalah membantu anak <br />
+            {content?.titlePart1 || 'Misi kami adalah membantu anak'} <br />
             <span className="font-sans italic font-normal text-[#FFCC07]">
-              menemukan kegembiraan belajar kreatif
+              {content?.titleHighlight || 'menemukan kegembiraan belajar kreatif'}
             </span>{' '}
             <br />
-            dan tumbuh menjadi generasi juara.
+            {content?.titlePart2 || 'dan tumbuh menjadi generasi juara.'}
           </h2>
         </motion.div>
 

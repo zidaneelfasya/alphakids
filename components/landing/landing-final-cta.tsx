@@ -61,7 +61,7 @@ export function LandingFinalCta({ content }: LandingFinalCtaProps) {
                 className="absolute inset-4 bg-white/30 rounded-full blur-2xl pointer-events-none -z-10"
               />
               <Image
-                src="/assets/img/cta.png"
+                src={content.ctaImage || 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/cta.png'}
                 alt="Siswa Berprestasi Alpha Kids"
                 fill
                 className="object-contain drop-shadow-2xl"
@@ -125,7 +125,7 @@ export function LandingFinalCta({ content }: LandingFinalCtaProps) {
                 className="inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-white hover:bg-slate-50 text-slate-950 font-semibold text-sm sm:text-base shadow-lg shadow-black/5 transition-all duration-200 hover:scale-105 active:scale-95 text-center cursor-pointer border border-white/80"
               >
                 <WhatsAppIcon className="size-5 shrink-0 text-[#25D366] fill-[#25D366]" />
-                <span>Tanya via WhatsApp</span>
+                <span>{content.btnSecondaryText || 'Tanya di WhatsApp'}</span>
               </a>
             </div>
           </motion.div>

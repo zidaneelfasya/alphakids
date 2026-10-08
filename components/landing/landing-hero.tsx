@@ -17,6 +17,21 @@ interface LandingHeroProps {
 export function LandingHero({ content }: LandingHeroProps) {
   const shouldReduceMotion = useReducedMotion();
 
+  // Dynamic CMS fields with robust fallbacks
+  const line1 = content?.titleLine1 || 'Tempat terbaik';
+  const line1Suffix = content?.titleLine1Suffix || 'untuk';
+  const highlightCyan = content?.titleHighlightCyan || 'belajar';
+  const conjunction = content?.titleConjunction || 'dan';
+  const highlightPink = content?.titleHighlightPink || 'berkarya';
+  const line3 = content?.titleLine3 || 'anak hebat';
+  const subtitle =
+    content?.subtitle ||
+    'Eksplorasi coding, robotika, logika, dan kreativitas digital anak usia 4-15 tahun melalui metode gamifikasi seru dan mentor bersertifikat internasional.';
+  const ctaText = content?.ctaText || 'Mulai Petualangan';
+  const ctaLink = content?.ctaLink || '#programs';
+  const imgLeft = content?.heroImageLeft || '/assets/img/hero1.png';
+  const imgRight = content?.heroImageRight || '/assets/img/hero2.png';
+
   return (
     <section className="relative overflow-hidden min-h-screen min-h-[100dvh] flex flex-col justify-center items-center bg-[#FFFDF9] dark:bg-slate-950 pt-20 sm:pt-28 pb-10 sm:pb-14">
       {/* 1. Left Background Puzzle: 50% in, 50% out of screen (Fully Responsive Scaling) */}
@@ -74,7 +89,7 @@ export function LandingHero({ content }: LandingHeroProps) {
             >
               <div className="relative w-full h-full drop-shadow-2xl">
                 <Image
-                  src="/assets/img/hero1.png"
+                  src={imgLeft}
                   alt="Siswa Alpha Kids"
                   fill
                   className="object-contain"
@@ -108,9 +123,9 @@ export function LandingHero({ content }: LandingHeroProps) {
               transition={{ duration: 0.48, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
               className="text-3xl xs:text-4xl sm:text-5xl md:text-5xl lg:text-[3.25rem] xl:text-[3.65rem] 2xl:text-[4.25rem] min-[1800px]:text-[5.25rem] font-semibold font-sans tracking-tight text-slate-900 dark:text-white leading-[1.18] sm:leading-[1.15]"
             >
-              Tempat terbaik{' '}
+              {line1}{' '}
               <span className="whitespace-nowrap inline-flex items-center gap-2 sm:gap-3.5 align-baseline">
-                <span>untuk</span>
+                <span>{line1Suffix}</span>
                 <span className="relative inline-block size-7 xs:size-8 sm:size-9 lg:size-10 xl:size-11 shrink-0 select-none pointer-events-none drop-shadow-md rotate-12 -mt-1 sm:-mt-2">
                   <Image
                     src="/assets/img/Ornamen Puzzle Kuning AlphaKids_revisi0.png"
@@ -123,15 +138,15 @@ export function LandingHero({ content }: LandingHeroProps) {
               </span>
               <br />
               <span className="font-sans font-semibold text-[#21b1db]">
-                belajar
+                {highlightCyan}
               </span>{' '}
-              <span className="font-semibold font-sans">dan</span>{' '}
+              <span className="font-semibold font-sans">{conjunction}</span>{' '}
               <span className="relative inline-block font-sans font-semibold text-[#ef599a]">
-                berkarya
+                {highlightPink}
                 <YellowBrushUnderline className="absolute -bottom-1.5 sm:-bottom-2.5 left-0 w-full text-[#FFCC07]" />
               </span>
               <br />
-              anak hebat
+              {line3}
             </motion.h1>
 
             {/* 4. Right Flanking Hero Character: hero2.png (Purple Blob Backdrop) */}
@@ -144,7 +159,7 @@ export function LandingHero({ content }: LandingHeroProps) {
             >
               <div className="relative w-full h-full drop-shadow-2xl">
                 <Image
-                  src="/assets/img/hero2.png"
+                  src={imgRight}
                   alt="Siswa Alpha Kids"
                   fill
                   className="object-contain"
@@ -163,7 +178,7 @@ export function LandingHero({ content }: LandingHeroProps) {
           >
             <div className="relative w-28 h-28 xs:w-36 xs:h-36 sm:w-48 sm:h-48 lg:w-56 lg:h-56 drop-shadow-xl">
               <Image
-                src="/assets/img/hero1.png"
+                src={imgLeft}
                 alt="Siswa Alpha Kids"
                 fill
                 className="object-contain"
@@ -172,7 +187,7 @@ export function LandingHero({ content }: LandingHeroProps) {
             </div>
             <div className="relative w-28 h-28 xs:w-36 xs:h-36 sm:w-48 sm:h-48 lg:w-56 lg:h-56 drop-shadow-xl">
               <Image
-                src="/assets/img/hero2.png"
+                src={imgRight}
                 alt="Siswa Alpha Kids"
                 fill
                 className="object-contain"
@@ -188,8 +203,7 @@ export function LandingHero({ content }: LandingHeroProps) {
             transition={{ duration: 0.45, delay: 0.22, ease: 'easeOut' }}
             className="mt-3 sm:mt-6 text-xs xs:text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-xl mx-auto leading-relaxed px-3 sm:px-0"
           >
-            {content.subtitle ||
-              "Temukan ribuan aktivitas belajar interaktif, coding, dan eksplorasi logika digital untuk mendukung tumbuh kembang dan masa depan buah hati Anda."}
+            {subtitle}
           </motion.p>
 
           {/* Centered Alpha Pink Pill CTA Button (Card 2 Accent) */}
@@ -200,10 +214,10 @@ export function LandingHero({ content }: LandingHeroProps) {
             className="mt-5 sm:mt-8 flex justify-center"
           >
             <Link
-              href="#programs"
+              href={ctaLink}
               className="group inline-flex items-center gap-3 sm:gap-4 pl-6 sm:pl-7 pr-2 sm:pr-2.5 py-2 sm:py-2.5 rounded-full bg-[#ef599a] hover:bg-[#df488a] text-white font-semibold text-sm sm:text-base shadow-xl shadow-[#ef599a]/30 transition-all hover:scale-105 active:scale-95"
             >
-              <span className="tracking-tight">Mulai Petualangan</span>
+              <span className="tracking-tight">{ctaText}</span>
               <span className="size-9 sm:size-10 rounded-full bg-white text-[#ef599a] flex items-center justify-center shrink-0 shadow-md transition-transform duration-200 group-hover:scale-105 group-hover:rotate-12">
                 <ArrowUpRight className="size-4 sm:size-5 stroke-[2.5] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </span>

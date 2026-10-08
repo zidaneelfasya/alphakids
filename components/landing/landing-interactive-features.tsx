@@ -91,12 +91,12 @@ export function LandingInteractiveFeatures({ content }: LandingInteractiveFeatur
         >
           <div>
             <h2 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-semibold font-sans tracking-tight text-slate-950 dark:text-white leading-[1.15]">
-              Fitur{' '}
+              {content?.titlePart1 || 'Fitur'}{' '}
               <span className="font-sans italic font-normal text-[#21b1db]">
-                interaktif
+                {content?.titleHighlight || 'interaktif'}
               </span>{' '}
               <br />
-              unggulan kami
+              {content?.titlePart2 || 'unggulan kami'}
             </h2>
           </div>
 
@@ -138,13 +138,13 @@ export function LandingInteractiveFeatures({ content }: LandingInteractiveFeatur
               {/* Bottom Content */}
               <div className="relative z-10 pt-16">
                 <h3 className="text-xl sm:text-2xl xl:text-3xl font-semibold font-sans text-white mb-2 leading-tight">
-                  Quiz{' '}
+                  {content?.card1Title || 'Quiz'}{' '}
                   <span className="font-sans italic font-normal text-white">
-                    Interaktif
+                    {content?.card1TitleHighlight || 'Interaktif'}
                   </span>
                 </h3>
                 <p className="text-xs sm:text-sm text-cyan-50 leading-relaxed font-medium">
-                  {content.card1Desc ||
+                  {content?.card1Desc ||
                     'Uji pemahaman si kecil melalui kuis seru berhadiah poin petualang dan lencana prestasi!'}
                 </p>
               </div>
@@ -179,13 +179,13 @@ export function LandingInteractiveFeatures({ content }: LandingInteractiveFeatur
               {/* Bottom Content */}
               <div className="relative z-10 pt-16">
                 <h3 className="text-xl sm:text-2xl xl:text-3xl font-semibold font-sans text-white mb-2 leading-tight">
-                  Aktivitas{' '}
+                  {content?.card2Title || 'Aktivitas'}{' '}
                   <span className="font-sans italic font-normal text-white">
-                    Kreatif
+                    {content?.card2TitleHighlight || 'Kreatif'}
                   </span>
                 </h3>
                 <p className="text-xs sm:text-sm text-pink-50 leading-relaxed font-medium">
-                  {content.card2Desc ||
+                  {content?.card2Desc ||
                     'Eksplorasi coding visual, perakitan robotika, dan pembuatan game yang mengasah logika komputasi.'}
                 </p>
               </div>
@@ -220,13 +220,13 @@ export function LandingInteractiveFeatures({ content }: LandingInteractiveFeatur
               {/* Bottom Content */}
               <div className="relative z-10 pt-16">
                 <h3 className="text-xl sm:text-2xl xl:text-3xl font-semibold font-sans text-slate-950 mb-2 leading-tight">
-                  Belajar dengan{' '}
+                  {content?.card3Title || 'Belajar dengan'}{' '}
                   <span className="font-sans italic font-normal text-slate-950">
-                    Game
+                    {content?.card3TitleHighlight || 'Game'}
                   </span>
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-900/90 leading-relaxed font-medium">
-                  {content.card3Desc ||
+                  {content?.card3Desc ||
                     'Metode gamifikasi modern yang membuat anak antusias memecahkan tantangan setiap hari!'}
                 </p>
               </div>

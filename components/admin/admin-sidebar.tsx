@@ -9,6 +9,7 @@ import {
   BookOpen,
   FolderTree,
   Palette,
+  Newspaper,
   Ticket,
   CreditCard,
   Users,
@@ -53,6 +54,11 @@ const adminMenuItems = [
     title: 'CMS & Landing Page',
     url: '/admin/cms',
     icon: Palette,
+  },
+  {
+    title: 'Kelola Artikel & Blog',
+    url: '/admin/blogs',
+    icon: Newspaper,
   },
   {
     title: 'Kelola Voucher',

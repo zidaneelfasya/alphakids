@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   Award,
-  BookOpen,
+  
   CreditCard,
   GraduationCap,
   LayoutDashboard,
@@ -41,11 +41,6 @@ const memberNavigation = [
     title: 'Program Saya',
     url: '/dashboard/programs',
     icon: GraduationCap,
-  },
-  {
-    title: 'Katalog Program',
-    url: '/programs',
-    icon: BookOpen,
   },
   {
     title: 'Riwayat Transaksi',

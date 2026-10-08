@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { toast } from 'sonner';
 import {
   Save,
@@ -8,7 +10,31 @@ import {
   Plus,
   Trash2,
   Loader2,
+  Columns2,
+  Eye,
+  FileEdit,
+  ArrowRight,
+  BookOpen,
+  ChevronDown,
+  Check,
+  Layout,
 } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+  CmsPreviewCanvas,
+  type DeviceType,
+  type PreviewScope,
+  type CmsPreviewData,
+} from '@/components/admin/cms-preview-canvas';
+import { CmsPreviewModal } from '@/components/admin/cms-preview-modal';
+import { CmsImageUpload } from '@/components/admin/cms-image-upload';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -70,6 +96,12 @@ export function CmsManager({ initialData }: CmsManagerProps) {
   const [activeTab, setActiveTab] = useState('hero');
   const [isSaving, setIsSaving] = useState(false);
 
+  // Preview States
+  const [viewMode, setViewMode] = useState<'form' | 'split'>('form');
+  const [previewDevice, setPreviewDevice] = useState<DeviceType>('desktop');
+  const [previewScope, setPreviewScope] = useState<PreviewScope>('section');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   // Section States
   const [hero, setHero] = useState<HeroSectionContent>(initialData.hero);
   const [features, setFeatures] = useState<FeaturesSectionContent>(initialData.features);
@@ -86,8 +118,38 @@ export function CmsManager({ initialData }: CmsManagerProps) {
   );
 
   // Modal Deletion States
-  const [deletingBlogIdx, setDeletingBlogIdx] = useState<number | null>(null);
   const [deletingFaqIdx, setDeletingFaqIdx] = useState<number | null>(null);
+
+  // Live Preview Data Aggregation (Uncommitted State)
+  const previewData: CmsPreviewData = {
+    hero,
+    features,
+    story,
+    mentors,
+    blogs,
+    faq,
+    cta,
+    contact,
+  };
+
+  const getCurrentTabData = (): { key: string; data: CmsSectionContent } => {
+    switch (activeTab) {
+      case 'hero': return { key: 'hero', data: hero };
+      case 'features': return { key: 'features', data: features };
+      case 'story': return { key: 'story', data: story };
+      case 'blogs': return { key: 'blogs', data: blogs };
+      case 'mentors': return { key: 'mentors', data: mentors };
+      case 'faq': return { key: 'faq', data: faq };
+      case 'cta': return { key: 'cta', data: cta };
+      case 'contact': return { key: 'contact', data: contact };
+      default: return { key: 'hero', data: hero };
+    }
+  };
+
+  const handleSaveCurrentTab = () => {
+    const current = getCurrentTabData();
+    handleSave(current.key, current.data);
+  };
 
   const handleSave = async (sectionKey: string, content: CmsSectionContent) => {
     setIsSaving(true);
@@ -103,47 +165,7 @@ export function CmsManager({ initialData }: CmsManagerProps) {
     }
   };
 
-  // Blog Handlers
-  const addBlogItem = () => {
-    setBlogs((prev) => ({
-      ...prev,
-      items: [
-        ...(prev.items || []),
-        {
-          id: Date.now().toString(),
-          title: 'Judul Artikel Baru',
-          slug: `judul-artikel-baru-${Date.now()}`,
-          excerpt: 'Ringkasan singkat tentang topik artikel yang dibahas.',
-          imageUrl: '/assets/img/hero1.png',
-          tag: 'Edukasi',
-          readTime: '3 mnt baca',
-          author: 'Tim Kurikulum Alpha Kids',
-          publishedAt: '8 Okt 2026',
-          content: '## Pendahuluan\n\nTulis isi konten artikel lengkap menggunakan format Markdown...',
-        },
-      ],
-    }));
-    toast.success('Artikel baru ditambahkan ke daftar');
-  };
-
-  const confirmRemoveBlogItem = () => {
-    if (deletingBlogIdx === null) return;
-    setBlogs((prev) => ({
-      ...prev,
-      items: prev.items.filter((_, i) => i !== deletingBlogIdx),
-    }));
-    setDeletingBlogIdx(null);
-    toast.success('Artikel dihapus dari formulir. Klik Simpan untuk memperbarui database.');
-  };
-
-  const updateBlogItem = (index: number, field: keyof BlogItem, value: string) => {
-    setBlogs((prev) => {
-      const newItems = [...prev.items];
-      newItems[index] = { ...newItems[index], [field]: value };
-      return { ...prev, items: newItems };
-    });
-  };
-
+  // Note: Blog article CRUD is now centralized at /admin/blogs
   // FAQ Handlers
   const addFaqItem = () => {
     setFaq((prev) => ({
@@ -210,17 +232,98 @@ export function CmsManager({ initialData }: CmsManagerProps) {
           </p>
         </div>
 
-        <Button
-          variant="outline"
-          size="sm"
-          className="rounded-xl text-xs font-semibold border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-[#21b1db] hover:border-[#21b1db]/40"
-          asChild
-        >
-          <a href="/" target="_blank" rel="noopener noreferrer">
-            <ExternalLink className="w-3.5 h-3.5 mr-1.5" />
-            Pratinjau Halaman
-          </a>
-        </Button>
+        <div className="flex flex-wrap items-center gap-2.5">
+          {/* Dropdown Mode Tampilan CMS (Default: Formulir) */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-xl text-xs font-semibold border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-[#21b1db] hover:border-[#21b1db]/40 bg-white dark:bg-slate-900 shadow-xs gap-2"
+                title="Pilih mode tampilan CMS"
+              >
+                <Layout className="w-3.5 h-3.5 text-[#21b1db]" />
+                <span>Tampilan</span>
+                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium border border-slate-200/50 dark:border-slate-700/50">
+                  {viewMode === 'form' ? 'Formulir' : 'Split View'}
+                </span>
+                <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              className="w-56 rounded-2xl p-1.5 shadow-lg border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900"
+            >
+              <DropdownMenuLabel className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 px-2.5 py-1.5">
+                Mode Tampilan CMS
+              </DropdownMenuLabel>
+
+              <DropdownMenuItem
+                onClick={() => setViewMode('form')}
+                className={`rounded-xl px-2.5 py-2 text-xs font-medium cursor-pointer flex items-center justify-between ${
+                  viewMode === 'form'
+                    ? 'bg-cyan-50 dark:bg-cyan-950/60 text-[#21b1db] font-semibold'
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+                }`}
+              >
+                <div className="flex items-center gap-2.5">
+                  <FileEdit className="w-4 h-4 text-[#21b1db]" />
+                  <div>
+                    <p className="font-semibold text-xs leading-none">Formulir</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5">Mode edit penuh (Default)</p>
+                  </div>
+                </div>
+                {viewMode === 'form' && <Check className="w-3.5 h-3.5 text-[#21b1db]" />}
+              </DropdownMenuItem>
+
+              <DropdownMenuItem
+                onClick={() => setViewMode('split')}
+                className={`rounded-xl px-2.5 py-2 text-xs font-medium cursor-pointer flex items-center justify-between ${
+                  viewMode === 'split'
+                    ? 'bg-cyan-50 dark:bg-cyan-950/60 text-[#21b1db] font-semibold'
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+                }`}
+              >
+                <div className="flex items-center gap-2.5">
+                  <Columns2 className="w-4 h-4 text-[#21b1db]" />
+                  <div>
+                    <p className="font-semibold text-xs leading-none">Split View</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5">Form & pratinjau samping</p>
+                  </div>
+                </div>
+                {viewMode === 'split' && <Check className="w-3.5 h-3.5 text-[#21b1db]" />}
+              </DropdownMenuItem>
+
+              <DropdownMenuSeparator className="my-1 border-slate-100 dark:border-slate-800" />
+
+              <DropdownMenuItem
+                onClick={() => setIsModalOpen(true)}
+                className="rounded-xl px-2.5 py-2 text-xs font-medium cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+              >
+                <div className="flex items-center gap-2.5">
+                  <Eye className="w-4 h-4 text-[#ef599a]" />
+                  <div>
+                    <p className="font-semibold text-xs leading-none">Layar Penuh</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5">Pratinjau pop-up interaktif</p>
+                  </div>
+                </div>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <Button
+            variant="outline"
+            size="sm"
+            className="rounded-xl text-xs font-semibold border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-[#21b1db] hover:border-[#21b1db]/40"
+            asChild
+          >
+            <a href="/" target="_blank" rel="noopener noreferrer">
+              <ExternalLink className="w-3.5 h-3.5 mr-1.5" />
+              Halaman Asli
+            </a>
+          </Button>
+        </div>
       </div>
 
       {/* 2. Text-Only Segmented Tabs (Anti-Slop: Tanpa icon dekoratif berlebih) */}
@@ -276,9 +379,11 @@ export function CmsManager({ initialData }: CmsManagerProps) {
           </TabsTrigger>
         </TabsList>
 
-        {/* ================================================================= */}
-        {/* TAB 1: HERO SECTION                                               */}
-        {/* ================================================================= */}
+        <div className={viewMode === 'split' ? 'grid grid-cols-1 xl:grid-cols-12 gap-6 items-start' : 'space-y-6'}>
+          <div className={viewMode === 'split' ? 'xl:col-span-6 space-y-6 min-w-0' : 'space-y-6'}>
+            {/* ================================================================= */}
+            {/* TAB 1: HERO SECTION                                               */}
+            {/* ================================================================= */}
         <TabsContent value="hero">
           <Card className="border border-slate-200/80 dark:border-slate-800 rounded-2xl shadow-xs bg-white dark:bg-slate-900">
             <CardHeader className="border-b border-slate-100 dark:border-slate-800 pb-4 flex flex-row items-center justify-between space-y-0">
@@ -287,73 +392,95 @@ export function CmsManager({ initialData }: CmsManagerProps) {
                   Pengaturan Hero Section
                 </CardTitle>
                 <CardDescription className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                  Teks headline, subjudul, tombol aksi utama, dan metrik kepercayaan di bagian atas halaman.
+                  Teks headline utama, aksen warna, subjudul, tombol aksi, dan foto siswa pada bagian paling atas halaman.
                 </CardDescription>
               </div>
               {renderSaveButton('hero', hero)}
             </CardHeader>
             <CardContent className="pt-6 space-y-6">
-              {/* Grup: Headline & Teks */}
+              {/* Grup: Headline Utama (3 Baris Sesuai Desain Asli) */}
               <div className="space-y-4">
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  Headline & Teks Utama
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Badge Atas</Label>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                    Headline Utama (3 Baris)
+                  </h3>
+                 
+                </div>
+
+                {/* Baris 1: Tempat terbaik untuk */}
+                <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 p-3.5 rounded-xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800">
+                  <div className="sm:col-span-8 space-y-1.5">
+                    <Label className="text-xs font-medium">Baris 1 - Kalimat Awal</Label>
                     <Input
-                      value={hero.badgeText}
-                      onChange={(e) => setHero({ ...hero, badgeText: e.target.value })}
-                      placeholder="Contoh: Platform Belajar Digital Anak #1"
+                      value={hero.titleLine1 || ''}
+                      onChange={(e) => setHero({ ...hero, titleLine1: e.target.value })}
+                      placeholder="Tempat terbaik"
                       className="text-xs"
                     />
                   </div>
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Teks Stempel Lingkar</Label>
+                  <div className="sm:col-span-4 space-y-1.5">
+                    <Label className="text-xs font-medium">Sisipan Puzzle</Label>
                     <Input
-                      value={hero.stampText}
-                      onChange={(e) => setHero({ ...hero, stampText: e.target.value })}
-                      placeholder="ALPHA KIDS • LEARNING & DISCOVERY"
+                      value={hero.titleLine1Suffix || ''}
+                      onChange={(e) => setHero({ ...hero, titleLine1Suffix: e.target.value })}
+                      placeholder="untuk"
                       className="text-xs"
                     />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Judul Bagian 1</Label>
+                {/* Baris 2: belajar (Cyan) dan berkarya (Pink) */}
+                <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 p-3.5 rounded-xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800">
+                  <div className="sm:col-span-5 space-y-1.5">
+                    <Label className="text-xs font-medium text-[#21b1db]">
+                      Baris 2 - Aksen Cyan
+                    </Label>
                     <Input
-                      value={hero.titlePart1}
-                      onChange={(e) => setHero({ ...hero, titlePart1: e.target.value })}
-                      placeholder="Tempat terbaik untuk"
-                      className="text-xs"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Kata Highlight (Aksen)</Label>
-                    <Input
-                      value={hero.titleHighlight}
-                      onChange={(e) => setHero({ ...hero, titleHighlight: e.target.value })}
-                      placeholder="belajar dan berkarya"
+                      value={hero.titleHighlightCyan || ''}
+                      onChange={(e) => setHero({ ...hero, titleHighlightCyan: e.target.value })}
+                      placeholder="belajar"
                       className="text-xs font-semibold text-[#21b1db]"
                     />
                   </div>
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Judul Bagian 2</Label>
+                  <div className="sm:col-span-2 space-y-1.5">
+                    <Label className="text-xs font-medium">Penghubung</Label>
                     <Input
-                      value={hero.titlePart2}
-                      onChange={(e) => setHero({ ...hero, titlePart2: e.target.value })}
-                      placeholder="anak hebat"
-                      className="text-xs"
+                      value={hero.titleConjunction || ''}
+                      onChange={(e) => setHero({ ...hero, titleConjunction: e.target.value })}
+                      placeholder="dan"
+                      className="text-xs text-center"
+                    />
+                  </div>
+                  <div className="sm:col-span-5 space-y-1.5">
+                    <Label className="text-xs font-medium text-[#ef599a]">
+                      Baris 2 - Aksen Pink (Garis Kuning)
+                    </Label>
+                    <Input
+                      value={hero.titleHighlightPink || ''}
+                      onChange={(e) => setHero({ ...hero, titleHighlightPink: e.target.value })}
+                      placeholder="berkarya"
+                      className="text-xs font-semibold text-[#ef599a]"
                     />
                   </div>
                 </div>
 
+                {/* Baris 3: anak hebat */}
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium">Baris 3 - Penutup Headline</Label>
+                  <Input
+                    value={hero.titleLine3 || ''}
+                    onChange={(e) => setHero({ ...hero, titleLine3: e.target.value })}
+                    placeholder="anak hebat"
+                    className="text-xs font-semibold"
+                  />
+                </div>
+
+                {/* Subjudul / Deskripsi */}
                 <div className="space-y-1.5">
                   <Label className="text-xs font-medium">Subjudul / Deskripsi Lengkap</Label>
                   <Textarea
                     rows={3}
-                    value={hero.subtitle}
+                    value={hero.subtitle || ''}
                     onChange={(e) => setHero({ ...hero, subtitle: e.target.value })}
                     placeholder="Deskripsi singkat yang menjelaskan nilai platform..."
                     className="text-xs leading-relaxed"
@@ -364,85 +491,50 @@ export function CmsManager({ initialData }: CmsManagerProps) {
               {/* Grup: Tombol Aksi (CTA) */}
               <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-4">
                 <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  Tombol Aksi (Call To Action)
+                  Tombol Aksi Utama (Signature Pink Pill)
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Teks Tombol Utama</Label>
+                    <Label className="text-xs font-medium">Teks Tombol</Label>
                     <Input
-                      value={hero.ctaPrimaryText}
-                      onChange={(e) => setHero({ ...hero, ctaPrimaryText: e.target.value })}
+                      value={hero.ctaText || ''}
+                      onChange={(e) => setHero({ ...hero, ctaText: e.target.value })}
+                      placeholder="Mulai Petualangan"
                       className="text-xs"
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Tautan Tombol Utama (URL)</Label>
+                    <Label className="text-xs font-medium">Tautan Tombol (Anchor / URL)</Label>
                     <Input
-                      value={hero.ctaPrimaryLink}
-                      onChange={(e) => setHero({ ...hero, ctaPrimaryLink: e.target.value })}
-                      className="text-xs font-mono"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Teks Tombol Sekunder</Label>
-                    <Input
-                      value={hero.ctaSecondaryText}
-                      onChange={(e) => setHero({ ...hero, ctaSecondaryText: e.target.value })}
-                      className="text-xs"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Tautan Tombol Sekunder (WA URL)</Label>
-                    <Input
-                      value={hero.ctaSecondaryLink}
-                      onChange={(e) => setHero({ ...hero, ctaSecondaryLink: e.target.value })}
+                      value={hero.ctaLink || ''}
+                      onChange={(e) => setHero({ ...hero, ctaLink: e.target.value })}
+                      placeholder="#programs"
                       className="text-xs font-mono"
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Grup: Metrik Kepercayaan */}
+              {/* Grup: Foto Karakter Siswa */}
               <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-4">
                 <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  Metrik & Bukti Sosial
+                  Foto Karakter Siswa Pendamping
                 </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 p-4 rounded-xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800">
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Angka Statistik</Label>
-                    <Input
-                      value={hero.statsCount}
-                      onChange={(e) => setHero({ ...hero, statsCount: e.target.value })}
-                      className="text-xs"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Label Statistik</Label>
-                    <Input
-                      value={hero.statsLabel}
-                      onChange={(e) => setHero({ ...hero, statsLabel: e.target.value })}
-                      className="text-xs"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Skor Rating</Label>
-                    <Input
-                      value={hero.ratingScore}
-                      onChange={(e) => setHero({ ...hero, ratingScore: e.target.value })}
-                      className="text-xs"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Ulasan Orang Tua</Label>
-                    <Input
-                      value={hero.ratingReviewCount}
-                      onChange={(e) => setHero({ ...hero, ratingReviewCount: e.target.value })}
-                      className="text-xs"
-                    />
-                  </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <CmsImageUpload
+                    label="Foto Sisi Kiri"
+                    description="Foto pada Hero sebelah Kiri"
+                    value={hero.heroImageLeft}
+                    onChange={(url) => setHero({ ...hero, heroImageLeft: url })}
+                    aspectRatio="square"
+                  />
+                  <CmsImageUpload
+                    label="Foto Sisi Kanan"
+                    description="Foto pada hero sebelah kanan"
+                    value={hero.heroImageRight}
+                    onChange={(url) => setHero({ ...hero, heroImageRight: url })}
+                    aspectRatio="square"
+                  />
                 </div>
               </div>
             </CardContent>
@@ -460,71 +552,80 @@ export function CmsManager({ initialData }: CmsManagerProps) {
                   Pengaturan 3 Kartu Fitur Unggulan
                 </CardTitle>
                 <CardDescription className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                  Teks pembuka dan 3 kartu fitur interaktif (Quiz, Aktivitas Kreatif, Belajar dengan Game).
+                  Teks judul utama dan isi 3 kartu interaktif (Quiz, Aktivitas Kreatif, Belajar dengan Game).
                 </CardDescription>
               </div>
               {renderSaveButton('features', features)}
             </CardHeader>
             <CardContent className="pt-6 space-y-6">
-              {/* Header Bagian */}
+              {/* Header Bagian: Fitur interaktif unggulan kami */}
               <div className="space-y-4">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  Judul Utama Bagian
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Badge Bagian</Label>
+                    <Label className="text-xs font-medium">Kata Pembuka</Label>
                     <Input
-                      value={features.badge}
-                      onChange={(e) => setFeatures({ ...features, badge: e.target.value })}
+                      value={features.titlePart1 || ''}
+                      onChange={(e) => setFeatures({ ...features, titlePart1: e.target.value })}
+                      placeholder="Fitur"
                       className="text-xs"
                     />
                   </div>
-                  <div className="space-y-1.5 md:col-span-2">
-                    <Label className="text-xs font-medium">Judul Utama</Label>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-medium text-[#21b1db]">
+                      Kata Aksen (Cyan Miring)
+                    </Label>
                     <Input
-                      value={features.title}
-                      onChange={(e) => setFeatures({ ...features, title: e.target.value })}
+                      value={features.titleHighlight || ''}
+                      onChange={(e) => setFeatures({ ...features, titleHighlight: e.target.value })}
+                      placeholder="interaktif"
+                      className="text-xs font-semibold text-[#21b1db]"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-medium">Kata Penutup</Label>
+                    <Input
+                      value={features.titlePart2 || ''}
+                      onChange={(e) => setFeatures({ ...features, titlePart2: e.target.value })}
+                      placeholder="unggulan kami"
                       className="text-xs"
                     />
                   </div>
-                </div>
-                <div className="space-y-1.5">
-                  <Label className="text-xs font-medium">Subjudul Bagian</Label>
-                  <Textarea
-                    rows={2}
-                    value={features.subtitle}
-                    onChange={(e) => setFeatures({ ...features, subtitle: e.target.value })}
-                    className="text-xs"
-                  />
                 </div>
               </div>
 
-              {/* 3 Kartu Sub-item (Flat Neutral Surfaces) */}
+              {/* 3 Kartu Interaktif */}
               <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-4">
                 <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  Konten Kartu Interaktif
+                  Konten 3 Kartu Interaktif
                 </h3>
 
-                {/* Kartu 1 */}
+                {/* Kartu 1: Alpha Cyan */}
                 <div className="p-4.5 rounded-xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800 space-y-3">
                   <div className="flex items-center justify-between pb-1 border-b border-slate-200/60 dark:border-slate-700/60">
                     <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">
-                      Kartu 1: Quiz & Misi
+                      Kartu 1 (Alpha Cyan #21b1db)
                     </span>
-                    <span className="text-[11px] text-slate-400">Aksen Alpha Cyan</span>
+                    <span className="text-[11px] font-semibold text-[#21b1db]">Ikon Quiz</span>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="space-y-1">
                       <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Judul</Label>
                       <Input
-                        value={features.card1Title}
+                        value={features.card1Title || ''}
                         onChange={(e) => setFeatures({ ...features, card1Title: e.target.value })}
+                        placeholder="Quiz"
                         className="text-xs"
                       />
                     </div>
                     <div className="space-y-1">
-                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Tag / Keterangan</Label>
+                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Kata Aksen (Miring)</Label>
                       <Input
-                        value={features.card1Tag}
-                        onChange={(e) => setFeatures({ ...features, card1Tag: e.target.value })}
+                        value={features.card1TitleHighlight || ''}
+                        onChange={(e) => setFeatures({ ...features, card1TitleHighlight: e.target.value })}
+                        placeholder="Interaktif"
                         className="text-xs"
                       />
                     </div>
@@ -533,35 +634,38 @@ export function CmsManager({ initialData }: CmsManagerProps) {
                     <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Deskripsi</Label>
                     <Textarea
                       rows={2}
-                      value={features.card1Desc}
+                      value={features.card1Desc || ''}
                       onChange={(e) => setFeatures({ ...features, card1Desc: e.target.value })}
-                      className="text-xs"
+                      placeholder="Uji pemahaman si kecil..."
+                      className="text-xs leading-relaxed"
                     />
                   </div>
                 </div>
 
-                {/* Kartu 2 */}
+                {/* Kartu 2: Alpha Pink */}
                 <div className="p-4.5 rounded-xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800 space-y-3">
                   <div className="flex items-center justify-between pb-1 border-b border-slate-200/60 dark:border-slate-700/60">
                     <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">
-                      Kartu 2: Coding & Robotika
+                      Kartu 2 (Alpha Pink #ef599a)
                     </span>
-                    <span className="text-[11px] text-slate-400">Aksen Alpha Pink</span>
+                    <span className="text-[11px] font-semibold text-[#ef599a]">Ikon Ide / Lampu</span>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="space-y-1">
                       <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Judul</Label>
                       <Input
-                        value={features.card2Title}
+                        value={features.card2Title || ''}
                         onChange={(e) => setFeatures({ ...features, card2Title: e.target.value })}
+                        placeholder="Aktivitas"
                         className="text-xs"
                       />
                     </div>
                     <div className="space-y-1">
-                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Tag / Keterangan</Label>
+                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Kata Aksen (Miring)</Label>
                       <Input
-                        value={features.card2Tag}
-                        onChange={(e) => setFeatures({ ...features, card2Tag: e.target.value })}
+                        value={features.card2TitleHighlight || ''}
+                        onChange={(e) => setFeatures({ ...features, card2TitleHighlight: e.target.value })}
+                        placeholder="Kreatif"
                         className="text-xs"
                       />
                     </div>
@@ -570,35 +674,38 @@ export function CmsManager({ initialData }: CmsManagerProps) {
                     <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Deskripsi</Label>
                     <Textarea
                       rows={2}
-                      value={features.card2Desc}
+                      value={features.card2Desc || ''}
                       onChange={(e) => setFeatures({ ...features, card2Desc: e.target.value })}
-                      className="text-xs"
+                      placeholder="Eksplorasi coding visual..."
+                      className="text-xs leading-relaxed"
                     />
                   </div>
                 </div>
 
-                {/* Kartu 3 */}
+                {/* Kartu 3: Alpha Yellow */}
                 <div className="p-4.5 rounded-xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800 space-y-3">
                   <div className="flex items-center justify-between pb-1 border-b border-slate-200/60 dark:border-slate-700/60">
                     <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">
-                      Kartu 3: Belajar dengan Game
+                      Kartu 3 (Alpha Yellow #FFCC07)
                     </span>
-                    <span className="text-[11px] text-slate-400">Aksen Alpha Yellow</span>
+                    <span className="text-[11px] font-semibold text-amber-600 dark:text-amber-400">Ikon Gamepad</span>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="space-y-1">
                       <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Judul</Label>
                       <Input
-                        value={features.card3Title}
+                        value={features.card3Title || ''}
                         onChange={(e) => setFeatures({ ...features, card3Title: e.target.value })}
+                        placeholder="Belajar dengan"
                         className="text-xs"
                       />
                     </div>
                     <div className="space-y-1">
-                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Tag / Keterangan</Label>
+                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Kata Aksen (Miring)</Label>
                       <Input
-                        value={features.card3Tag}
-                        onChange={(e) => setFeatures({ ...features, card3Tag: e.target.value })}
+                        value={features.card3TitleHighlight || ''}
+                        onChange={(e) => setFeatures({ ...features, card3TitleHighlight: e.target.value })}
+                        placeholder="Game"
                         className="text-xs"
                       />
                     </div>
@@ -607,9 +714,10 @@ export function CmsManager({ initialData }: CmsManagerProps) {
                     <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Deskripsi</Label>
                     <Textarea
                       rows={2}
-                      value={features.card3Desc}
+                      value={features.card3Desc || ''}
                       onChange={(e) => setFeatures({ ...features, card3Desc: e.target.value })}
-                      className="text-xs"
+                      placeholder="Metode gamifikasi modern..."
+                      className="text-xs leading-relaxed"
                     />
                   </div>
                 </div>
@@ -852,33 +960,27 @@ export function CmsManager({ initialData }: CmsManagerProps) {
                   Gambar Piramida 3 Tingkat (Sisi Kanan)
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Tingkat 1 (Strip Biru / Cyan)</Label>
-                    <Input
-                      value={story.tier1Image || '/assets/img/hero1.png'}
-                      onChange={(e) => setStory({ ...story, tier1Image: e.target.value })}
-                      placeholder="/assets/img/hero1.png"
-                      className="text-xs font-mono"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Tingkat 2 (Strip Pink)</Label>
-                    <Input
-                      value={story.tier2Image || '/assets/img/hero2.png'}
-                      onChange={(e) => setStory({ ...story, tier2Image: e.target.value })}
-                      placeholder="/assets/img/hero2.png"
-                      className="text-xs font-mono"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Tingkat 3 (Strip Kuning)</Label>
-                    <Input
-                      value={story.tier3Image || '/assets/img/hero3.png'}
-                      onChange={(e) => setStory({ ...story, tier3Image: e.target.value })}
-                      placeholder="/assets/img/hero3.png"
-                      className="text-xs font-mono"
-                    />
-                  </div>
+                  <CmsImageUpload
+                    label="Tingkat 1 (Piramida Atas)"
+                    description="Foto strip cyan paling atas "
+                    value={story.tier1Image}
+                    onChange={(url) => setStory({ ...story, tier1Image: url })}
+                    aspectRatio="square"
+                  />
+                  <CmsImageUpload
+                    label="Tingkat 2 (Piramida Tengah)"
+                    description="Foto strip pink tengah "
+                    value={story.tier2Image}
+                    onChange={(url) => setStory({ ...story, tier2Image: url })}
+                    aspectRatio="square"
+                  />
+                  <CmsImageUpload
+                    label="Tingkat 3 (Piramida Bawah)"
+                    description="Foto strip kuning paling bawah "
+                    value={story.tier3Image}
+                    onChange={(url) => setStory({ ...story, tier3Image: url })}
+                    aspectRatio="square"
+                  />
                 </div>
               </div>
             </CardContent>
@@ -904,29 +1006,23 @@ export function CmsManager({ initialData }: CmsManagerProps) {
             <CardContent className="pt-6 space-y-6">
               {/* Header Bagian */}
               <div className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Badge Bagian</Label>
-                    <Input
-                      value={blogs.badge}
-                      onChange={(e) => setBlogs({ ...blogs, badge: e.target.value })}
-                      className="text-xs"
-                    />
-                  </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <Label className="text-xs font-medium">Judul Bagian Depan</Label>
                     <Input
-                      value={blogs.titlePart1}
+                      value={blogs.titlePart1 || ''}
                       onChange={(e) => setBlogs({ ...blogs, titlePart1: e.target.value })}
+                      placeholder="Read our"
                       className="text-xs"
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Judul Highlight</Label>
+                    <Label className="text-xs font-medium text-[#ef599a]">Judul Highlight (Pink Miring)</Label>
                     <Input
-                      value={blogs.titleHighlight}
+                      value={blogs.titleHighlight || ''}
                       onChange={(e) => setBlogs({ ...blogs, titleHighlight: e.target.value })}
-                      className="text-xs"
+                      placeholder="blog"
+                      className="text-xs font-semibold text-[#ef599a]"
                     />
                   </div>
                 </div>
@@ -934,149 +1030,106 @@ export function CmsManager({ initialData }: CmsManagerProps) {
                   <Label className="text-xs font-medium">Subjudul Deskripsi</Label>
                   <Textarea
                     rows={2}
-                    value={blogs.subtitle}
+                    value={blogs.subtitle || ''}
                     onChange={(e) => setBlogs({ ...blogs, subtitle: e.target.value })}
+                    placeholder="Temukan artikel pilihan..."
                     className="text-xs"
                   />
                 </div>
               </div>
 
-              {/* Daftar Artikel Blog */}
+              {/* Daftar Kartu Artikel Blog (Tampilan Card Bersih & Navigasi ke Halaman Kelola Blog) */}
               <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                      Daftar Artikel ({blogs.items?.length || 0})
-                    </h3>
-                    <p className="text-[11px] text-slate-400 mt-0.5">
-                      Kelola kartu artikel yang tampil di bagian blog.
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl bg-gradient-to-r from-pink-50/70 via-white to-pink-50/40 dark:from-pink-950/20 dark:via-slate-900 dark:to-pink-950/10 border border-pink-200/60 dark:border-pink-900/40">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="inline-flex items-center justify-center size-6 rounded-lg bg-[#ef599a] text-white">
+                        <BookOpen className="size-3.5" />
+                      </span>
+                      <h3 className="text-xs font-semibold text-slate-900 dark:text-white">
+                        Daftar Kartu Artikel ({blogs.items?.length || 0})
+                      </h3>
+                    </div>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 max-w-xl">
+                      Kartu artikel aktif yang tampil di landing page. Untuk menulis artikel baru, mengubah isi teks/markdown, atau menghapus artikel, silakan buka menu khusus artikel.
                     </p>
                   </div>
                   <Button
-                    type="button"
-                    variant="outline"
+                    variant="default"
                     size="sm"
-                    onClick={addBlogItem}
-                    className="rounded-xl border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold hover:border-[#21b1db] hover:text-[#21b1db]"
+                    asChild
+                    className="rounded-xl bg-[#ef599a] hover:bg-[#df488a] text-white text-xs font-semibold shrink-0 shadow-sm"
                   >
-                    <Plus className="w-3.5 h-3.5 mr-1.5" />
-                    Tambah Artikel
+                    <Link href="/admin/blogs">
+                      <span>Kelola di Halaman Blog</span>
+                      <ArrowRight className="size-3.5 ml-1.5" />
+                    </Link>
                   </Button>
                 </div>
 
                 {(!blogs.items || blogs.items.length === 0) ? (
-                  <div className="p-8 text-center rounded-xl border border-dashed border-slate-200 dark:border-slate-800 text-xs text-slate-400">
-                    Belum ada artikel yang ditambahkan. Klik tombol di atas untuk membuat artikel baru.
+                  <div className="p-10 text-center rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 text-xs text-slate-400 space-y-2">
+                    <BookOpen className="size-8 mx-auto text-slate-300 dark:text-slate-700" />
+                    <p>Belum ada artikel yang dipublikasikan.</p>
+                    <Button variant="outline" size="sm" asChild className="rounded-xl text-xs mt-2">
+                      <Link href="/admin/blogs">Tambah Artikel Baru</Link>
+                    </Button>
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {blogs.items.map((item, idx) => (
                       <div
                         key={item.id || idx}
-                        className="p-4 rounded-xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800 space-y-3 flex flex-col justify-between"
+                        className="group rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 p-4 flex flex-col justify-between overflow-hidden shadow-xs hover:border-[#ef599a]/40 hover:shadow-md transition-all duration-200"
                       >
                         <div className="space-y-3">
-                          <div className="flex items-center justify-between pb-1.5 border-b border-slate-200/60 dark:border-slate-700/60">
-                            <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">
-                              Artikel #{idx + 1}
-                            </span>
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => setDeletingBlogIdx(idx)}
-                              className="text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 h-7 w-7 p-0"
-                              title="Hapus artikel"
-                            >
-                              <Trash2 className="w-3.5 h-3.5" />
-                            </Button>
-                          </div>
-
-                          <div className="space-y-1">
-                            <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Judul Artikel</Label>
-                            <Input
-                              placeholder="Judul artikel..."
-                              value={item.title}
-                              onChange={(e) => updateBlogItem(idx, 'title', e.target.value)}
-                              className="text-xs"
+                          {/* Image Thumbnail */}
+                          <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-[#FDF0F5] dark:bg-slate-800">
+                            <Image
+                              src={item.imageUrl || '/assets/img/hero1.png'}
+                              alt={item.title || 'Artikel'}
+                              fill
+                              className="object-cover group-hover:scale-105 transition-transform duration-300"
+                              sizes="(max-width: 768px) 100vw, 33vw"
                             />
+                            {item.tag && (
+                              <div className="absolute top-2.5 left-2.5">
+                                <span className="bg-[#ef599a] text-white text-[10px] font-semibold px-2 py-0.5 rounded-full shadow-xs">
+                                  {item.tag}
+                                </span>
+                              </div>
+                            )}
+                            {(item.readTime || item.publishedAt) && (
+                              <div className="absolute top-2.5 right-2.5">
+                                <span className="bg-white/90 dark:bg-slate-900/90 text-slate-700 dark:text-slate-300 text-[10px] font-medium px-2 py-0.5 rounded-full backdrop-blur-xs">
+                                  {item.readTime || item.publishedAt}
+                                </span>
+                              </div>
+                            )}
                           </div>
 
-                          <div className="grid grid-cols-2 gap-2">
-                            <div className="space-y-1">
-                              <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Slug URL</Label>
-                              <Input
-                                placeholder="judul-artikel"
-                                value={item.slug}
-                                onChange={(e) => updateBlogItem(idx, 'slug', e.target.value)}
-                                className="text-xs font-mono"
-                              />
-                            </div>
-                            <div className="space-y-1">
-                              <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Kategori / Tag</Label>
-                              <Input
-                                placeholder="Edukasi"
-                                value={item.tag || ''}
-                                onChange={(e) => updateBlogItem(idx, 'tag', e.target.value)}
-                                className="text-xs"
-                              />
-                            </div>
-                          </div>
-
-                          <div className="grid grid-cols-2 gap-2">
-                            <div className="space-y-1">
-                              <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Penulis</Label>
-                              <Input
-                                placeholder="Tim Alpha Kids"
-                                value={item.author || ''}
-                                onChange={(e) => updateBlogItem(idx, 'author', e.target.value)}
-                                className="text-xs"
-                              />
-                            </div>
-                            <div className="space-y-1">
-                              <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Tanggal & Waktu Baca</Label>
-                              <Input
-                                placeholder="8 Okt 2026 • 3 mnt baca"
-                                value={item.publishedAt || item.readTime || ''}
-                                onChange={(e) => updateBlogItem(idx, 'publishedAt', e.target.value)}
-                                className="text-xs"
-                              />
-                            </div>
-                          </div>
-
+                          {/* Info */}
                           <div className="space-y-1">
-                            <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Path Gambar</Label>
-                            <Input
-                              placeholder="/assets/img/hero1.png"
-                              value={item.imageUrl}
-                              onChange={(e) => updateBlogItem(idx, 'imageUrl', e.target.value)}
-                              className="text-xs font-mono"
-                            />
+                            <h4 className="text-xs font-semibold text-slate-900 dark:text-white line-clamp-2 leading-snug group-hover:text-[#ef599a] transition-colors">
+                              {item.title}
+                            </h4>
+                            <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                              {item.excerpt || 'Tidak ada ringkasan.'}
+                            </p>
                           </div>
+                        </div>
 
-                          <div className="space-y-1">
-                            <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Ringkasan / Excerpt</Label>
-                            <Textarea
-                              rows={2}
-                              placeholder="Ringkasan isi artikel..."
-                              value={item.excerpt}
-                              onChange={(e) => updateBlogItem(idx, 'excerpt', e.target.value)}
-                              className="text-xs leading-relaxed"
-                            />
-                          </div>
-
-                          <div className="space-y-1">
-                            <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">
-                              Konten Lengkap Artikel (Markdown)
-                            </Label>
-                            <Textarea
-                              rows={5}
-                              placeholder="## Subjudul 1&#10;&#10;Paragraf artikel..."
-                              value={item.content || ''}
-                              onChange={(e) => updateBlogItem(idx, 'content', e.target.value)}
-                              className="text-xs font-mono leading-relaxed"
-                            />
-                          </div>
+                        {/* Footer Card */}
+                        <div className="pt-3 mt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+                          <span className="truncate max-w-[120px] font-medium text-slate-600 dark:text-slate-300">
+                            {item.author || 'Tim Alpha Kids'}
+                          </span>
+                          <Link
+                            href="/admin/blogs"
+                            className="inline-flex items-center text-[11px] font-semibold text-[#ef599a] hover:underline"
+                          >
+                            Kelola Detail →
+                          </Link>
                         </div>
                       </div>
                     ))}
@@ -1098,76 +1151,83 @@ export function CmsManager({ initialData }: CmsManagerProps) {
                   Pengaturan Bagian Kakak Mentor
                 </CardTitle>
                 <CardDescription className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                  Informasi profil mentor ahli yang mendampingi siswa di Alpha Kids.
+                  Kalimat visi misi pendidikan dan profil 4 kakak mentor pendamping siswa.
                 </CardDescription>
               </div>
               {renderSaveButton('mentors', mentors)}
             </CardHeader>
             <CardContent className="pt-6 space-y-6">
-              {/* Header Bagian */}
+              {/* Header Bagian: Visi Misi */}
               <div className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  Kalimat Misi Utama (Section Heading)
+                </h3>
+                <div className="space-y-3 p-4 rounded-xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800">
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Badge Bagian</Label>
+                    <Label className="text-xs font-medium">Baris 1 - Pembuka</Label>
                     <Input
-                      value={mentors.badge}
-                      onChange={(e) => setMentors({ ...mentors, badge: e.target.value })}
+                      value={mentors.titlePart1 || ''}
+                      onChange={(e) => setMentors({ ...mentors, titlePart1: e.target.value })}
+                      placeholder="Misi kami adalah membantu anak"
                       className="text-xs"
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Judul Utama</Label>
+                    <Label className="text-xs font-medium text-amber-600 dark:text-amber-400">
+                      Baris 2 - Aksen Kuning Miring
+                    </Label>
                     <Input
-                      value={mentors.title}
-                      onChange={(e) => setMentors({ ...mentors, title: e.target.value })}
+                      value={mentors.titleHighlight || ''}
+                      onChange={(e) => setMentors({ ...mentors, titleHighlight: e.target.value })}
+                      placeholder="menemukan kegembiraan belajar kreatif"
+                      className="text-xs font-semibold text-amber-700 dark:text-amber-300"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-medium">Baris 3 - Penutup</Label>
+                    <Input
+                      value={mentors.titlePart2 || ''}
+                      onChange={(e) => setMentors({ ...mentors, titlePart2: e.target.value })}
+                      placeholder="dan tumbuh menjadi generasi juara."
                       className="text-xs"
                     />
                   </div>
-                </div>
-                <div className="space-y-1.5">
-                  <Label className="text-xs font-medium">Subjudul Bagian</Label>
-                  <Textarea
-                    rows={2}
-                    value={mentors.subtitle}
-                    onChange={(e) => setMentors({ ...mentors, subtitle: e.target.value })}
-                    className="text-xs"
-                  />
                 </div>
               </div>
 
-              {/* 3 Profil Mentor */}
+              {/* 4 Profil Mentor */}
               <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-4">
                 <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  Profil Mentor Utama
+                  Profil 4 Mentor Utama
                 </h3>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   {/* Mentor 1 */}
                   <div className="p-4 rounded-xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800 space-y-3">
                     <div className="pb-1 border-b border-slate-200/60 dark:border-slate-700/60">
                       <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">Mentor 1</span>
                     </div>
+                    <CmsImageUpload
+                      label="Foto Profil"
+                      value={mentors.mentor1Avatar}
+                      onChange={(url) => setMentors({ ...mentors, mentor1Avatar: url })}
+                      aspectRatio="square"
+                    />
                     <div className="space-y-1">
                       <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Nama Lengkap</Label>
                       <Input
-                        value={mentors.mentor1Name}
+                        value={mentors.mentor1Name || ''}
                         onChange={(e) => setMentors({ ...mentors, mentor1Name: e.target.value })}
+                        placeholder="Kak Budi Prasetyo"
                         className="text-xs"
                       />
                     </div>
                     <div className="space-y-1">
                       <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Peran / Keahlian</Label>
                       <Input
-                        value={mentors.mentor1Role}
+                        value={mentors.mentor1Role || ''}
                         onChange={(e) => setMentors({ ...mentors, mentor1Role: e.target.value })}
-                        className="text-xs"
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Keterangan / Tag</Label>
-                      <Input
-                        value={mentors.mentor1Tag}
-                        onChange={(e) => setMentors({ ...mentors, mentor1Tag: e.target.value })}
+                        placeholder="Eksplorasi Sains & Robotika"
                         className="text-xs"
                       />
                     </div>
@@ -1178,27 +1238,27 @@ export function CmsManager({ initialData }: CmsManagerProps) {
                     <div className="pb-1 border-b border-slate-200/60 dark:border-slate-700/60">
                       <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">Mentor 2</span>
                     </div>
+                    <CmsImageUpload
+                      label="Foto Profil"
+                      value={mentors.mentor2Avatar}
+                      onChange={(url) => setMentors({ ...mentors, mentor2Avatar: url })}
+                      aspectRatio="square"
+                    />
                     <div className="space-y-1">
                       <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Nama Lengkap</Label>
                       <Input
-                        value={mentors.mentor2Name}
+                        value={mentors.mentor2Name || ''}
                         onChange={(e) => setMentors({ ...mentors, mentor2Name: e.target.value })}
+                        placeholder="Kak Sarah Amelia"
                         className="text-xs"
                       />
                     </div>
                     <div className="space-y-1">
                       <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Peran / Keahlian</Label>
                       <Input
-                        value={mentors.mentor2Role}
+                        value={mentors.mentor2Role || ''}
                         onChange={(e) => setMentors({ ...mentors, mentor2Role: e.target.value })}
-                        className="text-xs"
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Keterangan / Tag</Label>
-                      <Input
-                        value={mentors.mentor2Tag}
-                        onChange={(e) => setMentors({ ...mentors, mentor2Tag: e.target.value })}
+                        placeholder="Spesialis Koding & Game Dev"
                         className="text-xs"
                       />
                     </div>
@@ -1209,27 +1269,58 @@ export function CmsManager({ initialData }: CmsManagerProps) {
                     <div className="pb-1 border-b border-slate-200/60 dark:border-slate-700/60">
                       <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">Mentor 3</span>
                     </div>
+                    <CmsImageUpload
+                      label="Foto Profil"
+                      value={mentors.mentor3Avatar}
+                      onChange={(url) => setMentors({ ...mentors, mentor3Avatar: url })}
+                      aspectRatio="square"
+                    />
                     <div className="space-y-1">
                       <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Nama Lengkap</Label>
                       <Input
-                        value={mentors.mentor3Name}
+                        value={mentors.mentor3Name || ''}
                         onChange={(e) => setMentors({ ...mentors, mentor3Name: e.target.value })}
+                        placeholder="Kak Nadia Utami"
                         className="text-xs"
                       />
                     </div>
                     <div className="space-y-1">
                       <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Peran / Keahlian</Label>
                       <Input
-                        value={mentors.mentor3Role}
+                        value={mentors.mentor3Role || ''}
                         onChange={(e) => setMentors({ ...mentors, mentor3Role: e.target.value })}
+                        placeholder="Seni Digital & Animasi"
+                        className="text-xs"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Mentor 4 */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800 space-y-3">
+                    <div className="pb-1 border-b border-slate-200/60 dark:border-slate-700/60">
+                      <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">Mentor 4</span>
+                    </div>
+                    <CmsImageUpload
+                      label="Foto Profil"
+                      value={mentors.mentor4Avatar}
+                      onChange={(url) => setMentors({ ...mentors, mentor4Avatar: url })}
+                      aspectRatio="square"
+                    />
+                    <div className="space-y-1">
+                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Nama Lengkap</Label>
+                      <Input
+                        value={mentors.mentor4Name || ''}
+                        onChange={(e) => setMentors({ ...mentors, mentor4Name: e.target.value })}
+                        placeholder="Kak Jacob Rama"
                         className="text-xs"
                       />
                     </div>
                     <div className="space-y-1">
-                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Keterangan / Tag</Label>
+                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Peran / Keahlian</Label>
                       <Input
-                        value={mentors.mentor3Tag}
-                        onChange={(e) => setMentors({ ...mentors, mentor3Tag: e.target.value })}
+                        value={mentors.mentor4Role || ''}
+                        onChange={(e) => setMentors({ ...mentors, mentor4Role: e.target.value })}
+                        placeholder="Logika & Matematika Kreatif"
                         className="text-xs"
                       />
                     </div>
@@ -1379,60 +1470,73 @@ export function CmsManager({ initialData }: CmsManagerProps) {
             </CardHeader>
             <CardContent className="pt-6 space-y-6">
               <div className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Badge</Label>
-                    <Input
-                      value={cta.badge}
-                      onChange={(e) => setCta({ ...cta, badge: e.target.value })}
-                      className="text-xs"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Judul Utama</Label>
-                    <Input
-                      value={cta.title}
-                      onChange={(e) => setCta({ ...cta, title: e.target.value })}
-                      className="text-xs"
-                    />
-                  </div>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium">Judul Utama</Label>
+                  <Input
+                    value={cta.title || ''}
+                    onChange={(e) => setCta({ ...cta, title: e.target.value })}
+                    placeholder="Mulai Petualangan Belajar Digital Buah Hati Anda!"
+                    className="text-xs"
+                  />
                 </div>
 
                 <div className="space-y-1.5">
                   <Label className="text-xs font-medium">Subjudul / Pesan Penutup</Label>
                   <Textarea
                     rows={2}
-                    value={cta.subtitle}
+                    value={cta.subtitle || ''}
                     onChange={(e) => setCta({ ...cta, subtitle: e.target.value })}
+                    placeholder="Konsultasikan bidang dan program belajar..."
                     className="text-xs leading-relaxed"
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
                   <div className="space-y-1.5">
                     <Label className="text-xs font-medium">Teks Tombol Utama</Label>
                     <Input
-                      value={cta.btnText}
+                      value={cta.btnText || ''}
                       onChange={(e) => setCta({ ...cta, btnText: e.target.value })}
+                      placeholder="Daftar Sekarang"
                       className="text-xs"
                     />
                   </div>
                   <div className="space-y-1.5">
                     <Label className="text-xs font-medium">Tautan Tombol Utama (URL)</Label>
                     <Input
-                      value={cta.btnLink}
+                      value={cta.btnLink || ''}
                       onChange={(e) => setCta({ ...cta, btnLink: e.target.value })}
+                      placeholder="#programs"
                       className="text-xs font-mono"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-medium">Teks Tombol WhatsApp</Label>
+                    <Input
+                      value={cta.btnSecondaryText || ''}
+                      onChange={(e) => setCta({ ...cta, btnSecondaryText: e.target.value })}
+                      placeholder="Tanya di WhatsApp"
+                      className="text-xs"
                     />
                   </div>
                   <div className="space-y-1.5">
                     <Label className="text-xs font-medium">Tautan WhatsApp Konsultasi</Label>
                     <Input
-                      value={cta.consultationLink}
+                      value={cta.consultationLink || ''}
                       onChange={(e) => setCta({ ...cta, consultationLink: e.target.value })}
                       className="text-xs font-mono"
                     />
                   </div>
+                </div>
+
+                <div className="pt-3 border-t border-slate-100 dark:border-slate-800">
+                  <CmsImageUpload
+                    label="Foto Ilustrasi Siswa CTA (Sisi Kiri)"
+                    description="Foto cutout siswa dengan ransel dan lingkaran aura pink (cta.png). Disarankan PNG transparan."
+                    value={cta.ctaImage}
+                    onChange={(url) => setCta({ ...cta, ctaImage: url })}
+                    aspectRatio="portrait"
+                  />
                 </div>
               </div>
             </CardContent>
@@ -1531,39 +1635,30 @@ export function CmsManager({ initialData }: CmsManagerProps) {
             </CardContent>
           </Card>
         </TabsContent>
+          </div>
+
+          {/* Right Column: Sticky Live Preview Canvas in Split View */}
+          {viewMode === 'split' && (
+            <div className="xl:col-span-6 xl:sticky xl:top-20 xl:h-[calc(100vh-6.5rem)] min-w-0 flex flex-col">
+              <CmsPreviewCanvas
+                data={previewData}
+                activeTab={activeTab}
+                device={previewDevice}
+                scope={previewScope}
+                onDeviceChange={setPreviewDevice}
+                onScopeChange={setPreviewScope}
+                onOpenModal={() => setIsModalOpen(true)}
+                onClose={() => setViewMode('form')}
+              />
+            </div>
+          )}
+        </div>
       </Tabs>
 
       {/* =================================================================== */}
       {/* DIALOG KONFIRMASI HAPUS (ANTI-SLOP: Modal Dialog Standar)           */}
       {/* =================================================================== */}
 
-      {/* 1. Modal Hapus Artikel Blog */}
-      <AlertDialog
-        open={deletingBlogIdx !== null}
-        onOpenChange={(open) => !open && setDeletingBlogIdx(null)}
-      >
-        <AlertDialogContent className="rounded-2xl max-w-sm">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-base font-semibold">
-              Hapus Artikel?
-            </AlertDialogTitle>
-            <AlertDialogDescription className="text-xs text-slate-500">
-              Artikel ini akan dihapus dari daftar. Jangan lupa klik &quot;Simpan Perubahan&quot; pada tab Blog agar pembaruan tersimpan ke server.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel className="rounded-xl text-xs">
-              Batal
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={confirmRemoveBlogItem}
-              className="bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-semibold"
-            >
-              Hapus Artikel
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
 
       {/* 2. Modal Hapus FAQ */}
       <AlertDialog
@@ -1592,6 +1687,20 @@ export function CmsManager({ initialData }: CmsManagerProps) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* 3. Modal Pratinjau Layar Penuh Interaktif */}
+      <CmsPreviewModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        data={previewData}
+        activeTab={activeTab}
+        device={previewDevice}
+        scope={previewScope}
+        onDeviceChange={setPreviewDevice}
+        onScopeChange={setPreviewScope}
+        onSaveCurrentTab={handleSaveCurrentTab}
+        isSaving={isSaving}
+      />
     </div>
   );
 }
