@@ -22,7 +22,7 @@ export function LandingHero({ content }: LandingHeroProps) {
       {/* 1. Left Background Puzzle: 50% in, 50% out of screen (Fully Responsive Scaling) */}
       <div
         aria-hidden="true"
-        className="absolute left-0 top-[45%] sm:top-[50%] -translate-y-1/2 -translate-x-1/2 w-[220px] h-[220px] xs:w-[280px] xs:h-[280px] sm:w-[460px] sm:h-[460px] lg:w-[560px] lg:h-[560px] xl:w-[720px] xl:h-[720px] 2xl:w-[840px] 2xl:h-[840px] pointer-events-none select-none z-[1]"
+        className="absolute left-0 top-[45%] sm:top-[50%] -translate-y-1/2 -translate-x-1/2 w-[220px] h-[220px] xs:w-[280px] xs:h-[280px] sm:w-[420px] sm:h-[420px] lg:w-[500px] lg:h-[500px] xl:w-[580px] xl:h-[580px] 2xl:w-[680px] 2xl:h-[680px] min-[1800px]:w-[840px] min-[1800px]:h-[840px] pointer-events-none select-none z-[1]"
       >
         <div className="relative w-full h-full rotate-12 filter blur-[2px] sm:blur-[3px] opacity-70 sm:opacity-85 dark:opacity-60 transition-all">
           <Image
@@ -38,7 +38,7 @@ export function LandingHero({ content }: LandingHeroProps) {
       {/* 2. Right Background Puzzle: 50% in, 50% out of screen (180 derajat) */}
       <div
         aria-hidden="true"
-        className="absolute right-0 top-[65%] sm:top-[60%] -translate-y-1/2 translate-x-1/2 w-[220px] h-[220px] xs:w-[280px] xs:h-[280px] sm:w-[460px] sm:h-[460px] lg:w-[560px] lg:h-[560px] xl:w-[720px] xl:h-[720px] 2xl:w-[840px] 2xl:h-[840px] pointer-events-none select-none z-[1]"
+        className="absolute right-0 top-[65%] sm:top-[60%] -translate-y-1/2 translate-x-1/2 w-[220px] h-[220px] xs:w-[280px] xs:h-[280px] sm:w-[420px] sm:h-[420px] lg:w-[500px] lg:h-[500px] xl:w-[580px] xl:h-[580px] 2xl:w-[680px] 2xl:h-[680px] min-[1800px]:w-[840px] min-[1800px]:h-[840px] pointer-events-none select-none z-[1]"
       >
         <div className="relative w-full h-full -rotate-12 filter blur-[2px] sm:blur-[3px] opacity-70 sm:opacity-90 dark:opacity-60 transition-all">
           <Image
@@ -63,7 +63,7 @@ export function LandingHero({ content }: LandingHeroProps) {
         initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.55, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute left-2 xl:left-4 2xl:left-24 top-1/2 -translate-y-[30%] w-[260px] h-[260px] xl:w-[320px] xl:h-[320px] 2xl:w-[450px] 2xl:h-[450px] pointer-events-none select-none z-10 hidden xl:block"
+        className="absolute left-0 xl:left-2 2xl:left-6 min-[1800px]:left-20 top-1/2 -translate-y-[32%] w-[220px] h-[220px] xl:w-[260px] xl:h-[260px] 2xl:w-[330px] 2xl:h-[330px] min-[1800px]:w-[430px] min-[1800px]:h-[430px] pointer-events-none select-none z-10 hidden xl:block"
       >
         <div className="relative w-full h-full drop-shadow-2xl">
           <Image
@@ -82,7 +82,7 @@ export function LandingHero({ content }: LandingHeroProps) {
         initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.55, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute right-2 xl:right-4 2xl:right-24 top-1/2 -translate-y-[60%] w-[260px] h-[260px] xl:w-[320px] xl:h-[320px] 2xl:w-[450px] 2xl:h-[450px] pointer-events-none select-none z-10 hidden xl:block"
+        className="absolute right-0 xl:right-2 2xl:right-6 min-[1800px]:right-20 top-1/2 -translate-y-[58%] w-[220px] h-[220px] xl:w-[260px] xl:h-[260px] 2xl:w-[330px] 2xl:h-[330px] min-[1800px]:w-[430px] min-[1800px]:h-[430px] pointer-events-none select-none z-10 hidden xl:block"
       >
         <div className="relative w-full h-full drop-shadow-2xl">
           <Image
@@ -105,9 +105,9 @@ export function LandingHero({ content }: LandingHeroProps) {
           initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.45, delay: 0.28, ease: 'easeOut' }}
-          className="absolute top-2 left-2 sm:left-12 lg:left-8 z-10 pointer-events-none hidden md:flex flex-col items-center"
+          className="absolute top-0 xl:-top-2 left-2 sm:left-6 lg:left-6 xl:left-8 2xl:left-12 z-10 pointer-events-none hidden md:flex flex-col items-center"
         >
-          <div className="relative size-12 sm:size-14 mb-1">
+          <div className="relative size-10 sm:size-12 mb-1">
             <Image
               src="/assets/img/Ornamen Bintang Ungu AlphaKids_revisi0.png"
               alt="Bintang Ungu"
@@ -115,7 +115,7 @@ export function LandingHero({ content }: LandingHeroProps) {
               className="object-contain"
             />
           </div>
-          <CurvedArrow className="w-12 h-12 sm:w-14 sm:h-14 text-[#21b1db] opacity-80 transform -rotate-12" />
+          <CurvedArrow className="w-10 h-10 sm:w-12 sm:h-12 text-[#21b1db] opacity-80 transform -rotate-12" />
         </motion.div>
 
         {/* 2. Mid-Left: Concentric Outline Rings (Alpha Cyan) */}
@@ -126,18 +126,18 @@ export function LandingHero({ content }: LandingHeroProps) {
         {/* ================================================================= */}
         {/* CENTERED HERO CONTENT (ALPHA KIDS RESPONSIVE TYPOGRAPHY & LAYOUT) */}
         {/* ================================================================= */}
-        <div className="text-center max-w-4xl lg:max-w-5xl mx-auto pt-2 sm:pt-6">
+        <div className="text-center max-w-2xl xl:max-w-3xl 2xl:max-w-4xl min-[1800px]:max-w-5xl mx-auto pt-2 sm:pt-6">
           {/* Centered Master Headline */}
           <motion.h1
             initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.48, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
-            className="text-3xl xs:text-4xl sm:text-5xl md:text-5xl lg:text-[3.5rem] xl:text-[4.25rem] 2xl:text-[5.25rem] font-semibold font-sans tracking-tight text-slate-900 dark:text-white leading-[1.18] sm:leading-[1.14] xl:leading-[1.12]"
+            className="text-3xl xs:text-4xl sm:text-5xl md:text-5xl lg:text-[3.25rem] xl:text-[3.65rem] 2xl:text-[4.25rem] min-[1800px]:text-[5.25rem] font-semibold font-sans tracking-tight text-slate-900 dark:text-white leading-[1.18] sm:leading-[1.15]"
           >
             Tempat terbaik{' '}
             <span className="whitespace-nowrap inline-flex items-center gap-2 sm:gap-3.5 align-baseline">
               <span>untuk</span>
-              <span className="relative inline-block size-7 xs:size-8 sm:size-10 lg:size-11 xl:size-12 shrink-0 select-none pointer-events-none drop-shadow-md rotate-12 -mt-1 sm:-mt-2">
+              <span className="relative inline-block size-7 xs:size-8 sm:size-9 lg:size-10 xl:size-11 shrink-0 select-none pointer-events-none drop-shadow-md rotate-12 -mt-1 sm:-mt-2">
                 <Image
                   src="/assets/img/Ornamen Puzzle Kuning AlphaKids_revisi0.png"
                   alt="Puzzle Kuning"
