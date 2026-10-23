@@ -18,15 +18,19 @@ export function LandingMentorsBlock({ content }: LandingMentorsBlockProps) {
   // 8 Unique Mentors featuring orang1.webp through orang8.webp with unique abstract shapes
   const allMentors = [
     {
-      name: content?.mentor1Name || 'Kak Budi Prasetyo',
-      role: content?.mentor1Role || 'Eksplorasi Sains & Robotika',
+      name: content?.mentor1Name || 'Kak Budi Prasetyo, S.Si.',
+      role: content?.mentor1Role || 'Mentor OSN Matematika SD & SMP',
+      institution: content?.mentor1Institution || 'Institut Teknologi Bandung (ITB)',
+      achievement: content?.mentor1Achievement || 'Medalis Perak OSN Matematika',
       avatar: content?.mentor1Avatar || 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang1.webp',
       shape: '63% 37% 54% 46% / 40% 58% 42% 60%',
       decoration: null,
     },
     {
-      name: content?.mentor2Name || 'Kak Sarah Amelia',
-      role: content?.mentor2Role || 'Spesialis Koding & Game Dev',
+      name: content?.mentor2Name || 'Kak Sarah Amelia, M.Sc.',
+      role: content?.mentor2Role || 'Mentor OSN IPA / Sains Terpadu',
+      institution: content?.mentor2Institution || 'Universitas Gadjah Mada (UGM)',
+      achievement: content?.mentor2Achievement || 'Peraih Emas OSN IPA Nasional',
       avatar: content?.mentor2Avatar || 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang2.webp',
       shape: '40% 60% 38% 62% / 62% 38% 62% 38%',
       decoration: (
@@ -42,8 +46,19 @@ export function LandingMentorsBlock({ content }: LandingMentorsBlockProps) {
       ),
     },
     {
-      name: content?.mentor4Name || 'Kak Jacob Rama',
-      role: content?.mentor4Role || 'Logika & Matematika Kreatif',
+      name: content?.mentor3Name || 'Kak Nadia Utami, S.Pd.',
+      role: content?.mentor3Role || 'Mentor OSN IPS Terpadu',
+      institution: content?.mentor3Institution || 'Universitas Indonesia (UI)',
+      achievement: content?.mentor3Achievement || 'Finalis OSN IPS & Peneliti Muda',
+      avatar: content?.mentor3Avatar || 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang4.webp',
+      shape: '38% 62% 65% 35% / 58% 40% 60% 42%',
+      decoration: null,
+    },
+    {
+      name: content?.mentor4Name || 'Kak Jacob Rama, S.T.',
+      role: content?.mentor4Role || 'Logika & Eksplorasi Sains',
+      institution: content?.mentor4Institution || 'Institut Teknologi Sepuluh Nopember (ITS)',
+      achievement: content?.mentor4Achievement || 'Juara 1 Lomba Inovasi Ilmiah',
       avatar: content?.mentor4Avatar || 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang3.webp',
       shape: '68% 32% 60% 40% / 36% 64% 36% 64%',
       decoration: (
@@ -53,15 +68,10 @@ export function LandingMentorsBlock({ content }: LandingMentorsBlockProps) {
       ),
     },
     {
-      name: content?.mentor3Name || 'Kak Nadia Utami',
-      role: content?.mentor3Role || 'Seni Digital & Animasi',
-      avatar: content?.mentor3Avatar || 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang4.webp',
-      shape: '38% 62% 65% 35% / 58% 40% 60% 42%',
-      decoration: null,
-    },
-    {
-      name: 'Kak Kevin Alamsyah',
+      name: 'Kak Kevin Alamsyah, S.Si.',
       role: 'Juara ONMIPA & Fisika Seru',
+      institution: 'Institut Teknologi Bandung (ITB)',
+      achievement: 'Medalis Emas ONMIPA Fisika',
       avatar: '/assets/img/orang5.webp',
       shape: '55% 45% 68% 32% / 42% 60% 40% 58%',
       decoration: (
@@ -71,15 +81,19 @@ export function LandingMentorsBlock({ content }: LandingMentorsBlockProps) {
       ),
     },
     {
-      name: 'Kak Dimas Prayoga',
-      role: 'Web Dev & Algoritma Logika',
+      name: 'Kak Dimas Prayoga, S.Kom.',
+      role: 'Algoritma & Pemecahan Masalah',
+      institution: 'Universitas Indonesia (UI)',
+      achievement: 'Finalis ICPC Asia Regional',
       avatar: '/assets/img/orang6.webp',
       shape: '42% 58% 35% 65% / 58% 42% 58% 42%',
       decoration: null,
     },
     {
-      name: 'Kak Zahra Aulia',
-      role: 'Desain Interaktif & UI Karakter',
+      name: 'Kak Zahra Aulia, S.Si.',
+      role: 'Sains Kreatif & Biologi Eksperimen',
+      institution: 'Universitas Gadjah Mada (UGM)',
+      achievement: 'Medalis Perunggu OSN Biologi',
       avatar: '/assets/img/orang7.webp',
       shape: '65% 35% 48% 52% / 38% 62% 38% 62%',
       decoration: (
@@ -89,8 +103,10 @@ export function LandingMentorsBlock({ content }: LandingMentorsBlockProps) {
       ),
     },
     {
-      name: 'Kak Fajar Ramadhan',
-      role: 'Robotika Cerdas & IoT Cilik',
+      name: 'Kak Fajar Ramadhan, S.Pd.',
+      role: 'Matematika Nalaria Realistik',
+      institution: 'Universitas Negeri Yogyakarta (UNY)',
+      achievement: 'Pelatih Pembinaan Olimpiade SD',
       avatar: '/assets/img/orang8.webp',
       shape: '36% 64% 58% 42% / 50% 38% 62% 50%',
       decoration: null,
@@ -121,7 +137,7 @@ export function LandingMentorsBlock({ content }: LandingMentorsBlockProps) {
       </div>
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative z-20">
-        {/* Centered Heading */}
+        {/* Centered Heading with Badge and Subtitle */}
         <motion.div
           initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -129,14 +145,21 @@ export function LandingMentorsBlock({ content }: LandingMentorsBlockProps) {
           transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
           className="text-center max-w-3xl mx-auto mb-14 sm:mb-18"
         >
+          {/* Badge */}
+          <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#FFCC07] text-white text-xs font-bold uppercase tracking-wider mb-4 shadow-[0_2px_4px_rgba(0,0,0,0.14)] drop-shadow-[0_1px_1px_rgba(0,0,0,0.25)]">
+            <span>{content?.badge || 'MENTOR ALPHA KIDS'}</span>
+          </div>
+
           <h2 className="text-3xl sm:text-5xl lg:text-[3.25rem] font-semibold font-sans tracking-tight leading-[1.2] text-white">
-            {content?.titlePart1 || 'Misi kami adalah membantu anak'} <br />
+            {content?.titlePart1 || 'Berprestasi di bidangnya,'} <br />
             <span className="font-sans italic font-normal text-[#FFCC07]">
-              {content?.titleHighlight || 'menemukan kegembiraan belajar kreatif'}
-            </span>{' '}
-            <br />
-            {content?.titlePart2 || 'dan tumbuh menjadi generasi juara.'}
+              {content?.titleHighlight || 'terlatih dalam mengajar.'}
+            </span>
           </h2>
+
+          <p className="text-sm sm:text-base text-cyan-50/90 max-w-2xl mx-auto mt-4 font-normal leading-relaxed">
+            {content?.subtitle || 'Mentor Alpha Kids dipilih berdasarkan kompetensi akademik, pengalaman, dan kemampuan pedagogik untuk membantu anak memahami materi dengan lebih efektif.'}
+          </p>
         </motion.div>
 
         {/* Mentors Row with Navigation Controls */}
@@ -207,12 +230,12 @@ export function LandingMentorsBlock({ content }: LandingMentorsBlockProps) {
                     }}
                     className="flex flex-col items-center text-center group will-change-[filter,opacity,transform]"
                   >
-                    {/* Abstract Organic Avatar (No border, unique organic shape) */}
+                    {/* Abstract Organic Avatar (No hover scale jumping - clean & steady) */}
                     <div className="relative mb-4">
                       {m.decoration}
                       <div
                         style={{ borderRadius: m.shape }}
-                        className="relative z-10 size-32 sm:size-36 md:size-40 overflow-hidden shadow-xl shadow-cyan-950/25 transition-transform duration-300 group-hover:scale-105"
+                        className="relative z-10 size-32 sm:size-36 md:size-40 overflow-hidden shadow-xl shadow-cyan-950/25"
                       >
                         <Image
                           src={m.avatar}
@@ -224,13 +247,24 @@ export function LandingMentorsBlock({ content }: LandingMentorsBlockProps) {
                       </div>
                     </div>
 
-                    {/* Name & Role */}
-                    <h3 className="font-sans font-semibold text-base sm:text-lg text-white mb-1">
+                    {/* Nama */}
+                    <h3 className="font-sans font-semibold text-base sm:text-lg text-white mb-1.5">
                       {m.name}
                     </h3>
-                    <p className="text-xs sm:text-sm text-cyan-100 font-medium">
-                      {m.role}
-                    </p>
+
+                    {/* Asal Instansi & Prestasi */}
+                    <div className="flex flex-col items-center gap-1.5 w-full max-w-[210px]">
+                      {m.institution && (
+                        <span className="inline-flex items-center text-[11px] font-medium text-white bg-white/20 backdrop-blur-xs px-3 py-0.5 rounded-full shadow-[0_2px_4px_rgba(0,0,0,0.14)] text-center leading-tight">
+                          {m.institution}
+                        </span>
+                      )}
+                      {m.achievement && (
+                        <span className="inline-flex items-center text-[10.5px] font-bold text-white bg-[#FFCC07] px-3 py-0.5 rounded-full shadow-[0_2px_4px_rgba(0,0,0,0.14)] drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)] text-center leading-tight">
+                          {m.achievement}
+                        </span>
+                      )}
+                    </div>
                   </motion.div>
                 ))}
               </motion.div>

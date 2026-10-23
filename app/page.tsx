@@ -9,14 +9,15 @@ import { LandingProgramShowcase } from '@/components/landing/landing-program-sho
 import { LandingStorySection } from '@/components/landing/landing-story-section';
 import { LandingBlogSection } from '@/components/landing/landing-blog-section';
 import { LandingMentorsBlock } from '@/components/landing/landing-mentors-block';
+import { LandingTestimonials } from '@/components/landing/landing-testimonials';
 import { LandingFaq } from '@/components/landing/landing-faq';
 import { LandingFinalCta } from '@/components/landing/landing-final-cta';
 import { LandingFooter } from '@/components/landing/landing-footer';
 
 export const metadata = {
-  title: 'Alpha Kids — Platform Program Belajar Digital & Eksplorasi Kreatif Anak',
+  title: 'Alpha Kids — Bimbingan Juara OSN Matematika, Sains, & IPS SD/SMP',
   description:
-    'Eksplorasi coding, robotika, logika, dan kreativitas digital anak usia 4-15 tahun melalui metode gamifikasi seru dan mentor bersertifikat.',
+    'Program bimbingan persiapan olimpiade sains nasional (OSN) terstruktur dengan pendampingan personal dari mentor berprestasi tingkat nasional.',
 };
 
 export const dynamic = 'force-dynamic';
@@ -71,6 +72,9 @@ export default async function HomePage() {
           programs={activePrograms}
           categories={activeCategories}
         />
+
+        {/* 5.5. Testimoni Siswa & Orang Tua (Juara OSN) */}
+        <LandingTestimonials content={cmsData.testimonials} />
 
         {/* 6. Tanya Jawab (FAQ) */}
         <LandingFaq content={cmsData.faq} />

@@ -21,15 +21,15 @@ export function LandingStorySection({ content }: LandingStorySectionProps) {
   const shouldReduceMotion = useReducedMotion();
 
   // Dynamic CMS fields with robust fallbacks
-  const line1 = content?.titleLine1 || 'Materi belajar yang';
-  const line2 = content?.titleLine2 || 'disediakan';
-  const highlight = content?.titleHighlight || 'menyenangkan';
-  const line3 = content?.titleLine3 || 'untuk anak';
+  const line1 = content?.titleLine1 || 'Setiap anak';
+  const line2 = content?.titleLine2 || 'punya potensi';
+  const highlight = content?.titleHighlight || 'juara';
+  const line3 = content?.titleLine3 || 'siap diasah';
   const subtitle =
     content?.subtitle ||
     content?.desc1 ||
-    'Jangan khawatir! Buah hati Anda akan menikmati setiap sesi pembelajaran dengan materi interaktif yang mudah dipahami, aplikatif, dan menyenangkan.';
-  const ctaText = content?.ctaText || 'Pelajari Lebih Lanjut';
+    'Alpha Kids mendampingi langkah demi langkah: belajar yang terarah, mentor yang terkurasi, dan perkembangan yang terukur jelas.';
+  const ctaText = content?.ctaText || 'Daftar Program';
   const ctaLink = content?.ctaLink || '#programs';
   const loopSize = content?.loopSize || 'normal';
   const loopScale = content?.loopScale ?? 100;
@@ -58,15 +58,16 @@ export function LandingStorySection({ content }: LandingStorySectionProps) {
               </span>{' '}
               <br />
               {line2} <br />
-              <span className="relative inline-flex items-center justify-center align-baseline whitespace-nowrap mx-1.5 sm:mx-2 my-1.5 sm:my-2 px-3.5 sm:px-4.5 py-1">
-                <span className="relative z-10 font-sans italic font-normal text-[#ef599a]">
-                  {highlight}
+              <span className="inline-flex items-center flex-wrap gap-x-2 sm:gap-x-3">
+                <span className="relative inline-flex items-center justify-center align-baseline whitespace-nowrap px-3.5 sm:px-4.5 py-1 my-1">
+                  <span className="relative z-10 font-sans italic font-normal text-[#ef599a]">
+                    {highlight}
+                  </span>
+                  {/* Hand-drawn yellow oval loop encircling dynamic highlighted word */}
+                  <YellowLoop size={loopSize} scale={loopScale} />
                 </span>
-                {/* Hand-drawn yellow oval loop encircling dynamic highlighted word */}
-                <YellowLoop size={loopSize} scale={loopScale} />
-              </span>{' '}
-              <br />
-              {line3}
+                <span className="whitespace-normal xs:whitespace-nowrap">{line3}</span>
+              </span>
             </h2>
 
             <p className="text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed max-w-lg font-normal">
@@ -76,7 +77,7 @@ export function LandingStorySection({ content }: LandingStorySectionProps) {
             <div className="pt-2 sm:pt-3">
               <Link
                 href={ctaLink}
-                className="group inline-flex items-center gap-3 sm:gap-4 pl-6 sm:pl-7 pr-2 sm:pr-2.5 py-2 sm:py-2.5 rounded-full bg-[#21b1db] hover:bg-[#1da0c7] text-white font-semibold text-sm sm:text-base shadow-xl shadow-[#21b1db]/30 transition-all hover:scale-105 active:scale-95"
+                className="group inline-flex items-center gap-3 sm:gap-4 pl-6 sm:pl-7 pr-2 sm:pr-2.5 py-2 sm:py-2.5 rounded-full bg-[#21b1db] hover:bg-[#1da0c7] text-white font-semibold text-sm sm:text-base shadow-lg shadow-[#21b1db]/25 transition-colors cursor-pointer"
               >
                 <span className="tracking-tight">{ctaText}</span>
                 <span className="size-9 sm:size-10 rounded-full bg-white text-[#21b1db] flex items-center justify-center shrink-0 shadow-md transition-transform duration-200 group-hover:scale-105 group-hover:rotate-12">

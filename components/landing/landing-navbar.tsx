@@ -217,7 +217,6 @@ export function LandingNavbar({
               </NavbarButton>
               <NavbarButton href="/auth/sign-up" variant="primary">
                 <span>Daftar</span>
-                <ArrowRight className="size-3.5" />
               </NavbarButton>
             </>
           )}

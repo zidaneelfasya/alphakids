@@ -54,7 +54,7 @@ export function LandingFinalCta({ content }: LandingFinalCtaProps) {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 xl:col-span-5 flex items-center justify-center lg:justify-start"
           >
-            <div className="relative w-full max-w-[340px] sm:max-w-[400px] lg:max-w-[420px] xl:max-w-[480px] 2xl:max-w-[520px] aspect-[1293/1217] select-none transition-transform duration-500 hover:scale-[1.02]">
+            <div className="relative w-full max-w-[340px] sm:max-w-[400px] lg:max-w-[420px] xl:max-w-[480px] 2xl:max-w-[520px] aspect-[1293/1217] select-none">
               {/* Soft radiance behind cutout */}
               <div
                 aria-hidden="true"
@@ -88,29 +88,26 @@ export function LandingFinalCta({ content }: LandingFinalCtaProps) {
             <div className="relative w-full">
               
               <h2 className="text-3xl sm:text-4xl lg:text-[2.5rem] xl:text-5xl font-semibold font-sans tracking-tight text-slate-950 leading-[1.15]">
-                {content.title || 'Mulai Petualangan Belajar Digital Buah Hati Anda!'}
+                {content.title || 'Temukan Program Belajar yang Tepat untuk Anak Anda'}
               </h2>
             </div>
 
             {/* Subtitle */}
             <p className="text-base sm:text-lg text-slate-900/85 font-normal leading-relaxed max-w-xl">
               {content.subtitle ||
-                'Konsultasikan bidang dan program belajar yang paling sesuai dengan kebutuhan si kecil bersama tim Alpha Kids.'}
+                'Pilih program sesuai kebutuhan, kemampuan, dan target belajar anak dengan dukungan mentor terseleksi dan pembelajaran yang terarah.'}
             </p>
 
             {/* Action Buttons: Playful Alpha Pink Pill + WhatsApp Clean White Pill */}
             <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3.5 pt-2 w-full sm:w-auto">
-              {/* Star Ornament near Buttons */}
-
-
               {/* Primary Button: Playful Alpha Pink Signature Pill with White Disc & ArrowUpRight */}
               <Link
                 href={content.btnLink || '#programs'}
-                className="group inline-flex items-center justify-between sm:justify-start gap-3 sm:gap-4 pl-6 sm:pl-7 pr-2 sm:pr-2.5 py-2 sm:py-2.5 rounded-full bg-[#ef599a] hover:bg-[#df488a] text-white font-semibold text-sm sm:text-base shadow-xl shadow-[#ef599a]/30 transition-all hover:scale-105 active:scale-95 cursor-pointer"
+                className="group inline-flex items-center justify-between sm:justify-start gap-3 sm:gap-4 pl-6 sm:pl-7 pr-2 sm:pr-2.5 py-2 sm:py-2.5 rounded-full bg-[#ef599a] hover:bg-[#df488a] text-white font-semibold text-sm sm:text-base shadow-lg shadow-[#ef599a]/25 transition-colors cursor-pointer"
               >
-                <span className="tracking-tight">{content.btnText || 'Daftar Sekarang'}</span>
-                <span className="size-9 sm:size-10 rounded-full bg-white text-[#ef599a] flex items-center justify-center shrink-0 shadow-md transition-transform duration-200 group-hover:scale-105 group-hover:rotate-12">
-                  <ArrowUpRight className="size-4 sm:size-5 stroke-[2.5] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <span className="tracking-tight">{content.btnText || 'Lihat Program'}</span>
+                <span className="size-9 sm:size-10 rounded-full bg-white text-[#ef599a] flex items-center justify-center shrink-0 shadow-md transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                  <ArrowUpRight className="size-4 sm:size-5 stroke-[2.5]" />
                 </span>
               </Link>
 
@@ -122,10 +119,10 @@ export function LandingFinalCta({ content }: LandingFinalCtaProps) {
                 }
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-white hover:bg-slate-50 text-slate-950 font-semibold text-sm sm:text-base shadow-lg shadow-black/5 transition-all duration-200 hover:scale-105 active:scale-95 text-center cursor-pointer border border-white/80"
+                className="inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-white hover:bg-slate-50 text-slate-950 font-semibold text-sm sm:text-base shadow-md shadow-black/5 transition-colors text-center cursor-pointer border border-white/80"
               >
                 <WhatsAppIcon className="size-5 shrink-0 text-[#25D366] fill-[#25D366]" />
-                <span>{content.btnSecondaryText || 'Tanya di WhatsApp'}</span>
+                <span>{content.btnSecondaryText || 'Konsultasi Gratis'}</span>
               </a>
             </div>
           </motion.div>

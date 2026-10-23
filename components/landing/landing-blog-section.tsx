@@ -26,14 +26,14 @@ export function LandingBlogSection({ content }: LandingBlogSectionProps) {
         >
           <div>
             <h2 className="text-4xl sm:text-5xl font-semibold font-sans tracking-tight text-slate-950 dark:text-white leading-[1.15]">
-              {content.titlePart1 || 'Read our'}{' '}
+              {content.titlePart1 || 'Kumpulan'}{' '}
               <span className="font-sans italic font-normal text-[#ef599a]">
-                {content.titleHighlight || 'blog'}
+                {content.titleHighlight || 'artikel & inspirasi'}
               </span>
             </h2>
             <p className="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-400 font-normal max-w-xl">
               {content.subtitle ||
-                'Temukan artikel pilihan, panduan metode bermain sambil belajar, dan aktivitas digital seru untuk tumbuh kembang buah hati Anda.'}
+                'Temukan artikel pilihan, strategi belajar OSN, panduan orang tua, dan metode berpikir kritis untuk mencetak anak berprestasi.'}
             </p>
           </div>
 
@@ -48,7 +48,7 @@ export function LandingBlogSection({ content }: LandingBlogSectionProps) {
           </div>
         </motion.div>
 
-        {/* 3 Clean Rounded Cards in Pink Theme */}
+        {/* 3 Clean Rounded Cards in Pink Theme (No distracting Y-movement) */}
         {!content.items || content.items.length === 0 ? (
           <div className="text-center py-16 px-4 bg-white dark:bg-slate-900 rounded-3xl border border-dashed border-slate-200">
             <BookOpen className="size-10 mx-auto text-[#ef599a] mb-3" />
@@ -65,7 +65,7 @@ export function LandingBlogSection({ content }: LandingBlogSectionProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="group rounded-[2rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-xl shadow-pink-950/5 p-4 sm:p-5 flex flex-col justify-between overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                className="group rounded-[2rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-md shadow-pink-950/5 p-4 sm:p-5 flex flex-col justify-between overflow-hidden transition-colors duration-200 hover:border-pink-200/80 dark:hover:border-pink-900/50"
               >
                 <div>
                   {/* Thumbnail Image */}
@@ -74,7 +74,7 @@ export function LandingBlogSection({ content }: LandingBlogSectionProps) {
                       src={item.imageUrl || '/assets/img/hero1.png'}
                       alt={item.title}
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover"
                       sizes="(max-width: 768px) 100vw, 33vw"
                     />
                     {item.tag && (
@@ -115,7 +115,7 @@ export function LandingBlogSection({ content }: LandingBlogSectionProps) {
                     <span className="text-xs sm:text-sm font-semibold text-[#ef599a] tracking-tight group-hover/link:text-[#df488a] transition-colors">
                       Baca Selengkapnya
                     </span>
-                    <span className="size-8 rounded-full bg-[#ef599a] text-white flex items-center justify-center shrink-0 shadow-md shadow-[#ef599a]/25 transition-all duration-200 group-hover/link:scale-105 group-hover/link:bg-[#df488a] group-hover/link:translate-x-1">
+                    <span className="size-8 rounded-full bg-[#ef599a] text-white flex items-center justify-center shrink-0 shadow-md shadow-[#ef599a]/25 transition-colors duration-200 group-hover/link:bg-[#df488a]">
                       <ArrowRight className="size-4 stroke-[2.5]" />
                     </span>
                   </Link>

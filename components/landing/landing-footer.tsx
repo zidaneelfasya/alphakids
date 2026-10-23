@@ -39,6 +39,7 @@ export function LandingFooter() {
             src="/assets/img/logo.png"
             alt=""
             fill
+            sizes="(max-width: 768px) 440px, (max-width: 1200px) 760px, 880px"
             className="object-contain object-right"
             priority={false}
           />
@@ -51,129 +52,95 @@ export function LandingFooter() {
         {/* ALIGNED TO VERTICAL START (TOP POSITION)                          */}
         {/* ================================================================= */}
         <div className="flex flex-col lg:flex-row items-start justify-between gap-10 lg:gap-14 pt-1 sm:pt-2">
-          {/* Left: 5 Themed Navigation Columns (Biru Muda, Pink, Kuning) */}
-          <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-3 md:grid-cols-5 gap-5 sm:gap-6 lg:gap-5 xl:gap-8 flex-1 w-full items-start">
-            {/* Column 1: Biru Muda (#21b1db) */}
+          {/* Left: 4 Themed Navigation Columns (Biru Muda, Pink, Kuning, Biru) */}
+          <div className="grid grid-cols-2 xs:grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 flex-1 w-full items-start">
+            {/* Column 1: Program (#21b1db) */}
             <div className="space-y-4">
               <h4 className="font-sans font-semibold text-xs sm:text-sm tracking-wider uppercase text-[#21b1db]">
                 Program
               </h4>
-              <ul className="space-y-3 text-xs sm:text-sm text-slate-900 dark:text-slate-400">
+              <ul className="space-y-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-400">
                 <li>
                   <Link href="/programs" className="hover:text-[#21b1db] transition-colors">
-                    Coding Game
+                    OSN Matematika SD
                   </Link>
                 </li>
                 <li>
                   <Link href="/programs" className="hover:text-[#21b1db] transition-colors">
-                    Robotika Pintar
+                    OSN IPA / Sains SD
                   </Link>
                 </li>
                 <li>
                   <Link href="/programs" className="hover:text-[#21b1db] transition-colors">
-                    Seni Digital
+                    OSN Matematika SMP
                   </Link>
                 </li>
                 <li>
                   <Link href="/programs" className="hover:text-[#21b1db] transition-colors">
-                    Logika & Sains
+                    OSN IPA Terpadu SMP
                   </Link>
                 </li>
                 <li>
                   <Link href="/programs" className="hover:text-[#21b1db] transition-colors">
-                    Semua Kelas
+                    OSN IPS Terpadu SMP
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/programs" className="hover:text-[#21b1db] font-semibold transition-colors">
+                    Semua Program &rarr;
                   </Link>
                 </li>
               </ul>
             </div>
 
-            {/* Column 2: Pink (#ef599a) */}
+            {/* Column 2: Fitur & Informasi (#ef599a) */}
             <div className="space-y-4">
               <h4 className="font-sans font-semibold text-xs sm:text-sm tracking-wider uppercase text-[#ef599a]">
-                Fitur
+                Fitur & Info
               </h4>
-              <ul className="space-y-3 text-xs sm:text-sm text-slate-900 dark:text-slate-400">
+              <ul className="space-y-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-400">
                 <li>
                   <Link href="#fitur" className="hover:text-[#ef599a] transition-colors">
-                    Quiz Interaktif
+                    Kurikulum Terarah
                   </Link>
                 </li>
                 <li>
-                  <Link href="#fitur" className="hover:text-[#ef599a] transition-colors">
-                    Aktivitas Kreatif
+                  <Link href="#mentor" className="hover:text-[#ef599a] transition-colors">
+                    Mentor Terkurasi
                   </Link>
                 </li>
                 <li>
-                  <Link href="#fitur" className="hover:text-[#ef599a] transition-colors">
-                    Game Belajar
+                  <Link href="#keunggulan" className="hover:text-[#ef599a] transition-colors">
+                    Progres Terukur
                   </Link>
                 </li>
                 <li>
-                  <Link href="#fitur" className="hover:text-[#ef599a] transition-colors">
-                    Poin & Lencana
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#fitur" className="hover:text-[#ef599a] transition-colors">
-                    Portofolio
+                  <Link href="#testimoni" className="hover:text-[#ef599a] transition-colors">
+                    Kisah Juara Siswa
                   </Link>
                 </li>
                 <li>
                   <Link href="/blog" className="hover:text-[#ef599a] transition-colors">
-                    Artikel & Blog
+                    Artikel & Panduan
                   </Link>
                 </li>
               </ul>
             </div>
 
-            {/* Column 3: Kuning (#ca8a04 / #FFCC07) */}
+            {/* Column 3: Bantuan (#ca8a04 / #FFCC07) */}
             <div className="space-y-4">
               <h4 className="font-sans font-semibold text-xs sm:text-sm tracking-wider uppercase text-[#ca8a04] dark:text-[#FFCC07]">
-                Keunggulan
-              </h4>
-              <ul className="space-y-3 text-xs sm:text-sm text-slate-900 dark:text-slate-400">
-                <li>
-                  <Link href="#keunggulan" className="hover:text-[#ca8a04] dark:hover:text-[#FFCC07] transition-colors">
-                    Metode Asyik
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#keunggulan" className="hover:text-[#ca8a04] dark:hover:text-[#FFCC07] transition-colors">
-                    Proyek Nyata
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#mentor" className="hover:text-[#ca8a04] dark:hover:text-[#FFCC07] transition-colors">
-                    Kakak Mentor
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#keunggulan" className="hover:text-[#ca8a04] dark:hover:text-[#FFCC07] transition-colors">
-                    Sertifikat
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#keunggulan" className="hover:text-[#ca8a04] dark:hover:text-[#FFCC07] transition-colors">
-                    Generasi Juara
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Column 4: Biru Muda (#21b1db) */}
-            <div className="space-y-4">
-              <h4 className="font-sans font-semibold text-xs sm:text-sm tracking-wider uppercase text-[#21b1db]">
                 Bantuan
               </h4>
-              <ul className="space-y-3 text-xs sm:text-sm text-slate-900 dark:text-slate-400">
+              <ul className="space-y-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-400">
                 <li>
                   <a
                     href="https://wa.me/6281234567890"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-[#21b1db] transition-colors"
+                    className="hover:text-[#21b1db] transition-colors font-medium"
                   >
-                    Konsultasi WA
+                    Konsultasi WhatsApp
                   </a>
                 </li>
                 <li>
@@ -188,46 +155,31 @@ export function LandingFooter() {
                 </li>
                 <li>
                   <Link href="/auth/sign-up" className="hover:text-[#21b1db] transition-colors">
-                    Daftar Peserta
+                    Daftar Peserta Baru
                   </Link>
-                </li>
-                <li>
-                  <a href="mailto:halo@alphakids.id" className="hover:text-[#21b1db] transition-colors">
-                    Email Resmi
-                  </a>
                 </li>
               </ul>
             </div>
 
-            {/* Column 5: Pink (#ef599a) */}
+            {/* Column 4: Kebijakan (#21b1db) */}
             <div className="space-y-4">
-              <h4 className="font-sans font-semibold text-xs sm:text-sm tracking-wider uppercase text-[#ef599a]">
+              <h4 className="font-sans font-semibold text-xs sm:text-sm tracking-wider uppercase text-[#21b1db]">
                 Kebijakan
               </h4>
-              <ul className="space-y-3 text-xs sm:text-sm text-slate-900 dark:text-slate-400">
+              <ul className="space-y-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-400">
                 <li>
-                  <Link href="/terms" className="hover:text-[#ef599a] transition-colors">
-                    Ketentuan
+                  <Link href="/terms" className="hover:text-[#21b1db] transition-colors">
+                    Syarat & Ketentuan
                   </Link>
                 </li>
                 <li>
-                  <Link href="/privacy" className="hover:text-[#ef599a] transition-colors">
-                    Privasi
+                  <Link href="/privacy" className="hover:text-[#21b1db] transition-colors">
+                    Kebijakan Privasi
                   </Link>
                 </li>
                 <li>
-                  <Link href="/refund" className="hover:text-[#ef599a] transition-colors">
-                    Pengembalian
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/safety" className="hover:text-[#ef599a] transition-colors">
-                    Keamanan
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/license" className="hover:text-[#ef599a] transition-colors">
-                    Lisensi
+                  <Link href="/refund" className="hover:text-[#21b1db] transition-colors">
+                    Kebijakan Garansi & Refund
                   </Link>
                 </li>
               </ul>
@@ -243,6 +195,7 @@ export function LandingFooter() {
                   src="/assets/img/logo.png"
                   alt="Alpha Kids Logo"
                   fill
+                  sizes="44px"
                   className="object-contain"
                 />
               </div>
@@ -252,37 +205,27 @@ export function LandingFooter() {
             </div>
 
             {/* Brand Description */}
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-normal">
-              Platform program digital interaktif untuk mencetak generasi anak Indonesia yang cerdas komputasi, kreatif, dan berkarakter juara.
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+              Platform pembelajaran untuk siswa SD–SMP dengan program terarah, mentor terseleksi, dan progress belajar yang terukur.
             </p>
 
-            {/* Social Media Icons (Instagram, LinkedIn, TikTok) */}
+            {/* Social Media Icons (Instagram & TikTok alphakids_education) */}
             <div className="flex items-center gap-3 pt-1">
               <a
-                href="https://instagram.com/alphakids.id"
+                href="https://www.instagram.com/alphakids_education/"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Instagram AlphaKids"
+                aria-label="Instagram AlphaKids Education"
                 className="size-9 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center hover:bg-[#ef599a]/15 hover:text-[#ef599a] transition-all hover:scale-105 active:scale-95 shadow-xs"
               >
                 <Instagram className="size-4.5" />
               </a>
 
               <a
-                href="https://linkedin.com/company/alphakids"
+                href="https://www.tiktok.com/@alphakids_education"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="LinkedIn AlphaKids"
-                className="size-9 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center hover:bg-[#21b1db]/15 hover:text-[#21b1db] transition-all hover:scale-105 active:scale-95 shadow-xs"
-              >
-                <Linkedin className="size-4.5" />
-              </a>
-
-              <a
-                href="https://tiktok.com/@alphakids.id"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="TikTok AlphaKids"
+                aria-label="TikTok AlphaKids Education"
                 className="size-9 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center hover:bg-slate-900 hover:text-white dark:hover:bg-slate-700 transition-all hover:scale-105 active:scale-95 shadow-xs"
               >
                 <TikTokIcon className="size-4.5" />

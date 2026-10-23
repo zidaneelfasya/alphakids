@@ -93,7 +93,7 @@ export function LandingFaq({ content }: LandingFaqProps) {
             className="lg:col-span-5 lg:sticky lg:top-28 space-y-6"
           >
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E8F8FA] dark:bg-cyan-950/60 text-[#0d89a4] dark:text-cyan-300 text-xs sm:text-sm font-semibold uppercase tracking-wider">
-              <span>{content.badge || 'Tanya Jawab'}</span>
+              <span>{content.badge || 'TANYA JAWAB'}</span>
             </div>
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold font-sans text-slate-900 dark:text-white tracking-tight leading-[1.18]">
@@ -102,7 +102,7 @@ export function LandingFaq({ content }: LandingFaqProps) {
 
             <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 font-normal leading-relaxed">
               {content.subtitle ||
-                'Segala hal yang perlu Ayah & Bunda ketahui tentang metode belajar, kurikulum, jadwal, dan manfaat belajar di Alpha Kids.'}
+                'Informasi penting tentang program, mentor, sistem belajar, dan perkembangan anak di Alpha Kids.'}
             </p>
 
             {/* Parent Support Quick Help Box */}
@@ -124,10 +124,10 @@ export function LandingFaq({ content }: LandingFaqProps) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.15 }}
                   transition={{ duration: 0.45, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  className={`overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border transition-all duration-350 ease-out ${
+                  className={`overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border transition-colors duration-200 ${
                     isOpen
-                      ? 'border-slate-200 dark:border-slate-700/80 -translate-y-1 sm:-translate-y-1.5 shadow-xl shadow-black/[0.08] dark:shadow-black/50'
-                      : 'border-slate-200/80 dark:border-slate-800 shadow-xs hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-md hover:shadow-black/[0.05] dark:hover:shadow-black/30 hover:-translate-y-0.5'
+                      ? 'border-slate-300 dark:border-slate-700 shadow-md shadow-black/[0.05] dark:shadow-black/40'
+                      : 'border-slate-200/80 dark:border-slate-800 shadow-xs hover:border-slate-300 dark:hover:border-slate-700'
                   }`}
                 >
                   <button
@@ -152,7 +152,7 @@ export function LandingFaq({ content }: LandingFaqProps) {
 
                     {/* Right: Circular Chevron Button with Solid Tri-Color Shape */}
                     <div
-                      className={`size-8 sm:size-9 rounded-full ${itemStyle.chevronCircleBg} flex items-center justify-center shrink-0 transition-transform duration-300 hover:scale-105`}
+                      className={`size-8 sm:size-9 rounded-full ${itemStyle.chevronCircleBg} flex items-center justify-center shrink-0`}
                     >
                       <motion.span
                         animate={{ rotate: isOpen ? 180 : 0 }}

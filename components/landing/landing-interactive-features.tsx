@@ -91,12 +91,12 @@ export function LandingInteractiveFeatures({ content }: LandingInteractiveFeatur
         >
           <div>
             <h2 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-semibold font-sans tracking-tight text-slate-950 dark:text-white leading-[1.15]">
-              {content?.titlePart1 || 'Fitur'}{' '}
+              {content?.titlePart1 || 'Tiga cara kami'}{' '}
               <span className="font-sans italic font-normal text-[#21b1db]">
-                {content?.titleHighlight || 'interaktif'}
+                {content?.titleHighlight || 'mengasah'}
               </span>{' '}
-              <br />
-              {content?.titlePart2 || 'unggulan kami'}
+              <br className="hidden sm:inline" />
+              {content?.titlePart2 || 'juara OSN.'}
             </h2>
           </div>
 
@@ -138,21 +138,21 @@ export function LandingInteractiveFeatures({ content }: LandingInteractiveFeatur
               {/* Bottom Content */}
               <div className="relative z-10 pt-16">
                 <h3 className="text-xl sm:text-2xl xl:text-3xl font-semibold font-sans text-white mb-2 leading-tight">
-                  {content?.card1Title || 'Quiz'}{' '}
+                  {content?.card1Title || 'Belajar'}{' '}
                   <span className="font-sans italic font-normal text-white">
-                    {content?.card1TitleHighlight || 'Interaktif'}
+                    {content?.card1TitleHighlight || 'Terarah'}
                   </span>
                 </h3>
                 <p className="text-xs sm:text-sm text-cyan-50 leading-relaxed font-medium">
                   {content?.card1Desc ||
-                    'Uji pemahaman si kecil melalui kuis seru berhadiah poin petualang dan lencana prestasi!'}
+                    'Materi disusun bertahap dari konsep dasar hingga level seleksi OSN, jadi anak selalu tahu apa yang dipelajari dan untuk apa.'}
                 </p>
               </div>
             </InteractiveTiltCard>
           </motion.div>
 
           {/* --------------------------------------------------------------- */}
-          {/* CARD 2: Alpha Pink #ef599a (Aktivitas Kreatif)                  */}
+          {/* CARD 2: Alpha Pink #ef599a (Mentor Terkurasi)                   */}
           {/* --------------------------------------------------------------- */}
           <motion.div
             initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
@@ -179,21 +179,21 @@ export function LandingInteractiveFeatures({ content }: LandingInteractiveFeatur
               {/* Bottom Content */}
               <div className="relative z-10 pt-16">
                 <h3 className="text-xl sm:text-2xl xl:text-3xl font-semibold font-sans text-white mb-2 leading-tight">
-                  {content?.card2Title || 'Aktivitas'}{' '}
+                  {content?.card2Title || 'Mentor'}{' '}
                   <span className="font-sans italic font-normal text-white">
-                    {content?.card2TitleHighlight || 'Kreatif'}
+                    {content?.card2TitleHighlight || 'Terkurasi'}
                   </span>
                 </h3>
                 <p className="text-xs sm:text-sm text-pink-50 leading-relaxed font-medium">
                   {content?.card2Desc ||
-                    'Eksplorasi coding visual, perakitan robotika, dan pembuatan game yang mengasah logika komputasi.'}
+                    'Setiap pembina dipilih lewat seleksi ketat berdasarkan keahlian dan pengalaman membina siswa di bidang OSN.'}
                 </p>
               </div>
             </InteractiveTiltCard>
           </motion.div>
 
           {/* --------------------------------------------------------------- */}
-          {/* CARD 3: Alpha Yellow (Learn with Games - Trophy/Logo Yellow)     */}
+          {/* CARD 3: Alpha Yellow (Progres Terukur)                          */}
           {/* --------------------------------------------------------------- */}
           <motion.div
             initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
@@ -220,14 +220,14 @@ export function LandingInteractiveFeatures({ content }: LandingInteractiveFeatur
               {/* Bottom Content */}
               <div className="relative z-10 pt-16">
                 <h3 className="text-xl sm:text-2xl xl:text-3xl font-semibold font-sans text-slate-950 mb-2 leading-tight">
-                  {content?.card3Title || 'Belajar dengan'}{' '}
+                  {content?.card3Title || 'Progres'}{' '}
                   <span className="font-sans italic font-normal text-slate-950">
-                    {content?.card3TitleHighlight || 'Game'}
+                    {content?.card3TitleHighlight || 'Terukur'}
                   </span>
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-900/90 leading-relaxed font-medium">
                   {content?.card3Desc ||
-                    'Metode gamifikasi modern yang membuat anak antusias memecahkan tantangan setiap hari!'}
+                    'Perkembangan anak dipantau lewat latihan dan evaluasi berkala, sehingga orang tua melihat hasilnya dengan jelas.'}
                 </p>
               </div>
             </InteractiveTiltCard>
