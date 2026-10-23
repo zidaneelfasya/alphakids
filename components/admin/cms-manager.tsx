@@ -18,6 +18,9 @@ import {
   ChevronDown,
   Check,
   Layout,
+  Quote,
+  Star,
+  Award,
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -68,6 +71,8 @@ import type {
   FeaturesSectionContent,
   StorySectionContent,
   MentorsSectionContent,
+  TestimonialsSectionContent,
+  TestimonialItem,
   BlogSectionContent,
   BlogItem,
   FaqSectionContent,
@@ -76,7 +81,12 @@ import type {
   FaqItem,
   CmsSectionContent,
 } from '@/lib/cms-types';
-import { DEFAULT_CONTACT, DEFAULT_STORY, formatWhatsAppUrl } from '@/lib/cms-types';
+import {
+  DEFAULT_CONTACT,
+  DEFAULT_STORY,
+  DEFAULT_TESTIMONIALS,
+  formatWhatsAppUrl,
+} from '@/lib/cms-types';
 import { YellowLoop } from '@/components/landing/wonder-decorations';
 
 interface CmsManagerProps {
@@ -85,6 +95,7 @@ interface CmsManagerProps {
     features: FeaturesSectionContent;
     story: StorySectionContent;
     mentors: MentorsSectionContent;
+    testimonials?: TestimonialsSectionContent;
     blogs: BlogSectionContent;
     faq: FaqSectionContent;
     cta: CtaSectionContent;
@@ -110,6 +121,9 @@ export function CmsManager({ initialData }: CmsManagerProps) {
     ...initialData.story,
   });
   const [mentors, setMentors] = useState<MentorsSectionContent>(initialData.mentors);
+  const [testimonials, setTestimonials] = useState<TestimonialsSectionContent>(
+    initialData.testimonials || DEFAULT_TESTIMONIALS
+  );
   const [blogs, setBlogs] = useState<BlogSectionContent>(initialData.blogs);
   const [faq, setFaq] = useState<FaqSectionContent>(initialData.faq);
   const [cta, setCta] = useState<CtaSectionContent>(initialData.cta);
@@ -119,6 +133,7 @@ export function CmsManager({ initialData }: CmsManagerProps) {
 
   // Modal Deletion States
   const [deletingFaqIdx, setDeletingFaqIdx] = useState<number | null>(null);
+  const [deletingTestimonialIdx, setDeletingTestimonialIdx] = useState<number | null>(null);
 
   // Live Preview Data Aggregation (Uncommitted State)
   const previewData: CmsPreviewData = {
@@ -126,6 +141,7 @@ export function CmsManager({ initialData }: CmsManagerProps) {
     features,
     story,
     mentors,
+    testimonials,
     blogs,
     faq,
     cta,
@@ -139,6 +155,7 @@ export function CmsManager({ initialData }: CmsManagerProps) {
       case 'story': return { key: 'story', data: story };
       case 'blogs': return { key: 'blogs', data: blogs };
       case 'mentors': return { key: 'mentors', data: mentors };
+      case 'testimonials': return { key: 'testimonials', data: testimonials };
       case 'faq': return { key: 'faq', data: faq };
       case 'cta': return { key: 'cta', data: cta };
       case 'contact': return { key: 'contact', data: contact };
@@ -194,6 +211,47 @@ export function CmsManager({ initialData }: CmsManagerProps) {
   const updateFaqItem = (index: number, field: keyof FaqItem, value: string) => {
     setFaq((prev) => {
       const newItems = [...prev.items];
+      newItems[index] = { ...newItems[index], [field]: value };
+      return { ...prev, items: newItems };
+    });
+  };
+
+  // Testimonial Handlers
+  const handleAddTestimonial = () => {
+    const newItem: TestimonialItem = {
+      id: `testi-${Date.now()}`,
+      name: 'Nama Siswa / Wali Murid',
+      role: 'Siswa SMP / SD',
+      school: 'Nama Sekolah',
+      achievement: 'Medali OSN / Juara Kelas',
+      avatar: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang1.webp',
+      quote: 'Kesan dan pengalaman berharga selama mengikuti bimbingan...',
+      rating: 5,
+    };
+    setTestimonials((prev) => ({
+      ...prev,
+      items: [...(prev.items || []), newItem],
+    }));
+    toast.success('Testimoni baru ditambahkan ke daftar');
+  };
+
+  const confirmRemoveTestimonialItem = () => {
+    if (deletingTestimonialIdx === null) return;
+    setTestimonials((prev) => ({
+      ...prev,
+      items: prev.items.filter((_, i) => i !== deletingTestimonialIdx),
+    }));
+    setDeletingTestimonialIdx(null);
+    toast.success('Testimoni dihapus dari formulir. Klik Simpan untuk memperbarui database.');
+  };
+
+  const updateTestimonialItem = (
+    index: number,
+    field: keyof TestimonialItem,
+    value: string | number
+  ) => {
+    setTestimonials((prev) => {
+      const newItems = [...(prev.items || [])];
       newItems[index] = { ...newItems[index], [field]: value };
       return { ...prev, items: newItems };
     });
@@ -358,6 +416,12 @@ export function CmsManager({ initialData }: CmsManagerProps) {
             className="rounded-xl text-xs font-semibold px-4 py-2 data-[state=active]:bg-white data-[state=active]:text-[#21b1db] data-[state=active]:shadow-xs dark:data-[state=active]:bg-slate-900"
           >
             Kakak Mentor
+          </TabsTrigger>
+          <TabsTrigger
+            value="testimonials"
+            className="rounded-xl text-xs font-semibold px-4 py-2 data-[state=active]:bg-white data-[state=active]:text-[#21b1db] data-[state=active]:shadow-xs dark:data-[state=active]:bg-slate-900"
+          >
+            Testimoni Juara
           </TabsTrigger>
           <TabsTrigger
             value="faq"
@@ -751,21 +815,22 @@ export function CmsManager({ initialData }: CmsManagerProps) {
 
                 <div className="py-2 max-w-xl">
                   <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold font-sans tracking-tight text-slate-900 dark:text-white leading-[1.3]">
-                    <span className="inline-block">{story.titleLine1 || 'Materi belajar yang'}</span>{' '}
+                    <span className="inline-block">{story.titleLine1 || 'Setiap anak'}</span>{' '}
                     <br />
-                    <span>{story.titleLine2 || 'disediakan'}</span>{' '}
+                    <span>{story.titleLine2 || 'punya potensi'}</span>{' '}
                     <br />
-                    <span className="relative inline-flex items-center justify-center align-baseline whitespace-nowrap mx-1.5 my-1.5 px-3.5 py-1">
-                      <span className="relative z-10 font-sans italic font-normal text-[#ef599a]">
-                        {story.titleHighlight || 'menyenangkan'}
+                    <span className="inline-flex items-center flex-wrap justify-center gap-x-2 sm:gap-x-3">
+                      <span className="relative inline-flex items-center justify-center align-baseline whitespace-nowrap px-3.5 sm:px-4.5 py-1 my-1">
+                        <span className="relative z-10 font-sans italic font-normal text-[#ef599a]">
+                          {story.titleHighlight || 'juara'}
+                        </span>
+                        <YellowLoop
+                          size={story.loopSize || 'normal'}
+                          scale={story.loopScale ?? 100}
+                        />
                       </span>
-                      <YellowLoop
-                        size={story.loopSize || 'normal'}
-                        scale={story.loopScale ?? 100}
-                      />
-                    </span>{' '}
-                    <br />
-                    <span>{story.titleLine3 || 'untuk anak'}</span>
+                      <span>{story.titleLine3 || 'siap diasah'}</span>
+                    </span>
                   </h2>
                 </div>
 
@@ -1151,7 +1216,7 @@ export function CmsManager({ initialData }: CmsManagerProps) {
                   Pengaturan Bagian Kakak Mentor
                 </CardTitle>
                 <CardDescription className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                  Kalimat visi misi pendidikan dan profil 4 kakak mentor pendamping siswa.
+                  Profil pembina OSN berprestasi dengan kompetensi pedagogik teruji.
                 </CardDescription>
               </div>
               {renderSaveButton('mentors', mentors)}
@@ -1159,36 +1224,43 @@ export function CmsManager({ initialData }: CmsManagerProps) {
             <CardContent className="pt-6 space-y-6">
               {/* Header Bagian: Visi Misi */}
               <div className="space-y-4">
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  Kalimat Misi Utama (Section Heading)
-                </h3>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium">Badge Atas</Label>
+                  <Input
+                    value={mentors.badge || ''}
+                    onChange={(e) => setMentors({ ...mentors, badge: e.target.value })}
+                    placeholder="MENTOR ALPHA KIDS"
+                    className="text-xs"
+                  />
+                </div>
                 <div className="space-y-3 p-4 rounded-xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800">
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Baris 1 - Pembuka</Label>
+                    <Label className="text-xs font-medium">Judul Baris 1 - Pembuka</Label>
                     <Input
                       value={mentors.titlePart1 || ''}
                       onChange={(e) => setMentors({ ...mentors, titlePart1: e.target.value })}
-                      placeholder="Misi kami adalah membantu anak"
+                      placeholder="Berprestasi di bidangnya,"
                       className="text-xs"
                     />
                   </div>
                   <div className="space-y-1.5">
                     <Label className="text-xs font-medium text-amber-600 dark:text-amber-400">
-                      Baris 2 - Aksen Kuning Miring
+                      Judul Baris 2 - Aksen Kuning Miring
                     </Label>
                     <Input
                       value={mentors.titleHighlight || ''}
                       onChange={(e) => setMentors({ ...mentors, titleHighlight: e.target.value })}
-                      placeholder="menemukan kegembiraan belajar kreatif"
+                      placeholder="terlatih dalam mengajar."
                       className="text-xs font-semibold text-amber-700 dark:text-amber-300"
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-medium">Baris 3 - Penutup</Label>
-                    <Input
-                      value={mentors.titlePart2 || ''}
-                      onChange={(e) => setMentors({ ...mentors, titlePart2: e.target.value })}
-                      placeholder="dan tumbuh menjadi generasi juara."
+                    <Label className="text-xs font-medium">Subjudul Deskripsi</Label>
+                    <Textarea
+                      rows={2}
+                      value={mentors.subtitle || ''}
+                      onChange={(e) => setMentors({ ...mentors, subtitle: e.target.value })}
+                      placeholder="Mentor Alpha Kids dipilih berdasarkan kompetensi akademik..."
                       className="text-xs"
                     />
                   </div>
@@ -1203,7 +1275,7 @@ export function CmsManager({ initialData }: CmsManagerProps) {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   {/* Mentor 1 */}
-                  <div className="p-4 rounded-xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800 space-y-3">
+                  <div className="p-4 rounded-xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800 space-y-2.5">
                     <div className="pb-1 border-b border-slate-200/60 dark:border-slate-700/60">
                       <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">Mentor 1</span>
                     </div>
@@ -1223,18 +1295,36 @@ export function CmsManager({ initialData }: CmsManagerProps) {
                       />
                     </div>
                     <div className="space-y-1">
-                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Peran / Keahlian</Label>
+                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Peran / Bidang</Label>
                       <Input
                         value={mentors.mentor1Role || ''}
                         onChange={(e) => setMentors({ ...mentors, mentor1Role: e.target.value })}
-                        placeholder="Eksplorasi Sains & Robotika"
+                        placeholder="Pembina OSN Matematika SD & SMP"
+                        className="text-xs"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Asal Instansi</Label>
+                      <Input
+                        value={mentors.mentor1Institution || ''}
+                        onChange={(e) => setMentors({ ...mentors, mentor1Institution: e.target.value })}
+                        placeholder="Institut Teknologi Bandung (ITB)"
+                        className="text-xs"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Prestasi / Rekam Jejak</Label>
+                      <Input
+                        value={mentors.mentor1Achievement || ''}
+                        onChange={(e) => setMentors({ ...mentors, mentor1Achievement: e.target.value })}
+                        placeholder="Medali Emas OSN Matematika"
                         className="text-xs"
                       />
                     </div>
                   </div>
 
                   {/* Mentor 2 */}
-                  <div className="p-4 rounded-xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800 space-y-3">
+                  <div className="p-4 rounded-xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800 space-y-2.5">
                     <div className="pb-1 border-b border-slate-200/60 dark:border-slate-700/60">
                       <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">Mentor 2</span>
                     </div>
@@ -1254,18 +1344,36 @@ export function CmsManager({ initialData }: CmsManagerProps) {
                       />
                     </div>
                     <div className="space-y-1">
-                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Peran / Keahlian</Label>
+                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Peran / Bidang</Label>
                       <Input
                         value={mentors.mentor2Role || ''}
                         onChange={(e) => setMentors({ ...mentors, mentor2Role: e.target.value })}
-                        placeholder="Spesialis Koding & Game Dev"
+                        placeholder="Spesialis OSN IPA & Biologi"
+                        className="text-xs"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Asal Instansi</Label>
+                      <Input
+                        value={mentors.mentor2Institution || ''}
+                        onChange={(e) => setMentors({ ...mentors, mentor2Institution: e.target.value })}
+                        placeholder="Universitas Indonesia (UI)"
+                        className="text-xs"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Prestasi / Rekam Jejak</Label>
+                      <Input
+                        value={mentors.mentor2Achievement || ''}
+                        onChange={(e) => setMentors({ ...mentors, mentor2Achievement: e.target.value })}
+                        placeholder="Peraih Medali Perak ONMIPA"
                         className="text-xs"
                       />
                     </div>
                   </div>
 
                   {/* Mentor 3 */}
-                  <div className="p-4 rounded-xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800 space-y-3">
+                  <div className="p-4 rounded-xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800 space-y-2.5">
                     <div className="pb-1 border-b border-slate-200/60 dark:border-slate-700/60">
                       <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">Mentor 3</span>
                     </div>
@@ -1285,18 +1393,36 @@ export function CmsManager({ initialData }: CmsManagerProps) {
                       />
                     </div>
                     <div className="space-y-1">
-                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Peran / Keahlian</Label>
+                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Peran / Bidang</Label>
                       <Input
                         value={mentors.mentor3Role || ''}
                         onChange={(e) => setMentors({ ...mentors, mentor3Role: e.target.value })}
-                        placeholder="Seni Digital & Animasi"
+                        placeholder="Pembina OSN IPS & Geografi"
+                        className="text-xs"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Asal Instansi</Label>
+                      <Input
+                        value={mentors.mentor3Institution || ''}
+                        onChange={(e) => setMentors({ ...mentors, mentor3Institution: e.target.value })}
+                        placeholder="Universitas Gadjah Mada (UGM)"
+                        className="text-xs"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Prestasi / Rekam Jejak</Label>
+                      <Input
+                        value={mentors.mentor3Achievement || ''}
+                        onChange={(e) => setMentors({ ...mentors, mentor3Achievement: e.target.value })}
+                        placeholder="Juara Olimpiade Geografi Nasional"
                         className="text-xs"
                       />
                     </div>
                   </div>
 
                   {/* Mentor 4 */}
-                  <div className="p-4 rounded-xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800 space-y-3">
+                  <div className="p-4 rounded-xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800 space-y-2.5">
                     <div className="pb-1 border-b border-slate-200/60 dark:border-slate-700/60">
                       <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">Mentor 4</span>
                     </div>
@@ -1316,16 +1442,218 @@ export function CmsManager({ initialData }: CmsManagerProps) {
                       />
                     </div>
                     <div className="space-y-1">
-                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Peran / Keahlian</Label>
+                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Peran / Bidang</Label>
                       <Input
                         value={mentors.mentor4Role || ''}
                         onChange={(e) => setMentors({ ...mentors, mentor4Role: e.target.value })}
-                        placeholder="Logika & Matematika Kreatif"
+                        placeholder="Spesialis Penalaran Logika OSN"
+                        className="text-xs"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Asal Instansi</Label>
+                      <Input
+                        value={mentors.mentor4Institution || ''}
+                        onChange={(e) => setMentors({ ...mentors, mentor4Institution: e.target.value })}
+                        placeholder="Institut Teknologi Sepuluh Nopember"
+                        className="text-xs"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">Prestasi / Rekam Jejak</Label>
+                      <Input
+                        value={mentors.mentor4Achievement || ''}
+                        onChange={(e) => setMentors({ ...mentors, mentor4Achievement: e.target.value })}
+                        placeholder="Finalis International Math Camp"
                         className="text-xs"
                       />
                     </div>
                   </div>
                 </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* ================================================================= */}
+        {/* TAB 5.5: TESTIMONI SISWA & ORANG TUA                              */}
+        {/* ================================================================= */}
+        <TabsContent value="testimonials">
+          <Card className="border border-slate-200/80 dark:border-slate-800 rounded-2xl shadow-xs bg-white dark:bg-slate-900">
+            <CardHeader className="border-b border-slate-100 dark:border-slate-800 pb-4 flex flex-row items-center justify-between space-y-0">
+              <div>
+                <CardTitle className="text-base font-semibold text-slate-900 dark:text-white">
+                  Pengaturan Bagian Testimoni
+                </CardTitle>
+                <CardDescription className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  Kisah nyata siswa juara OSN dan pengalaman orang tua bersama Alpha Kids.
+                </CardDescription>
+              </div>
+              {renderSaveButton('testimonials', testimonials)}
+            </CardHeader>
+            <CardContent className="pt-6 space-y-6">
+              {/* Header Bagian */}
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-medium">Badge Atas</Label>
+                    <Input
+                      value={testimonials.badge || ''}
+                      onChange={(e) => setTestimonials({ ...testimonials, badge: e.target.value })}
+                      placeholder="Testimoni Siswa & Orang Tua"
+                      className="text-xs"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-medium">Judul Depan</Label>
+                    <Input
+                      value={testimonials.titlePart1 || ''}
+                      onChange={(e) => setTestimonials({ ...testimonials, titlePart1: e.target.value })}
+                      placeholder="Apa kata"
+                      className="text-xs"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-medium text-[#21b1db]">Highlight (Biru Miring)</Label>
+                    <Input
+                      value={testimonials.titleHighlight || ''}
+                      onChange={(e) => setTestimonials({ ...testimonials, titleHighlight: e.target.value })}
+                      placeholder="juara kami"
+                      className="text-xs font-semibold text-[#21b1db]"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium">Subjudul Deskripsi</Label>
+                  <Textarea
+                    rows={2}
+                    value={testimonials.subtitle || ''}
+                    onChange={(e) => setTestimonials({ ...testimonials, subtitle: e.target.value })}
+                    placeholder="Kisah nyata dari para siswa juara OSN..."
+                    className="text-xs"
+                  />
+                </div>
+              </div>
+
+              {/* Daftar Kartu Testimoni */}
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                    Daftar Kartu Testimoni ({testimonials.items?.length || 0})
+                  </h3>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={handleAddTestimonial}
+                    className="rounded-xl text-xs gap-1.5 cursor-pointer"
+                  >
+                    <Plus className="size-3.5" />
+                    <span>Tambah Testimoni</span>
+                  </Button>
+                </div>
+
+                {(!testimonials.items || testimonials.items.length === 0) ? (
+                  <div className="p-8 text-center rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 text-xs text-slate-400">
+                    Belum ada testimoni. Klik &quot;Tambah Testimoni&quot; di atas untuk membuat testimoni baru.
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {testimonials.items.map((item, idx) => (
+                      <div
+                        key={item.id || idx}
+                        className="rounded-2xl bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800 p-4 space-y-3 relative group"
+                      >
+                        <div className="flex items-center justify-between pb-2 border-b border-slate-200/60 dark:border-slate-700/60">
+                          <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">
+                            Testimoni #{idx + 1}
+                          </span>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setDeletingTestimonialIdx(idx)}
+                            className="size-7 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 cursor-pointer"
+                            aria-label={`Hapus testimoni ${idx + 1}`}
+                          >
+                            <Trash2 className="size-3.5" />
+                          </Button>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-start">
+                          <div className="sm:col-span-5">
+                            <CmsImageUpload
+                              label="Foto Profil"
+                              value={item.avatar}
+                              onChange={(url) => updateTestimonialItem(idx, 'avatar', url)}
+                              aspectRatio="square"
+                            />
+                          </div>
+
+                          <div className="sm:col-span-7 space-y-2">
+                            <div className="space-y-1">
+                              <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">
+                                Nama Lengkap
+                              </Label>
+                              <Input
+                                value={item.name}
+                                onChange={(e) => updateTestimonialItem(idx, 'name', e.target.value)}
+                                placeholder="William Philip Karnadi"
+                                className="text-xs"
+                              />
+                            </div>
+                            <div className="space-y-1">
+                              <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">
+                                Peran / Jenjang Kelas
+                              </Label>
+                              <Input
+                                value={item.role}
+                                onChange={(e) => updateTestimonialItem(idx, 'role', e.target.value)}
+                                placeholder="Siswa SMP Kelas 8"
+                                className="text-xs"
+                              />
+                            </div>
+                            <div className="space-y-1">
+                              <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">
+                                Asal Sekolah / Instansi
+                              </Label>
+                              <Input
+                                value={item.school}
+                                onChange={(e) => updateTestimonialItem(idx, 'school', e.target.value)}
+                                placeholder="SMPK 3 PENABUR Jakarta"
+                                className="text-xs"
+                              />
+                            </div>
+                            <div className="space-y-1">
+                              <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">
+                                Prestasi / Medali OSN
+                              </Label>
+                              <Input
+                                value={item.achievement || ''}
+                                onChange={(e) => updateTestimonialItem(idx, 'achievement', e.target.value)}
+                                placeholder="Medali Emas OSN Matematika"
+                                className="text-xs"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-1 pt-1">
+                          <Label className="text-[11px] font-medium text-slate-600 dark:text-slate-400">
+                            Isi Testimoni / Pengalaman Belajar
+                          </Label>
+                          <Textarea
+                            rows={3}
+                            value={item.quote}
+                            onChange={(e) => updateTestimonialItem(idx, 'quote', e.target.value)}
+                            placeholder="Tuliskan pengalaman siswa / orang tua..."
+                            className="text-xs"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>
@@ -1659,6 +1987,33 @@ export function CmsManager({ initialData }: CmsManagerProps) {
       {/* DIALOG KONFIRMASI HAPUS (ANTI-SLOP: Modal Dialog Standar)           */}
       {/* =================================================================== */}
 
+      {/* 1. Modal Hapus Testimoni */}
+      <AlertDialog
+        open={deletingTestimonialIdx !== null}
+        onOpenChange={(open) => !open && setDeletingTestimonialIdx(null)}
+      >
+        <AlertDialogContent className="rounded-2xl max-w-sm">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-base font-semibold">
+              Hapus Testimoni Siswa?
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-xs text-slate-500">
+              Testimoni ini akan dihapus dari daftar. Jangan lupa klik &quot;Simpan Perubahan&quot; pada tab Testimoni agar pembaruan tersimpan ke server.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="rounded-xl text-xs">
+              Batal
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={confirmRemoveTestimonialItem}
+              className="bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-semibold"
+            >
+              Hapus Testimoni
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       {/* 2. Modal Hapus FAQ */}
       <AlertDialog

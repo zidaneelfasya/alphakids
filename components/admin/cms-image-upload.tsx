@@ -8,8 +8,11 @@ import {
   RefreshCw,
   Loader2,
   Image as ImageIcon,
+  Link2,
+  Check,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 
@@ -35,6 +38,8 @@ export function CmsImageUpload({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [urlInput, setUrlInput] = useState('');
+  const [showUrlField, setShowUrlField] = useState(false);
 
   const handleFile = async (file: File) => {
     // Basic validation
@@ -272,6 +277,66 @@ export function CmsImageUpload({
           )}
         </div>
       )}
+
+      {/* URL Direct Input / Fallback Option */}
+      <div className="pt-1">
+        {!showUrlField ? (
+          <button
+            type="button"
+            onClick={() => setShowUrlField(true)}
+            className="inline-flex items-center gap-1.5 text-[11px] font-medium text-slate-500 hover:text-[#21b1db] dark:text-slate-400 dark:hover:text-[#21b1db] transition-colors cursor-pointer"
+          >
+            <Link2 className="size-3" />
+            <span>Atau masukkan tautan / URL gambar langsung</span>
+          </button>
+        ) : (
+          <div className="flex items-center gap-2 p-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800">
+            <Link2 className="size-3.5 text-slate-400 shrink-0 ml-1" />
+            <Input
+              type="url"
+              placeholder="https://... (URL gambar langsung)"
+              value={urlInput}
+              onChange={(e) => setUrlInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  if (urlInput.trim()) {
+                    onChange(urlInput.trim());
+                    setUrlInput('');
+                    setShowUrlField(false);
+                    toast.success('URL gambar berhasil diterapkan!');
+                  }
+                }
+              }}
+              className="text-xs h-7.5 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 flex-1"
+            />
+            <Button
+              type="button"
+              size="sm"
+              disabled={!urlInput.trim()}
+              onClick={() => {
+                if (urlInput.trim()) {
+                  onChange(urlInput.trim());
+                  setUrlInput('');
+                  setShowUrlField(false);
+                  toast.success('URL gambar berhasil diterapkan!');
+                }
+              }}
+              className="h-7.5 px-3 rounded-lg text-xs bg-[#21b1db] hover:bg-[#1ca0c7] text-white font-medium shrink-0"
+            >
+              <Check className="size-3 mr-1" />
+              Terapkan
+            </Button>
+            <button
+              type="button"
+              onClick={() => setShowUrlField(false)}
+              className="text-[11px] text-slate-400 hover:text-slate-600 px-1.5 cursor-pointer"
+            >
+              Batal
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

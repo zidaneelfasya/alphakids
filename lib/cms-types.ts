@@ -80,28 +80,56 @@ export interface StorySectionContent {
 
 export interface MentorsSectionContent {
   // Real dynamic fields matching official LandingMentorsBlock UI
-  titlePart1: string;          // "Misi kami adalah membantu anak"
-  titleHighlight: string;      // "menemukan kegembiraan belajar kreatif"
-  titlePart2: string;          // "dan tumbuh menjadi generasi juara."
+  badge?: string;              // "MENTOR ALPHA KIDS"
+  titlePart1: string;          // "Berprestasi di bidangnya,"
+  titleHighlight: string;      // "terlatih dalam mengajar."
+  titlePart2?: string;         // ""
+  subtitle?: string;           // "Mentor Alpha Kids dipilih berdasarkan kompetensi akademik..."
   mentor1Name: string;         // "Kak Budi Prasetyo"
-  mentor1Role: string;         // "Eksplorasi Sains & Robotika"
-  mentor2Name: string;         // "Kak Sarah Amelia"
-  mentor2Role: string;         // "Spesialis Koding & Game Dev"
-  mentor3Name: string;         // "Kak Nadia Utami"
-  mentor3Role: string;         // "Seni Digital & Animasi"
-  mentor4Name: string;         // "Kak Jacob Rama"
-  mentor4Role: string;         // "Logika & Matematika Kreatif"
+  mentor1Role: string;         // "Pembina OSN Matematika SD/SMP"
+  mentor1Institution?: string; // "Institut Teknologi Bandung (ITB)"
+  mentor1Achievement?: string; // "Medali Emas OSN Matematika Nasional"
   mentor1Avatar?: string;
+  mentor2Name: string;         // "Kak Sarah Amelia"
+  mentor2Role: string;         // "Spesialis OSN Sains & IPA Terpadu"
+  mentor2Institution?: string; // "Universitas Indonesia (UI)"
+  mentor2Achievement?: string; // "Peraih Medali Perak ONMIPA Fisika"
   mentor2Avatar?: string;
+  mentor3Name: string;         // "Kak Nadia Utami"
+  mentor3Role: string;         // "Pembina OSN IPS & Analisis Spasial"
+  mentor3Institution?: string; // "Universitas Gadjah Mada (UGM)"
+  mentor3Achievement?: string; // "Juara 1 Lomba Cerdas Cermat Geografi"
   mentor3Avatar?: string;
+  mentor4Name: string;         // "Kak Jacob Rama"
+  mentor4Role: string;         // "Spesialis Logika & Problem Solving OSN"
+  mentor4Institution?: string; // "Institut Teknologi Sepuluh Nopember (ITS)"
+  mentor4Achievement?: string; // "Finalis IMO Training Camp"
   mentor4Avatar?: string;
   // Backward compatibility optional fields
-  badge?: string;
   title?: string;
-  subtitle?: string;
   mentor1Tag?: string;
   mentor2Tag?: string;
   mentor3Tag?: string;
+}
+
+export interface TestimonialItem {
+  id: string;
+  name: string;
+  role: string;          // e.g. "Siswa SMP Kelas 8"
+  school: string;        // e.g. "SMPK 3 PENABUR Jakarta"
+  achievement?: string;  // e.g. "Medali Emas OSN Matematika"
+  avatar: string;
+  quote: string;
+  rating?: number;       // default 5
+}
+
+export interface TestimonialsSectionContent {
+  badge: string;
+  titlePart1: string;
+  titleHighlight: string;
+  titlePart2: string;
+  subtitle: string;
+  items: TestimonialItem[];
 }
 
 export interface FaqItem {
@@ -160,6 +188,7 @@ export type CmsSectionContent =
   | FeaturesSectionContent
   | StorySectionContent
   | MentorsSectionContent
+  | TestimonialsSectionContent
   | BlogSectionContent
   | FaqSectionContent
   | CtaSectionContent
@@ -171,53 +200,53 @@ export type CmsSectionContent =
 // -----------------------------------------------------------------------------
 
 export const DEFAULT_HERO: HeroSectionContent = {
-  titleLine1: 'Tempat terbaik',
-  titleLine1Suffix: 'untuk',
-  titleHighlightCyan: 'belajar',
-  titleConjunction: 'dan',
-  titleHighlightPink: 'berkarya',
-  titleLine3: 'anak hebat',
+  titleLine1: 'Siapkan si kecil',
+  titleLine1Suffix: '',
+  titleHighlightCyan: 'jadi juara',
+  titleConjunction: '',
+  titleHighlightPink: 'OSN',
+  titleLine3: 'sejak dini',
   subtitle:
-    'Eksplorasi coding, robotika, logika, dan kreativitas digital anak usia 4-15 tahun melalui metode gamifikasi seru dan mentor bersertifikat internasional.',
-  ctaText: 'Mulai Petualangan',
+    'Program bimbingan OSN Matematika, Sains, dan IPS untuk SD & SMP, dengan materi terstruktur dan pendampingan yang personal.',
+  ctaText: 'Daftar Program',
   ctaLink: '#programs',
   heroImageLeft: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/hero1.png',
   heroImageRight: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/hero2.png',
   // Backward compatibility fields
-  titlePart1: 'Tempat terbaik untuk',
-  titleHighlight: 'belajar dan berkarya',
-  titlePart2: 'anak hebat',
-  ctaPrimaryText: 'Mulai Petualangan',
+  titlePart1: 'Siapkan si kecil',
+  titleHighlight: 'jadi juara OSN',
+  titlePart2: 'sejak dini',
+  ctaPrimaryText: 'Daftar Program',
   ctaPrimaryLink: '#programs',
 };
 
 export const DEFAULT_FEATURES: FeaturesSectionContent = {
-  titlePart1: 'Fitur',
-  titleHighlight: 'interaktif',
-  titlePart2: 'unggulan kami',
-  card1Title: 'Quiz',
-  card1TitleHighlight: 'Interaktif',
+  titlePart1: 'Tiga cara kami',
+  titleHighlight: 'mengasah',
+  titlePart2: 'juara OSN',
+  card1Title: 'Belajar',
+  card1TitleHighlight: 'Terarah',
   card1Desc:
-    'Uji pemahaman si kecil melalui kuis seru berhadiah poin petualang dan lencana prestasi!',
-  card2Title: 'Aktivitas',
-  card2TitleHighlight: 'Kreatif',
+    'Materi disusun bertahap dari konsep dasar hingga level seleksi OSN, jadi anak selalu tahu apa yang dipelajari dan untuk apa.',
+  card2Title: 'Mentor',
+  card2TitleHighlight: 'Terkurasi',
   card2Desc:
-    'Eksplorasi coding visual, perakitan robotika, dan pembuatan game yang mengasah logika komputasi.',
-  card3Title: 'Belajar dengan',
-  card3TitleHighlight: 'Game',
+    'Setiap pembina dipilih lewat seleksi ketat berdasarkan keahlian dan pengalaman membina siswa di bidang OSN.',
+  card3Title: 'Progres',
+  card3TitleHighlight: 'Terukur',
   card3Desc:
-    'Metode gamifikasi modern yang membuat anak antusias memecahkan tantangan setiap hari!',
+    'Perkembangan anak dipantau lewat latihan dan evaluasi berkala, sehingga orang tua melihat hasilnya dengan jelas.',
 };
 
 export const DEFAULT_STORY: StorySectionContent = {
   badge: 'Mengapa Alpha Kids',
-  titleLine1: 'Materi belajar yang',
-  titleLine2: 'disediakan',
-  titleHighlight: 'menyenangkan',
-  titleLine3: 'untuk anak',
+  titleLine1: 'Setiap anak',
+  titleLine2: 'punya potensi',
+  titleHighlight: 'juara',
+  titleLine3: 'siap diasah',
   subtitle:
-    'Jangan khawatir! Buah hati Anda akan menikmati setiap sesi pembelajaran dengan materi interaktif yang mudah dipahami, aplikatif, dan menyenangkan.',
-  ctaText: 'Pelajari Lebih Lanjut',
+    'Alpha Kids mendampingi langkah demi langkah: belajar yang terarah, mentor yang terkurasi, dan perkembangan yang terukur jelas.',
+  ctaText: 'Daftar Program',
   ctaLink: '#programs',
   loopSize: 'normal',
   loopScale: 100,
@@ -225,75 +254,87 @@ export const DEFAULT_STORY: StorySectionContent = {
   tier2Image: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/hero2.png',
   tier3Image: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/hero3.png',
   // Fallbacks
-  title: 'Materi belajar yang disediakan menyenangkan untuk anak',
+  title: 'Setiap anak punya potensi juara siap diasah',
   desc1:
-    'Jangan khawatir! Buah hati Anda akan menikmati setiap sesi pembelajaran dengan materi interaktif yang mudah dipahami, aplikatif, dan menyenangkan.',
-  desc2:
-    'Alpha Kids dirancang khusus oleh praktisi pendidikan dan teknologi anak untuk menumbuhkan rasa percaya diri, daya nalar kritis, serta kolaborasi.',
-  point1: 'Kurikulum Berjenjang dari Dasar hingga Mahir',
-  point2: 'Lingkungan Belajar Aman, Positif, & Edukatif',
-  point3: 'Akses Materi Selamanya (Lifetime Access) Tanpa Batas',
-  point4: 'Sertifikat Terverifikasi dengan Barcode Resmi',
+    'Alpha Kids mendampingi langkah demi langkah: belajar yang terarah, mentor yang terkurasi, dan perkembangan yang terukur jelas.',
+  point1: 'Kurikulum Berjenjang Seleksi OSN Kota hingga Nasional',
+  point2: 'Pendampingan Personal & Pemecahan Soal Tingkat Tinggi (HOTS)',
+  point3: 'Bank Soal Tryout Terstandar Silabus Pusat Prestasi Nasional',
+  point4: 'Evaluasi & Laporan Perkembangan Belajar Rutin ke Orang Tua',
 };
 
 export const DEFAULT_MENTORS: MentorsSectionContent = {
-  titlePart1: 'Misi kami adalah membantu anak',
-  titleHighlight: 'menemukan kegembiraan belajar kreatif',
-  titlePart2: 'dan tumbuh menjadi generasi juara.',
+  badge: 'MENTOR ALPHA KIDS',
+  titlePart1: 'Berprestasi di bidangnya,',
+  titleHighlight: 'terlatih dalam mengajar.',
+  titlePart2: '',
+  subtitle:
+    'Mentor Alpha Kids dipilih berdasarkan kompetensi akademik, pengalaman, dan kemampuan pedagogik untuk membantu anak memahami materi dengan lebih efektif.',
   mentor1Name: 'Kak Budi Prasetyo',
-  mentor1Role: 'Eksplorasi Sains & Robotika',
+  mentor1Role: 'Pembina OSN Matematika SD & SMP',
+  mentor1Institution: 'Institut Teknologi Bandung (ITB)',
+  mentor1Achievement: 'Medali Emas OSN Matematika',
   mentor1Avatar: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang1.webp',
+
   mentor2Name: 'Kak Sarah Amelia',
-  mentor2Role: 'Spesialis Koding & Game Dev',
+  mentor2Role: 'Spesialis OSN IPA & Biologi Cilik',
+  mentor2Institution: 'Universitas Indonesia (UI)',
+  mentor2Achievement: 'Peraih Medali Perak ONMIPA',
   mentor2Avatar: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang2.webp',
+
   mentor3Name: 'Kak Nadia Utami',
-  mentor3Role: 'Seni Digital & Animasi',
+  mentor3Role: 'Pembina OSN IPS & Dinamika Sosial',
+  mentor3Institution: 'Universitas Gadjah Mada (UGM)',
+  mentor3Achievement: 'Juara Olimpiade Geografi Nasional',
   mentor3Avatar: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang4.webp',
+
   mentor4Name: 'Kak Jacob Rama',
-  mentor4Role: 'Logika & Matematika Kreatif',
+  mentor4Role: 'Spesialis Penalaran Logika & HOTS',
+  mentor4Institution: 'Institut Teknologi Sepuluh Nopember (ITS)',
+  mentor4Achievement: 'Finalis International Math Camp',
   mentor4Avatar: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang3.webp',
 };
 
 export const DEFAULT_FAQ: FaqSectionContent = {
-  badge: 'Tanya Jawab',
+  badge: 'TANYA JAWAB',
   title: 'Pertanyaan yang Sering Diajukan Orang Tua',
   subtitle:
-    'Segala hal yang perlu Ayah & Bunda ketahui tentang metode, jadwal, dan manfaat belajar di Alpha Kids.',
+    'Informasi penting tentang program, mentor, sistem belajar, dan perkembangan anak di Alpha Kids.',
   items: [
     {
-      question: 'Apakah program ini cocok untuk anak yang belum pernah belajar coding?',
+      question: 'Apakah program bimbingan ini cocok untuk anak yang baru mulai belajar OSN?',
       answer:
-        'Sangat cocok! Kelas pengantar dirancang khusus tanpa prasyarat koding rumit. Kami menggunakan visual block programming (seperti Scratch) yang intuitif dan mudah dipahami anak usia dini.',
+        'Sangat cocok! Kelas kami dirancang bertahap mulai dari pendalaman konsep dasar sekolah, pemahaman logika analitis, hingga pengenalan tipe-tipe soal HOTS seleksi OSN tingkat kota.',
     },
     {
-      question: 'Bagaimana jadwal belajar dan sistem akses materinya?',
+      question: 'Bagaimana jadwal bimbingan dan sistem belajarnya?',
       answer:
-        'Sangat fleksibel! Materi video dan modul interaktif bisa diakses 24/7 kapan saja sesuai ritme anak. Terdapat juga jadwal sesi live konsultasi berkala dengan kakak mentor.',
+        'Jadwal fleksibel tersedia dalam pilihan kelas Private 1-on-1 maupun Kelas Grup interaktif melalui sesi live interaktif, lengkap dengan rekaman materi dan bank latihan soal yang dapat diakses kapan saja.',
     },
     {
-      question: 'Perangkat apa saja yang dibutuhkan untuk mengikuti kelas?',
+      question: 'Apa saja bidang OSN yang dibina di Alpha Kids?',
       answer:
-        'Cukup laptop/komputer (Windows/Mac) atau tablet dengan koneksi internet yang stabil dan browser Google Chrome/Edge terkini.',
+        'Kami fokus mendampingi bidang Matematika, Sains/IPA, dan IPS untuk jenjang SD (Kelas 4–6) serta SMP (Kelas 7–9) dengan kurikulum terstruktur.',
     },
     {
-      question: 'Apakah anak akan mendapatkan sertifikat setelah selesai?',
+      question: 'Apakah anak akan mendapatkan simulasi tryout berkala?',
       answer:
-        'Ya! Setiap peserta yang menuntaskan modul dan tugas akhir akan diterbitkan Sertifikat Kelulusan Resmi Digital ber-ID unik yang bisa diverifikasi secara online.',
+        'Ya! Setiap peserta akan mengikuti simulasi tryout berkala berbasis CBT yang disesuaikan dengan standar dan durasi resmi seleksi OSN Pusat Prestasi Nasional.',
     },
     {
-      question: 'Bagaimana jika anak mengalami kesulitan saat belajar?',
+      question: 'Bagaimana orang tua dapat memantau perkembangan anak?',
       answer:
-        'Tim mentor dan forum diskusi komunitas belajar selalu siap sedia membantu menjawab pertanyaan anak dan orang tua dengan ramah dan suportif.',
+        'Alpha Kids menyediakan rapor progres belajar berkala dan konsultasi bersama mentor, sehingga Ayah & Bunda mengetahui kekuatan konsep dan materi yang perlu diasah lebih lanjut.',
     },
   ],
 };
 
 export const DEFAULT_BLOGS: BlogSectionContent = {
   badge: 'Artikel & Edukasi',
-  titlePart1: 'Read our',
-  titleHighlight: 'blog',
+  titlePart1: 'Kumpulan artikel',
+  titleHighlight: '& inspirasi',
   subtitle:
-    'Temukan inspirasi artikel, panduan metode bermain sambil belajar, dan aktivitas digital seru untuk tumbuh kembang buah hati Anda.',
+    'Temukan artikel pilihan, strategi belajar OSN, panduan orang tua, dan metode berpikir kritis untuk mencetak anak berprestasi.',
   items: [
     {
       id: '1',
@@ -559,15 +600,70 @@ Mengajarkan computational thinking sejak dini adalah investasi terbaik untuk mem
 };
 
 export const DEFAULT_CTA: CtaSectionContent = {
-  title: 'Mulai Petualangan Belajar Digital Buah Hati Anda!',
+  title: 'Temukan Program Belajar yang Tepat untuk Anak Anda',
   subtitle:
-    'Konsultasikan kurikulum dan kelas yang paling cocok untuk si kecil bersama konsultan edukasi Alpha Kids.',
-  btnText: 'Daftar Sekarang',
+    'Pilih program sesuai kebutuhan, kemampuan, dan target belajar anak dengan dukungan mentor terseleksi dan pembelajaran yang terarah.',
+  btnText: 'Lihat Program',
   btnLink: '#programs',
-  btnSecondaryText: 'Tanya di WhatsApp',
+  btnSecondaryText: 'Konsultasi Gratis',
   consultationLink:
-    'https://wa.me/6281234567890?text=Halo%20Alpha%20Kids,%20saya%20ingin%20konsultasi%20program%20belajar%20anak',
+    'https://wa.me/6281234567890?text=Halo%20Alpha%20Kids,%20saya%20ingin%20konsultasi%20program%20bimbingan%20OSN%20anak',
   ctaImage: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/cta.png',
+};
+
+export const DEFAULT_TESTIMONIALS: TestimonialsSectionContent = {
+  badge: 'Testimoni Siswa & Orang Tua',
+  titlePart1: 'Apa kata',
+  titleHighlight: 'juara kami',
+  titlePart2: '?',
+  subtitle:
+    'Kisah nyata para siswa dan orang tua yang membuktikan metode bimbingan terarah Alpha Kids dalam meraih prestasi terbaik di kompetisi OSN.',
+  items: [
+    {
+      id: 't-1',
+      name: 'William Philip Karnadi',
+      role: 'Siswa SMP Kelas 8',
+      school: 'SMPK 3 PENABUR Jakarta',
+      achievement: 'Medali Emas OSN Matematika',
+      avatar: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang3.webp',
+      quote:
+        'Latihan soal try-out di Alpha Kids mantap banget! Kualitas soalnya menantang dan sesuai dengan silabus seleksi OSN, pembahasannya terstruktur bikin konsep sulit jadi gampang.',
+      rating: 5,
+    },
+    {
+      id: 't-2',
+      name: 'Alvin Dermawan',
+      role: 'Siswa SMP Kelas 9',
+      school: 'SMPN 1 Probolinggo',
+      achievement: 'Medali Perak OSN IPA',
+      avatar: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang6.webp',
+      quote:
+        'Soal-soal yang diberikan sangat mirip dengan tipe seleksi OSN tingkat kota dan provinsi. Kakak mentor selalu siap membantu membimbing saat saya bingung menjawab soal HOTS.',
+      rating: 5,
+    },
+    {
+      id: 't-3',
+      name: 'Clarissa Aurelia',
+      role: 'Siswa SD Kelas 5',
+      school: 'SD Mentari Grand Surya Jakarta',
+      achievement: 'Juara 1 OSN Matematika Kota',
+      avatar: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang2.webp',
+      quote:
+        'Dulu aku merasa matematika itu susah dan bikin pusing. Tapi setelah ikut bimbingan Alpha Kids, belajarnya jadi seru dengan trik logika cepat. Senang sekali bisa juara!',
+      rating: 5,
+    },
+    {
+      id: 't-4',
+      name: 'Ibu Ratna Dewi',
+      role: 'Orang Tua (Daffa - SD Kelas 6)',
+      school: 'Wali Murid SD Al-Azhar',
+      achievement: 'Lolos Seleksi OSN Provinsi',
+      avatar: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/orang7.webp',
+      quote:
+        'Sebagai orang tua, kami sangat terbantu dengan laporan evaluasi perkembangan anak yang terukur berkala. Guru dan mentornya sangat komunikatif dan peduli.',
+      rating: 5,
+    },
+  ],
 };
 
 export const DEFAULT_CONTACT: ContactSectionContent = {

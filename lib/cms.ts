@@ -5,6 +5,7 @@ import {
   DEFAULT_FEATURES,
   DEFAULT_STORY,
   DEFAULT_MENTORS,
+  DEFAULT_TESTIMONIALS,
   DEFAULT_FAQ,
   DEFAULT_BLOGS,
   DEFAULT_CTA,
@@ -13,6 +14,7 @@ import {
   FeaturesSectionContent,
   StorySectionContent,
   MentorsSectionContent,
+  TestimonialsSectionContent,
   BlogSectionContent,
   FaqSectionContent,
   CtaSectionContent,
@@ -44,16 +46,17 @@ export async function getCmsSection<T>(sectionKey: string, fallback: T): Promise
 }
 
 export async function getAllCmsData() {
-  const [hero, features, story, mentors, blogs, faq, cta, contact] = await Promise.all([
+  const [hero, features, story, mentors, testimonials, blogs, faq, cta, contact] = await Promise.all([
     getCmsSection<HeroSectionContent>('hero', DEFAULT_HERO),
     getCmsSection<FeaturesSectionContent>('features', DEFAULT_FEATURES),
     getCmsSection<StorySectionContent>('story', DEFAULT_STORY),
     getCmsSection<MentorsSectionContent>('mentors', DEFAULT_MENTORS),
+    getCmsSection<TestimonialsSectionContent>('testimonials', DEFAULT_TESTIMONIALS),
     getCmsSection<BlogSectionContent>('blogs', DEFAULT_BLOGS),
     getCmsSection<FaqSectionContent>('faq', DEFAULT_FAQ),
     getCmsSection<CtaSectionContent>('cta', DEFAULT_CTA),
     getCmsSection<ContactSectionContent>('contact', DEFAULT_CONTACT),
   ]);
 
-  return { hero, features, story, mentors, blogs, faq, cta, contact };
+  return { hero, features, story, mentors, testimonials, blogs, faq, cta, contact };
 }

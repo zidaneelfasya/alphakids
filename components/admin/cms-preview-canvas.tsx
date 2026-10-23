@@ -20,6 +20,7 @@ import { LandingInteractiveFeatures } from '@/components/landing/landing-interac
 import { LandingStorySection } from '@/components/landing/landing-story-section';
 import { LandingBlogSection } from '@/components/landing/landing-blog-section';
 import { LandingMentorsBlock } from '@/components/landing/landing-mentors-block';
+import { LandingTestimonials } from '@/components/landing/landing-testimonials';
 import { LandingFaq } from '@/components/landing/landing-faq';
 import { LandingFinalCta } from '@/components/landing/landing-final-cta';
 import { formatWhatsAppUrl } from '@/lib/cms-types';
@@ -28,6 +29,7 @@ import type {
   FeaturesSectionContent,
   StorySectionContent,
   MentorsSectionContent,
+  TestimonialsSectionContent,
   BlogSectionContent,
   FaqSectionContent,
   CtaSectionContent,
@@ -42,6 +44,7 @@ export interface CmsPreviewData {
   features: FeaturesSectionContent;
   story: StorySectionContent;
   mentors: MentorsSectionContent;
+  testimonials: TestimonialsSectionContent;
   blogs: BlogSectionContent;
   faq: FaqSectionContent;
   cta: CtaSectionContent;
@@ -66,6 +69,7 @@ const TAB_NAMES: Record<string, string> = {
   story: 'Section Story',
   blogs: 'Blog & Artikel',
   mentors: 'Kakak Mentor',
+  testimonials: 'Testimoni Juara',
   faq: 'Tanya Jawab (FAQ)',
   cta: 'Call To Action',
   contact: 'Kontak & WhatsApp',
@@ -234,6 +238,7 @@ export function CmsPreviewCanvas({
               <LandingStorySection content={data.story} />
               <LandingBlogSection content={data.blogs} />
               <LandingMentorsBlock content={data.mentors} />
+              <LandingTestimonials content={data.testimonials} />
               <LandingFaq content={data.faq} />
               <LandingFinalCta content={data.cta} />
             </div>
@@ -252,6 +257,9 @@ export function CmsPreviewCanvas({
               )}
               {activeTab === 'mentors' && (
                 <LandingMentorsBlock content={data.mentors} />
+              )}
+              {activeTab === 'testimonials' && (
+                <LandingTestimonials content={data.testimonials} />
               )}
               {activeTab === 'faq' && <LandingFaq content={data.faq} />}
               {activeTab === 'cta' && <LandingFinalCta content={data.cta} />}
