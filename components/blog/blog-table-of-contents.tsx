@@ -12,9 +12,10 @@ export interface TocItem {
 
 interface BlogTableOfContentsProps {
   items: TocItem[];
+  hideBackLink?: boolean;
 }
 
-export function BlogTableOfContents({ items }: BlogTableOfContentsProps) {
+export function BlogTableOfContents({ items, hideBackLink = false }: BlogTableOfContentsProps) {
   const [activeId, setActiveId] = useState<string>('');
 
   useEffect(() => {
@@ -72,17 +73,19 @@ export function BlogTableOfContents({ items }: BlogTableOfContentsProps) {
   if (items.length === 0) return null;
 
   return (
-    <div className="sticky top-28 space-y-6">
-      {/* Back to Blog Catalog Link */}
-      <div>
-        <Link
-          href="/blog"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-[#ef599a] dark:text-slate-400 dark:hover:text-pink-300 transition-colors"
-        >
-          <ArrowLeft className="size-3.5" />
-          <span>Kembali ke Blog</span>
-        </Link>
-      </div>
+    <div className="space-y-4">
+      {/* Back to Blog Catalog Link (Optional) */}
+      {!hideBackLink && (
+        <div>
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-[#ef599a] dark:text-slate-400 dark:hover:text-pink-300 transition-colors"
+          >
+            <ArrowLeft className="size-3.5" />
+            <span>Kembali ke Blog</span>
+          </Link>
+        </div>
+      )}
 
       {/* TOC Container Card */}
       <nav

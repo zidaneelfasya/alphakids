@@ -98,15 +98,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             )}
           </div>
 
-          {/* 3-Column Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-8 items-start">
-            {/* Column 1: Left Sticky Table of Contents (Desktop) */}
-            <div className="hidden lg:block lg:col-span-3">
-              <BlogTableOfContents items={tocItems} />
-            </div>
-
-            {/* Column 2: Center Main Article */}
-            <article className="col-span-12 lg:col-span-6 bg-white dark:bg-slate-900/90 rounded-3xl border border-slate-200/80 dark:border-slate-800 p-6 sm:p-8 lg:p-10 shadow-xs">
+          {/* 2-Column Responsive Layout: Spacious Article (8 cols) + Sticky Sidebar (4 cols) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-8 xl:gap-10 items-start">
+            {/* Main Article (Spacious, prominent on all laptop and desktop screens) */}
+            <article className="col-span-12 lg:col-span-8 bg-white dark:bg-slate-900/90 rounded-3xl border border-slate-200/80 dark:border-slate-800 p-6 sm:p-8 lg:p-10 shadow-xs">
               {/* Title */}
               <h1 className="text-2xl sm:text-3xl lg:text-[2.25rem] font-semibold font-sans tracking-tight text-slate-900 dark:text-white leading-[1.25] mb-4">
                 {article.title}
@@ -142,14 +137,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   fill
                   priority
                   className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 700px"
+                  sizes="(max-width: 1024px) 100vw, 850px"
                 />
               </div>
 
-              {/* Mobile Table of Contents (Shown only on small screens) */}
+              {/* Mobile Table of Contents (Shown only on small screens < lg) */}
               {tocItems.length > 0 && (
                 <div className="block lg:hidden mb-8">
-                  <BlogTableOfContents items={tocItems} />
+                  <BlogTableOfContents items={tocItems} hideBackLink />
                 </div>
               )}
 
@@ -160,8 +155,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <BlogShareBar title={article.title} />
             </article>
 
-            {/* Column 3: Right Sticky Related Posts (Desktop) */}
-            <div className="hidden lg:block lg:col-span-3">
+            {/* Right Sticky Sidebar (TOC + Related Posts) */}
+            <div className="hidden lg:flex flex-col gap-8 lg:col-span-4 sticky top-28">
+              {tocItems.length > 0 && (
+                <BlogTableOfContents items={tocItems} hideBackLink />
+              )}
               <BlogRelatedPosts
                 currentSlug={article.slug}
                 currentTag={article.tag}

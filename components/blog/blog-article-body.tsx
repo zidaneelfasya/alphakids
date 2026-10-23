@@ -64,7 +64,7 @@ export function BlogArticleBody({ content = '' }: BlogArticleBodyProps) {
         blocks.push(
           <p
             key={`p-${blocks.length}`}
-            className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed mb-5"
+            className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed mb-5 text-justify"
           >
             {formatInlineText(text)}
           </p>
@@ -80,7 +80,7 @@ export function BlogArticleBody({ content = '' }: BlogArticleBodyProps) {
         blocks.push(
           <ol
             key={`ol-${blocks.length}`}
-            className="list-decimal pl-5 sm:pl-6 space-y-2 text-sm sm:text-base text-slate-700 dark:text-slate-300 mb-6 leading-relaxed"
+            className="list-decimal pl-5 sm:pl-6 space-y-2 text-sm sm:text-base text-slate-700 dark:text-slate-300 mb-6 leading-relaxed text-justify"
           >
             {currentList.items.map((item, idx) => (
               <li key={idx} className="pl-1">
@@ -93,7 +93,7 @@ export function BlogArticleBody({ content = '' }: BlogArticleBodyProps) {
         blocks.push(
           <ul
             key={`ul-${blocks.length}`}
-            className="list-disc pl-5 sm:pl-6 space-y-2 text-sm sm:text-base text-slate-700 dark:text-slate-300 mb-6 leading-relaxed"
+            className="list-disc pl-5 sm:pl-6 space-y-2 text-sm sm:text-base text-slate-700 dark:text-slate-300 mb-6 leading-relaxed text-justify"
           >
             {currentList.items.map((item, idx) => (
               <li key={idx} className="pl-1">
