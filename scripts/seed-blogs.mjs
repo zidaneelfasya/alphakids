@@ -19,11 +19,11 @@ connectionString = connectionString.replace(/:([^@:]*)@/, (m, p) => {
 const sql = postgres(connectionString, { prepare: false });
 
 const blogsData = {
-  badge: 'Artikel & Edukasi Digital',
-  titlePart1: 'Read our',
-  titleHighlight: 'blog',
+  badge: 'Artikel & Edukasi',
+  titlePart1: 'Kumpulan artikel',
+  titleHighlight: '& inspirasi',
   subtitle:
-    'Temukan inspirasi artikel, panduan metode bermain sambil belajar, tips parenting era digital, dan aktivitas seru untuk tumbuh kembang buah hati Anda.',
+    'Temukan artikel pilihan, strategi belajar OSN, panduan orang tua, dan metode berpikir kritis untuk mencetak anak berprestasi.',
   items: [
     {
       id: '1',

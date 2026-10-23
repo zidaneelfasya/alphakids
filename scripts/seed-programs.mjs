@@ -56,7 +56,7 @@ async function uploadImageToStorage(bucketName, localFilePath, destinationFileNa
 }
 
 async function main() {
-  console.log('🚀 Memulai proses seeding data realistis Alpha Kids...');
+  console.log('🚀 Memulai proses seeding data program dan kategori Alpha Kids...');
 
   // 1. Pastikan Bucket 'programs' ada di Supabase Storage
   const bucketName = 'programs';
@@ -86,7 +86,6 @@ async function main() {
       `;
     }
   } else {
-    // Pastikan public = true
     await supabase.storage.updateBucket(bucketName, { public: true });
     console.log(`✅ Bucket '${bucketName}' sudah ada dan berstatus publik.`);
   }
@@ -102,28 +101,33 @@ async function main() {
   const hero1Url = await uploadImageToStorage(bucketName, hero1Path, 'hero1.png');
   const ctaUrl = await uploadImageToStorage(bucketName, ctaPath, 'cta.png');
 
-  // 3. Seed Kategori (public.categories)
+  // 3. Seed Kategori Resmi (Sesuai Review: Semua | Private 1-on-1 | Kelas Grup | Matematika | IPA | IPS)
   console.log('\n📂 Melakukan seeding tabel categories...');
   const categoriesData = [
     {
-      name: 'Coding & Game Dev',
-      slug: 'coding-game-dev',
-      description: 'Eksplorasi logika pemrograman visual, algoritma anak, dan kreasi game 2D mandiri.',
+      name: 'Private 1-on-1',
+      slug: 'private-1-on-1',
+      description: 'Pendampingan belajar privat eksklusif 1-on-1 dengan jadwal fleksibel dan pendekatan personal.',
     },
     {
-      name: 'Sains & Robotika',
-      slug: 'sains-robotika',
-      description: 'Praktik sensor pintar, sirkuit aman, dan perakitan robot mini interaktif berbasis proyek.',
+      name: 'Kelas Grup',
+      slug: 'kelas-grup',
+      description: 'Kelas interaktif kelompok kecil bersama mentor berpengalaman untuk membangun kolaborasi dan daya juang siswa.',
     },
     {
-      name: 'Seni & Animasi Digital',
-      slug: 'seni-animasi-digital',
-      description: 'Kembangkan imajinasi visual, desain karakter orisinal, dan animasi gerak kreatif.',
+      name: 'Matematika',
+      slug: 'matematika',
+      description: 'Program bimbingan intensif persiapan Olimpiade Sains Nasional bidang Matematika tingkat SD & SMP.',
     },
     {
-      name: 'Olimpiade & Logika Matematika',
-      slug: 'olimpiade-matematika',
-      description: 'Pelatihan nalar kritis, problem solving olimpiade, dan strategi matematika kompetitif.',
+      name: 'IPA',
+      slug: 'ipa',
+      description: 'Bimbingan terstruktur pendalaman materi sains, biologi, dan fisika untuk olimpiade jenjang SD & SMP.',
+    },
+    {
+      name: 'IPS',
+      slug: 'ips',
+      description: 'Penguasaan konsep geografi, sejarah, sosiologi, dan ekonomi untuk persiapan kompetisi OSN IPS.',
     },
   ];
 
@@ -145,125 +149,195 @@ async function main() {
   }
 
   // 4. Seed Program (public.programs)
+  // Sesuai Review:
+  // - Badge jenjang kelas: SD Kelas 4–6 / SMP Kelas 7–9
+  // - Private 1-on-1: Label Mulai dari, Harga: Rp250.000 / sesi
+  // - Bootcamp / Kelas Grup: Label Program lengkap, Harga: Rp800.000 / siswa
   console.log('\n🎓 Melakukan seeding tabel programs...');
   const programsData = [
     {
-      categorySlug: 'coding-game-dev',
-      title: 'Petualangan Coding & Pembuat Game 2D',
-      slug: 'petualangan-coding-game-2d',
-      description: 'Belajar fondasi computational thinking, logika blok visual, dan bangun game petualangan 2D interaktif karya sendiri dari nol.',
-      price: 299000,
+      categorySlug: 'private-1-on-1',
+      title: 'Private 1-on-1 OSN Matematika SD',
+      slug: 'private-osn-matematika-sd',
+      description: 'Bimbingan intensif 1-on-1 persiapan seleksi OSN Matematika SD dengan kurikulum terstruktur dan pemecahan soal HOTS.',
+      price: 250000,
       coverImage: hero1Url,
-      ageRange: 'Usia 7–12 Thn',
-      level: 'Pemula',
+      ageRange: 'SD Kelas 4–6',
+      level: 'SD Kelas 4–6',
       contents: [
         {
-          title: 'Silabus Modul: Logika Blok & Gerak Karakter',
+          title: 'Pendalaman Teori Bilangan & Aljabar Dasar',
           contentType: 'lesson',
-          content: 'Minggu 1-2: Pengenalan Sprite, koordinat X-Y, loop pergerakan, dan mekanisme kontrol tombol keyboard.',
+          content: 'Pembahasan konsep dasar pemecahan masalah nalar tingkat tinggi dan pola bilangan olimpiade.',
           sortOrder: 1,
         },
         {
-          title: 'Proyek Akhir: Game Labirin Pemburu Koin 2D',
+          title: 'Simulasi Tryout CBT & Analisis Kesalahan',
           contentType: 'lesson',
-          content: 'Membangun game interaktif lengkap dengan sistem nyawa, timer hitung mundur, dan skor kemenangan.',
+          content: 'Latihan soal mandiri berbasis CBT dengan feedback detail langsung dari mentor.',
           sortOrder: 2,
         },
         {
-          title: 'Fasilitas Program & Bimbingan',
+          title: 'Fasilitas & Pendampingan Mentor Medalis',
           contentType: 'text',
-          content: 'Sesi live Zoom 8x pertemuan bersama Kakak Mentor, akses video tutorial selamanya, dan e-sertifikat kelulusan.',
+          content: 'Jadwal fleksibel, sesi tanya jawab tak terbatas, dan laporan evaluasi rutin berkala kepada orang tua.',
           sortOrder: 3,
         },
       ],
     },
     {
-      categorySlug: 'sains-robotika',
-      title: 'Sains Cilik: Robotika Pintar & Sensor Eksplorasi',
-      slug: 'sains-robotika-pintar',
-      description: 'Eksperimen seru merakit sirkuit cerdas, membaca input sensor gerak dan cahaya, serta menghidupkan robot mini edukatif.',
-      price: 349000,
+      categorySlug: 'private-1-on-1',
+      title: 'Private 1-on-1 OSN IPA SMP',
+      slug: 'private-osn-ipa-smp',
+      description: 'Pendampingan privat personal bidang IPA Fisika dan Biologi SMP menghadapi seleksi OSN tingkat kota dan provinsi.',
+      price: 250000,
       coverImage: ctaUrl,
-      ageRange: 'Usia 8–14 Thn',
-      level: 'Menengah',
+      ageRange: 'SMP Kelas 7–9',
+      level: 'SMP Kelas 7–9',
       contents: [
         {
-          title: 'Silabus Modul: Komponen Sirkuit Aman & Sensor',
+          title: 'Konsep Mekanika, Gelombang & Fisiologi Makhluk Hidup',
           contentType: 'lesson',
-          content: 'Mengenal resistor, LED, saklar otomatis, dan prinsip konduktivitas listrik melalui eksperimen yang aman bagi anak.',
+          content: 'Eksplorasi materi esensial sesuai silabus resmi Puspresnas secara terstruktur.',
           sortOrder: 1,
         },
         {
-          title: 'Proyek Akhir: Robot Mini Pendeteksi Rintangan',
+          title: 'Bedah Soal HOTS & Strategi Eliminasi Cepat',
           contentType: 'lesson',
-          content: 'Merakit robot beroda dengan sensor ultrasonik yang mampu bermanuver menghindari halangan secara mandiri.',
+          content: 'Teknik menganalisis soal eksperimental dan penalaran logis tingkat tinggi.',
           sortOrder: 2,
-        },
-        {
-          title: 'Fasilitas & Pendampingan',
-          contentType: 'text',
-          content: 'Bimbingan intensif grup kecil, panduan eksperimen visual bergambar, dan sertifikat prestasi inovator cilik.',
-          sortOrder: 3,
         },
       ],
     },
     {
-      categorySlug: 'seni-animasi-digital',
-      title: 'Studio Seni Digital & Ilustrasi Karakter Anak',
-      slug: 'seni-digital-ilustrasi-karakter',
-      description: 'Asah kreativitas menggambar digital, belajar komposisi warna harmonis, dan ciptakan figur karakter kartun favorit si kecil.',
-      price: 249000,
+      categorySlug: 'private-1-on-1',
+      title: 'Private 1-on-1 OSN IPS SMP',
+      slug: 'private-osn-ips-smp',
+      description: 'Bimbingan eksklusif 1-on-1 OSN IPS SMP mencakup dinamika sosial, spasial geografi, dan sistem ekonomi.',
+      price: 250000,
       coverImage: hero1Url,
-      ageRange: 'Usia 6–11 Thn',
-      level: 'Pemula',
+      ageRange: 'SMP Kelas 7–9',
+      level: 'SMP Kelas 7–9',
       contents: [
         {
-          title: 'Silabus Modul: Anatomi Kartun & Palet Warna',
+          title: 'Pemahaman Peta, Geografi & Dinamika Sosial',
           contentType: 'lesson',
-          content: 'Teknik dasar sketsa garis digital, ekspresi wajah kartun, dan pencampuran gradasi warna yang ceria.',
+          content: 'Materi terstruktur konsep spasial dan dinamika interaksi sosial masyarakat.',
           sortOrder: 1,
-        },
-        {
-          title: 'Proyek Akhir: Komik Pendek 4 Panel Karya Sendiri',
-          contentType: 'lesson',
-          content: 'Menciptakan alur cerita mini, menyusun panel komik, dan mengekspor karya siap cetak atau dibagikan ke keluarga.',
-          sortOrder: 2,
-        },
-        {
-          title: 'Fasilitas & Karya Galeri',
-          contentType: 'text',
-          content: 'Portofolio digital tersimpan rapi, ulasan karya personal dari ilustrator profesional, dan sertifikat kelulusan seni.',
-          sortOrder: 3,
         },
       ],
     },
     {
-      categorySlug: 'olimpiade-matematika',
-      title: 'Master OSN Matematika Cilik & Nalar Komputasi',
-      slug: 'osn-matematika',
-      description: 'Bimbingan intensif pemecahan soal olimpiade sains nasional, trik berhitung cepat, dan penguatan konsep matematika analitis.',
-      price: 399000,
+      categorySlug: 'kelas-grup',
+      title: 'Bootcamp Intensif OSN Matematika SD',
+      slug: 'bootcamp-osn-matematika-sd',
+      description: 'Program lengkap bimbingan kelompok persiapan kompetisi OSN Matematika SD dengan simulasi tryout dan modul eksklusif.',
+      price: 800000,
       coverImage: ctaUrl,
-      ageRange: 'Usia 9–15 Thn',
-      level: 'Mahir',
+      ageRange: 'SD Kelas 4–6',
+      level: 'SD Kelas 4–6',
       contents: [
         {
-          title: 'Silabus Modul: Pola Bilangan, Aljabar Visual & Kombinatorika',
+          title: 'Kurikulum Berjenjang Seleksi OSN Kota hingga Nasional',
           contentType: 'lesson',
-          content: 'Strategi bedah tipe soal HOTS (Higher Order Thinking Skills) tingkat OSN kota dan provinsi.',
+          content: 'Modul bertahap dari konsep dasar hingga tipe soal kompetisi nasional.',
           sortOrder: 1,
         },
         {
-          title: 'Simulasi Tryout & Bedah Soal Realistis',
+          title: 'Simulasi Tryout Berkala Berstandar Nasional',
           contentType: 'lesson',
-          content: 'Latihan simulasi ujian berkala dengan sistem scoring instan dan pembahasan taktis per butir soal.',
+          content: 'Ujian simulasi online dengan skor real-time dan pembahasan live interaktif.',
           sortOrder: 2,
         },
+      ],
+    },
+    {
+      categorySlug: 'kelas-grup',
+      title: 'Bootcamp Persiapan OSN IPA SMP',
+      slug: 'bootcamp-osn-ipa-smp',
+      description: 'Program lengkap kelas grup interaktif pendalaman materi sains terpadu SMP dengan bank latihan soal terlengkap.',
+      price: 800000,
+      coverImage: hero1Url,
+      ageRange: 'SMP Kelas 7–9',
+      level: 'SMP Kelas 7–9',
+      contents: [
         {
-          title: 'Fasilitas & Pendampingan Juara',
-          contentType: 'text',
-          content: 'Bank soal 500+ latihan eksklusif, mentoring bersama peraih medali OSN, dan sertifikat kompetensi analitis.',
-          sortOrder: 3,
+          title: 'Fisika Terapan & Biologi Seluler Lanjutan',
+          contentType: 'lesson',
+          content: 'Pembahasan komprehensif silabus olimpiade sains nasional jenjang SMP.',
+          sortOrder: 1,
+        },
+      ],
+    },
+    {
+      categorySlug: 'kelas-grup',
+      title: 'Bootcamp & Masterclass OSN IPS SMP',
+      slug: 'bootcamp-osn-ips-smp',
+      description: 'Program lengkap kelas grup persiapan olimpiade IPS SMP dengan studi kasus fenomena sosial dan pembinaan mentor juara.',
+      price: 800000,
+      coverImage: ctaUrl,
+      ageRange: 'SMP Kelas 7–9',
+      level: 'SMP Kelas 7–9',
+      contents: [
+        {
+          title: 'Analisis Fenomena Ekonomi & Lingkungan',
+          contentType: 'lesson',
+          content: 'Bedah tipe soal esai dan pilihan ganda kompetisi sains nasional bidang IPS.',
+          sortOrder: 1,
+        },
+      ],
+    },
+    {
+      categorySlug: 'matematika',
+      title: 'Kelas Master OSN Matematika SMP',
+      slug: 'kelas-master-osn-matematika-smp',
+      description: 'Bimbingan intensif kombinatorika, aljabar, dan geometri tingkat SMP untuk mencetak calon juara OSN tingkat provinsi & nasional.',
+      price: 800000,
+      coverImage: hero1Url,
+      ageRange: 'SMP Kelas 7–9',
+      level: 'SMP Kelas 7–9',
+      contents: [
+        {
+          title: 'Kombinatorika & Teori Peluang Olimpiade',
+          contentType: 'lesson',
+          content: 'Strategi pemecahan masalah non-rutin dengan nalar analitis cepat.',
+          sortOrder: 1,
+        },
+      ],
+    },
+    {
+      categorySlug: 'ipa',
+      title: 'Kelas Eksplorasi Sains & OSN IPA SD',
+      slug: 'kelas-eksplorasi-osn-ipa-sd',
+      description: 'Bimbingan sains terarah untuk anak SD kelas 4-6 dengan pendekatan eksperimen interaktif dan pemahaman konsep mendalam.',
+      price: 250000,
+      coverImage: ctaUrl,
+      ageRange: 'SD Kelas 4–6',
+      level: 'SD Kelas 4–6',
+      contents: [
+        {
+          title: 'Alam Semesta, Energi & Keanekaragaman Hayati',
+          contentType: 'lesson',
+          content: 'Konsep dasar IPA sekolah dasar yang dikembangkan hingga level pengujian OSN.',
+          sortOrder: 1,
+        },
+      ],
+    },
+    {
+      categorySlug: 'ips',
+      title: 'Kelas Pendalaman OSN IPS Terpadu SMP',
+      slug: 'kelas-pendalaman-osn-ips-smp',
+      description: 'Bimbingan komprehensif geografi, sejarah, sosiologi, dan ekonomi bersama mentor lulusan perguruan tinggi ternama.',
+      price: 250000,
+      coverImage: hero1Url,
+      ageRange: 'SMP Kelas 7–9',
+      level: 'SMP Kelas 7–9',
+      contents: [
+        {
+          title: 'Ruang, Waktu, & Interaksi Sosial Manusia',
+          contentType: 'lesson',
+          content: 'Penguasaan materi holistik kurikulum olimpiade IPS jenjang SMP.',
+          sortOrder: 1,
         },
       ],
     },
@@ -291,7 +365,7 @@ async function main() {
       RETURNING id, title, slug;
     `;
 
-    console.log(`  ✓ Program '${savedProg.title}' (${savedProg.slug})`);
+    console.log(`  ✓ Program '${savedProg.title}' (${savedProg.slug}) - ${prog.level} - Rp${prog.price.toLocaleString('id-ID')}`);
 
     // Hapus konten publik lama untuk program ini agar tidak duplikat
     await sql`
@@ -315,12 +389,12 @@ async function main() {
   console.log('\n🎟️ Melakukan seeding tabel vouchers...');
   const vouchersData = [
     {
-      code: 'ALPHABARU',
+      code: 'ALPHAJUARA',
       discountType: 'percentage',
-      discountValue: 20,
+      discountValue: 15,
     },
     {
-      code: 'HEMAT50K',
+      code: 'OSN50K',
       discountType: 'fixed',
       discountValue: 50000,
     },
@@ -339,12 +413,12 @@ async function main() {
     console.log(`  ✓ Voucher '${v.code}' (${v.discountType === 'percentage' ? `${v.discountValue}%` : `Rp ${v.discountValue}`})`);
   }
 
-  console.log('\n✨ SEEDING BERHASIL! Seluruh data program dan gambar Supabase Storage sudah tersinkronisasi sempurna.');
+  console.log('\n✨ SEEDING PROGRAM BERHASIL! Seluruh kategori, program, dan voucher sudah sesuai standar Alpha Kids.');
   await sql.end();
 }
 
 main().catch(async (err) => {
-  console.error('\n❌ Gagal melakukan seeding:', err);
+  console.error('\n❌ Gagal melakukan seeding program:', err);
   await sql.end();
   process.exit(1);
 });
