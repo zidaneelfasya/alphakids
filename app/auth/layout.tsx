@@ -23,6 +23,7 @@ export default function AuthLayout({
             src="/assets/img/Ornamen Puzzle Kuning AlphaKids_revisi0.png"
             alt=""
             fill
+            sizes="(max-width: 640px) 320px, (max-width: 1024px) 480px, 540px"
             className="object-contain"
             priority
           />
@@ -34,6 +35,7 @@ export default function AuthLayout({
             src="/assets/img/Ornamen Puzzle Putih AlphaKids_revisi0.png"
             alt=""
             fill
+            sizes="(max-width: 640px) 300px, (max-width: 1024px) 460px, 520px"
             className="object-contain"
             priority
           />
@@ -55,6 +57,7 @@ export default function AuthLayout({
               src="/assets/img/logo.png"
               alt="Alpha Kids Logo"
               fill
+              sizes="40px"
               className="object-contain"
               priority
             />

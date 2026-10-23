@@ -4,10 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
-import {
-  CurvedArrow,
-  YellowBrushUnderline,
-} from '@/components/landing/wonder-decorations';
+
 import type { HeroSectionContent } from '@/lib/cms';
 
 interface LandingHeroProps {
@@ -18,17 +15,17 @@ export function LandingHero({ content }: LandingHeroProps) {
   const shouldReduceMotion = useReducedMotion();
 
   // Dynamic CMS fields with robust fallbacks
-  const line1 = content?.titleLine1 || 'Tempat terbaik';
-  const line1Suffix = content?.titleLine1Suffix || 'untuk';
-  const highlightCyan = content?.titleHighlightCyan || 'belajar';
-  const conjunction = content?.titleConjunction || 'dan';
-  const highlightPink = content?.titleHighlightPink || 'berkarya';
-  const line3 = content?.titleLine3 || 'anak hebat';
+  const line1 = content?.titleLine1 || content?.titlePart1 || 'Siapkan si kecil';
+  const line1Suffix = content?.titleLine1Suffix ?? '';
+  const highlightCyan = content?.titleHighlightCyan || 'jadi juara';
+  const conjunction = content?.titleConjunction ?? '';
+  const highlightPink = content?.titleHighlightPink || 'OSN';
+  const line3 = content?.titleLine3 || content?.titlePart2 || 'sejak dini';
   const subtitle =
     content?.subtitle ||
-    'Eksplorasi coding, robotika, logika, dan kreativitas digital anak usia 4-15 tahun melalui metode gamifikasi seru dan mentor bersertifikat internasional.';
-  const ctaText = content?.ctaText || 'Mulai Petualangan';
-  const ctaLink = content?.ctaLink || '#programs';
+    'Program bimbingan OSN Matematika, Sains, dan IPS untuk SD & SMP, dengan materi terstruktur dan pendampingan yang personal.';
+  const ctaText = content?.ctaText || content?.ctaPrimaryText || 'Daftar Program';
+  const ctaLink = content?.ctaLink || content?.ctaPrimaryLink || '#programs';
   const imgLeft = content?.heroImageLeft || '/assets/img/hero1.png';
   const imgRight = content?.heroImageRight || '/assets/img/hero2.png';
 
@@ -44,6 +41,7 @@ export function LandingHero({ content }: LandingHeroProps) {
             src="/assets/img/Ornamen Puzzle Kuning AlphaKids_revisi0.png"
             alt=""
             fill
+            sizes="(max-width: 640px) 280px, (max-width: 1024px) 500px, 840px"
             className="object-contain"
             priority
           />
@@ -60,6 +58,7 @@ export function LandingHero({ content }: LandingHeroProps) {
             src="/assets/img/Ornamen Puzzle Kuning AlphaKids_revisi0.png"
             alt=""
             fill
+            sizes="(max-width: 640px) 280px, (max-width: 1024px) 500px, 840px"
             className="object-contain"
             priority
           />
@@ -92,28 +91,29 @@ export function LandingHero({ content }: LandingHeroProps) {
                   src={imgLeft}
                   alt="Siswa Alpha Kids"
                   fill
+                  sizes="(max-width: 1536px) 320px, 380px"
                   className="object-contain"
                   priority
                 />
               </div>
             </motion.div>
 
-            {/* 2. Top-Left: Official Alpha Kids Star Ornament + Curving Arrow */}
+            {/* 2. Top-Left: Official Alpha Kids Star Ornament */}
             <motion.div
               initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.45, delay: 0.28, ease: 'easeOut' }}
-              className="absolute -top-10 sm:-top-12 -left-6 sm:-left-10 lg:-left-12 z-10 pointer-events-none hidden md:flex flex-col items-center"
+              className="absolute -top-10 sm:-top-12 -left-6 sm:-left-10 lg:-left-12 z-10 pointer-events-none hidden md:block"
             >
-              <div className="relative size-10 sm:size-12 mb-1">
+              <div className="relative size-10 sm:size-12">
                 <Image
                   src="/assets/img/Ornamen Bintang Ungu AlphaKids_revisi0.png"
                   alt="Bintang Ungu"
                   fill
+                  sizes="48px"
                   className="object-contain"
                 />
               </div>
-              <CurvedArrow className="w-10 h-10 sm:w-12 sm:h-12 text-[#21b1db] opacity-80 transform -rotate-12" />
             </motion.div>
 
             {/* 3. Centered Master Headline */}
@@ -123,30 +123,22 @@ export function LandingHero({ content }: LandingHeroProps) {
               transition={{ duration: 0.48, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
               className="text-3xl xs:text-4xl sm:text-5xl md:text-5xl lg:text-[3.25rem] xl:text-[3.65rem] 2xl:text-[4.25rem] min-[1800px]:text-[5.25rem] font-semibold font-sans tracking-tight text-slate-900 dark:text-white leading-[1.18] sm:leading-[1.15]"
             >
-              {line1}{' '}
-              <span className="whitespace-nowrap inline-flex items-center gap-2 sm:gap-3.5 align-baseline">
-                <span>{line1Suffix}</span>
-                <span className="relative inline-block size-7 xs:size-8 sm:size-9 lg:size-10 xl:size-11 shrink-0 select-none pointer-events-none drop-shadow-md rotate-12 -mt-1 sm:-mt-2">
-                  <Image
-                    src="/assets/img/Ornamen Puzzle Kuning AlphaKids_revisi0.png"
-                    alt="Puzzle Kuning"
-                    fill
-                    className="object-contain"
-                    priority
-                  />
-                </span>
-              </span>
+              <span>{line1}</span>
+              {line1Suffix ? <span> {line1Suffix}</span> : null}
               <br />
               <span className="font-sans font-semibold text-[#21b1db]">
                 {highlightCyan}
-              </span>{' '}
-              <span className="font-semibold font-sans">{conjunction}</span>{' '}
-              <span className="relative inline-block font-sans font-semibold text-[#ef599a]">
+              </span>
+              {conjunction ? (
+                <span className="font-semibold font-sans"> {conjunction} </span>
+              ) : (
+                ' '
+              )}
+              <span className="font-sans font-semibold text-[#ef599a]">
                 {highlightPink}
-                <YellowBrushUnderline className="absolute -bottom-1.5 sm:-bottom-2.5 left-0 w-full text-[#FFCC07]" />
               </span>
               <br />
-              {line3}
+              <span>{line3}</span>
             </motion.h1>
 
             {/* 4. Right Flanking Hero Character: hero2.png (Purple Blob Backdrop) */}
@@ -162,6 +154,7 @@ export function LandingHero({ content }: LandingHeroProps) {
                   src={imgRight}
                   alt="Siswa Alpha Kids"
                   fill
+                  sizes="(max-width: 1536px) 320px, 380px"
                   className="object-contain"
                   priority
                 />
@@ -181,6 +174,7 @@ export function LandingHero({ content }: LandingHeroProps) {
                 src={imgLeft}
                 alt="Siswa Alpha Kids"
                 fill
+                sizes="(max-width: 640px) 144px, 224px"
                 className="object-contain"
                 priority
               />
@@ -190,6 +184,7 @@ export function LandingHero({ content }: LandingHeroProps) {
                 src={imgRight}
                 alt="Siswa Alpha Kids"
                 fill
+                sizes="(max-width: 640px) 144px, 224px"
                 className="object-contain"
                 priority
               />
@@ -215,7 +210,7 @@ export function LandingHero({ content }: LandingHeroProps) {
           >
             <Link
               href={ctaLink}
-              className="group inline-flex items-center gap-3 sm:gap-4 pl-6 sm:pl-7 pr-2 sm:pr-2.5 py-2 sm:py-2.5 rounded-full bg-[#ef599a] hover:bg-[#df488a] text-white font-semibold text-sm sm:text-base shadow-xl shadow-[#ef599a]/30 transition-all hover:scale-105 active:scale-95"
+              className="group inline-flex items-center gap-3 sm:gap-4 pl-6 sm:pl-7 pr-2 sm:pr-2.5 py-2 sm:py-2.5 rounded-full bg-[#ef599a] hover:bg-[#df488a] text-white font-semibold text-sm sm:text-base shadow-lg shadow-[#ef599a]/25 transition-colors cursor-pointer"
             >
               <span className="tracking-tight">{ctaText}</span>
               <span className="size-9 sm:size-10 rounded-full bg-white text-[#ef599a] flex items-center justify-center shrink-0 shadow-md transition-transform duration-200 group-hover:scale-105 group-hover:rotate-12">

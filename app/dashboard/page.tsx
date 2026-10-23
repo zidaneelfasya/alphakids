@@ -132,6 +132,7 @@ export default async function DashboardPage() {
                   src="/assets/img/Simbol Piala AlphaKids_revisi0.png"
                   alt="Piala Prestasi"
                   fill
+                  sizes="96px"
                   className="object-contain"
                 />
               </div>
@@ -142,6 +143,7 @@ export default async function DashboardPage() {
                   src="/assets/img/Ornamen Bintang Ungu AlphaKids_revisi0.png"
                   alt="Bintang Ungu"
                   fill
+                  sizes="56px"
                   className="object-contain"
                 />
               </div>
@@ -152,6 +154,7 @@ export default async function DashboardPage() {
                   src="/assets/img/Ornamen Puzzle Kuning AlphaKids_revisi0.png"
                   alt="Puzzle Kuning"
                   fill
+                  sizes="56px"
                   className="object-contain"
                 />
               </div>

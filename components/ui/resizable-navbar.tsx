@@ -362,6 +362,7 @@ export const NavbarLogo = ({
         width={36}
         height={36}
         className="h-8 sm:h-9 w-auto object-contain shrink-0"
+        style={{ width: 'auto', height: 'auto' }}
         priority
       />
 
