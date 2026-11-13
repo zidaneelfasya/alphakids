@@ -26,8 +26,8 @@ export function LandingHero({ content }: LandingHeroProps) {
     'Program bimbingan OSN Matematika, Sains, dan IPS untuk SD & SMP, dengan materi terstruktur dan pendampingan yang personal.';
   const ctaText = content?.ctaText || content?.ctaPrimaryText || 'Daftar Program';
   const ctaLink = content?.ctaLink || content?.ctaPrimaryLink || '#programs';
-  const imgLeft = content?.heroImageLeft || '/assets/img/hero1.png';
-  const imgRight = content?.heroImageRight || '/assets/img/hero2.png';
+  const imgLeft = content?.heroImageLeft || '/assets/img/hero_1.webp';
+  const imgRight = content?.heroImageRight || '/assets/img/hero_2.webp';
 
   return (
     <section className="relative overflow-hidden min-h-screen min-h-[100dvh] flex flex-col justify-center items-center bg-[#FFFDF9] dark:bg-slate-950 pt-20 sm:pt-28 pb-10 sm:pb-14">
@@ -43,7 +43,6 @@ export function LandingHero({ content }: LandingHeroProps) {
             fill
             sizes="(max-width: 640px) 280px, (max-width: 1024px) 500px, 840px"
             className="object-contain"
-            priority
           />
         </div>
       </div>
@@ -60,7 +59,6 @@ export function LandingHero({ content }: LandingHeroProps) {
             fill
             sizes="(max-width: 640px) 280px, (max-width: 1024px) 500px, 840px"
             className="object-contain"
-            priority
           />
         </div>
       </div>
