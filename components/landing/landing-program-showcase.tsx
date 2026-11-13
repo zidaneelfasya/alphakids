@@ -115,15 +115,16 @@ export function LandingProgramShowcase({
             {FILTER_TABS.map((tab) => (
               <button
                 key={tab.slug}
+                id={`tab-${tab.slug}`}
                 type="button"
                 role="tab"
                 aria-selected={selectedCategory === tab.slug}
                 aria-controls="program-catalog-grid"
                 onClick={() => setSelectedCategory(tab.slug)}
-                className={`relative px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-colors duration-200 cursor-pointer ${
+                className={`relative px-4 py-2 min-h-[44px] inline-flex items-center justify-center rounded-full text-xs font-semibold whitespace-nowrap transition-colors duration-200 cursor-pointer ${
                   selectedCategory === tab.slug
                     ? 'text-white'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
+                    : 'text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
                 }`}
               >
                 {selectedCategory === tab.slug && (
@@ -139,23 +140,31 @@ export function LandingProgramShowcase({
           </div>
         </motion.div>
 
-        {/* 3 Clean Rounded Cards with Fluid Animated Layout Reordering */}
-        {filteredPrograms.length === 0 ? (
-          <div className="text-center py-16 px-4 bg-slate-50 dark:bg-slate-900 rounded-3xl border border-dashed border-slate-200">
-            <BookOpen className="size-10 mx-auto text-[#21b1db] mb-3" />
-            <p className="font-sans font-semibold text-base text-slate-700 dark:text-slate-300">
-              Belum ada program di kategori ini
-            </p>
-          </div>
-        ) : (
-          <motion.div
-            layout={!shouldReduceMotion}
-            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.55, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          >
+        {/* Tabpanel Container Linked to Filter Tabs */}
+        <div
+          id="program-catalog-grid"
+          role="tabpanel"
+          aria-labelledby={`tab-${selectedCategory}`}
+          tabIndex={0}
+          className="focus-visible:outline-hidden"
+        >
+          {/* 3 Clean Rounded Cards with Fluid Animated Layout Reordering */}
+          {filteredPrograms.length === 0 ? (
+            <div className="text-center py-16 px-4 bg-slate-50 dark:bg-slate-900 rounded-3xl border border-dashed border-slate-200">
+              <BookOpen className="size-10 mx-auto text-[#21b1db] mb-3" />
+              <p className="font-sans font-semibold text-base text-slate-700 dark:text-slate-300">
+                Belum ada program di kategori ini
+              </p>
+            </div>
+          ) : (
+            <motion.div
+              layout={!shouldReduceMotion}
+              initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.55, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            >
             <AnimatePresence mode="popLayout">
               {filteredPrograms.slice(0, 6).map((prog) => {
                 const activePrice = prog.promoPrice ?? prog.price;
@@ -268,6 +277,7 @@ export function LandingProgramShowcase({
             </AnimatePresence>
           </motion.div>
         )}
+        </div>
 
         {/* View All Programs Link */}
         <div className="text-center mt-12">

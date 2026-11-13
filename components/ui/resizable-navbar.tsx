@@ -351,6 +351,7 @@ export const NavbarLogo = ({
   return (
     <Link
       href={href}
+      aria-label="Alpha Kids Beranda"
       className={cn(
         "relative z-20 flex items-center gap-2 sm:gap-2.5 transition-transform hover:scale-105 shrink-0",
         className
