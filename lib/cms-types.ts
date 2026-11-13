@@ -210,8 +210,8 @@ export const DEFAULT_HERO: HeroSectionContent = {
     'Program bimbingan OSN Matematika, Sains, dan IPS untuk SD & SMP, dengan materi terstruktur dan pendampingan yang personal.',
   ctaText: 'Daftar Program',
   ctaLink: '#programs',
-  heroImageLeft: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/hero1.png',
-  heroImageRight: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/hero2.png',
+  heroImageLeft: '/assets/img/hero_1.webp',
+  heroImageRight: '/assets/img/hero_2.webp',
   // Backward compatibility fields
   titlePart1: 'Siapkan si kecil',
   titleHighlight: 'jadi juara OSN',
@@ -250,9 +250,9 @@ export const DEFAULT_STORY: StorySectionContent = {
   ctaLink: '#programs',
   loopSize: 'normal',
   loopScale: 100,
-  tier1Image: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/hero1.png',
-  tier2Image: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/hero2.png',
-  tier3Image: 'https://yxbjqatnmoqvanawxjyk.supabase.co/storage/v1/object/public/cms/hero3.png',
+  tier1Image: '/assets/img/hero_1.webp',
+  tier2Image: '/assets/img/hero_2.webp',
+  tier3Image: '/assets/img/hero_3.webp',
   // Fallbacks
   title: 'Setiap anak punya potensi juara siap diasah',
   desc1:

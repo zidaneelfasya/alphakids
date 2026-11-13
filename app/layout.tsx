@@ -1,11 +1,16 @@
-import type { Metadata } from "next";
-import { Raleway, Poppins, Playfair_Display } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Raleway, Poppins } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
-const defaultUrl = process.env.NEXT_PUBLIC_APP_URL || (process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000");
+const defaultUrl = "https://www.alphakids.id";
+
+export const viewport: Viewport = {
+  themeColor: "#21b1db",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
@@ -15,7 +20,7 @@ export const metadata: Metadata = {
   },
   description: "Platform komersial dan akses program edukasi digital anak terpercaya, bimbingan OSN, webinar, dan kelas intensif berkualitas.",
   alternates: {
-    canonical: "./",
+    canonical: "https://www.alphakids.id",
   },
   openGraph: {
     type: "website",
@@ -55,22 +60,14 @@ export const metadata: Metadata = {
 const raleway = Raleway({
   variable: "--font-heading",
   subsets: ["latin"],
-  weight: ["600", "700", "800"],
+  weight: ["600", "700"],
   display: "swap",
 });
 
 const poppins = Poppins({
   variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
-
-const playfair = Playfair_Display({
-  variable: "--font-serif",
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  weight: ["400", "600", "700"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -113,7 +110,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${poppins.variable} ${raleway.variable} ${playfair.variable} font-sans antialiased`}
+        className={`${poppins.variable} ${raleway.variable} font-sans antialiased`}
       >
         <ThemeProvider
           attribute="class"
