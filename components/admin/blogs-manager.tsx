@@ -8,17 +8,12 @@ import {
   Search,
   ExternalLink,
   Trash2,
-  Calendar,
   Clock,
   User,
-  Sparkles,
   ArrowRight,
   BookOpen,
-  Filter,
-  Check,
   Loader2,
   Save,
-  Tag,
   PenLine,
 } from 'lucide-react';
 import { toast } from 'sonner';

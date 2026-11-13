@@ -18,9 +18,6 @@ import {
   ChevronDown,
   Check,
   Layout,
-  Quote,
-  Star,
-  Award,
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -74,7 +71,6 @@ import type {
   TestimonialsSectionContent,
   TestimonialItem,
   BlogSectionContent,
-  BlogItem,
   FaqSectionContent,
   CtaSectionContent,
   ContactSectionContent,

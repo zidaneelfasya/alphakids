@@ -7,9 +7,7 @@ import {
   Mail,
   GraduationCap,
   ArrowUpRight,
-  Sparkles,
   Clock,
-  ShieldCheck,
 } from 'lucide-react';
 import { LandingNavbar } from '@/components/landing/landing-navbar';
 import { LandingFooter } from '@/components/landing/landing-footer';

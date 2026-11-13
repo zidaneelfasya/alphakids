@@ -1,13 +1,8 @@
 import { db, cmsSections } from '../lib/db';
 import { eq } from 'drizzle-orm';
 import {
-  DEFAULT_HERO,
-  DEFAULT_FEATURES,
-  DEFAULT_STORY,
-  DEFAULT_MENTORS,
   DEFAULT_TESTIMONIALS,
   DEFAULT_FAQ,
-  DEFAULT_CTA,
   DEFAULT_BLOGS,
 } from '../lib/cms-types';
 

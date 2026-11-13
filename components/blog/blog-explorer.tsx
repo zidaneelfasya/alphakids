@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { Search, X } from 'lucide-react';
-import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import { BlogItem } from '@/lib/cms';
 import { BlogCard } from '@/components/blog/blog-card';
 
@@ -21,7 +21,6 @@ export function BlogExplorer({
     initialCategory || 'Semua'
   );
   const [searchQuery, setSearchQuery] = useState<string>(initialQuery || '');
-  const shouldReduceMotion = useReducedMotion();
 
   // Extract unique tags/categories from blogs
   const categories = useMemo(() => {

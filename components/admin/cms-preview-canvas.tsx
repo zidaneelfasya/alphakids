@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
 import {
   Monitor,
   Tablet,
@@ -12,8 +11,6 @@ import {
   MessageCircle,
   Mail,
   Clock,
-  Layers,
-  Sparkles,
 } from 'lucide-react';
 import { LandingHero } from '@/components/landing/landing-hero';
 import { LandingInteractiveFeatures } from '@/components/landing/landing-interactive-features';
