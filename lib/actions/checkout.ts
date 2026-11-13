@@ -1,6 +1,6 @@
 'use server';
 
-import { db, programs, programAccess, vouchers, orders, orderItems, payments } from '@/lib/db';
+import { db, programs, programAccess, vouchers, orders, orderItems, payments, voucherRedemptions } from '@/lib/db';
 import { eq, and } from 'drizzle-orm';
 import { requireAuth } from '@/lib/auth/guards';
 import { PaymentGatewayRegistry } from '@/lib/payment/registry';
@@ -84,7 +84,66 @@ export async function createOrderAndInitiatePayment(
     const randomSuffix = Math.floor(1000 + Math.random() * 9000);
     const orderNumber = `AK-${timestamp}-${randomSuffix}`;
 
-    // 5. Resolve active payment gateway
+    // 5. Special Case: Free Program ($0) or 100% Voucher Discount
+    // Bypasses payment gateways (Midtrans / Mayar reject amount 0) and grants immediate access
+    if (total === 0) {
+      const [freeOrder] = await db
+        .insert(orders)
+        .values({
+          userId: user.id,
+          orderNumber,
+          status: 'paid',
+          subtotal,
+          discountTotal,
+          total: 0,
+          voucherId,
+        })
+        .returning();
+
+      if (!freeOrder) {
+        return { success: false, error: 'Gagal membuat pesanan program gratis.' };
+      }
+
+      await db.insert(orderItems).values({
+        orderId: freeOrder.id,
+        programId: program.id,
+        priceAtPurchase: 0,
+        quantity: 1,
+      });
+
+      // Grant instant program access
+      await db
+        .insert(programAccess)
+        .values({
+          userId: user.id,
+          programId: program.id,
+          orderId: freeOrder.id,
+          status: 'active',
+          grantedAt: new Date(),
+        })
+        .onConflictDoUpdate({
+          target: [programAccess.userId, programAccess.programId],
+          set: { status: 'active', revokedAt: null, updatedAt: new Date() },
+        });
+
+      // Record voucher redemption if applicable
+      if (voucherId && discountTotal > 0) {
+        await db.insert(voucherRedemptions).values({
+          voucherId,
+          userId: user.id,
+          orderId: freeOrder.id,
+          discountAmount: discountTotal,
+        });
+      }
+
+      return {
+        success: true,
+        orderNumber: freeOrder.orderNumber,
+        checkoutUrl: `/dashboard/programs/${program.slug}`,
+      };
+    }
+
+    // 6. Resolve active payment gateway
     // STRICT RULE: No silent fallback to Midtrans. If no provider is active, throws error.
     let gateway;
     try {
@@ -100,7 +159,7 @@ export async function createOrderAndInitiatePayment(
       throw gwErr;
     }
 
-    // 6. Insert Order (status: 'pending')
+    // 7. Insert Order (status: 'pending')
     const [order] = await db
       .insert(orders)
       .values({
@@ -118,7 +177,7 @@ export async function createOrderAndInitiatePayment(
       return { success: false, error: 'Gagal membuat pesanan. Silakan coba lagi.' };
     }
 
-    // 7. Insert Order Item (1 order = 1 item MVP constraint)
+    // 8. Insert Order Item (1 order = 1 item MVP constraint)
     await db.insert(orderItems).values({
       orderId: order.id,
       programId: program.id,
@@ -126,7 +185,7 @@ export async function createOrderAndInitiatePayment(
       quantity: 1,
     });
 
-    // 8. Insert initial Payment record
+    // 9. Insert initial Payment record
     await db.insert(payments).values({
       orderId: order.id,
       provider: gateway.provider,
@@ -134,7 +193,7 @@ export async function createOrderAndInitiatePayment(
       status: 'pending',
     });
 
-    // 9. Call gateway adapter to generate checkout link or snap token
+    // 10. Call gateway adapter to generate checkout link or snap token
     const paymentResult = await gateway.createPayment({
       orderId: order.id,
       orderNumber: order.orderNumber,
