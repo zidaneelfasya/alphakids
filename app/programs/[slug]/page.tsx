@@ -10,7 +10,7 @@ import {
   programContents,
   programAccess,
 } from '@/lib/db';
-import { eq, and, desc, asc, ne } from 'drizzle-orm';
+import { eq, and, desc, asc } from 'drizzle-orm';
 import { LandingNavbar } from '@/components/landing/landing-navbar';
 import { LandingFooter } from '@/components/landing/landing-footer';
 import { ProgramCard } from '@/components/programs/program-card';
@@ -48,7 +48,11 @@ export async function generateMetadata({
 }: ProgramDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
   const [program] = await db
-    .select({ title: programs.title, description: programs.description })
+    .select({
+      title: programs.title,
+      description: programs.description,
+      coverImage: programs.coverImage,
+    })
     .from(programs)
     .where(and(eq(programs.slug, slug), eq(programs.isActive, true)))
     .limit(1);
@@ -57,9 +61,35 @@ export async function generateMetadata({
     return { title: 'Program Tidak Ditemukan — Alpha Kids' };
   }
 
+  const desc = (program.description || 'Program bimbingan OSN dan materi edukasi digital berkualitas Alpha Kids.').slice(0, 160);
+  const imgUrl = program.coverImage || '/opengraph-image.png';
+
   return {
     title: `${program.title} — Alpha Kids`,
-    description: (program.description || '').slice(0, 160),
+    description: desc,
+    alternates: {
+      canonical: `/programs/${slug}`,
+    },
+    openGraph: {
+      title: `${program.title} | Alpha Kids`,
+      description: desc,
+      url: `/programs/${slug}`,
+      images: [
+        {
+          url: imgUrl,
+          width: 1200,
+          height: 630,
+          alt: program.title,
+        },
+      ],
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${program.title} | Alpha Kids`,
+      description: desc,
+      images: [imgUrl],
+    },
   };
 }
 
@@ -150,10 +180,34 @@ export default async function ProgramDetailPage({
     DEFAULT_CONTACT
   );
 
-  const fallbackCover = '/assets/img/hero1.png';
+  const fallbackCover = '/assets/img/hero_1.webp';
+
+  const courseJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: program.title,
+    description: program.description || 'Program bimbingan OSN dan materi intensif berkualitas Alpha Kids.',
+    provider: {
+      '@type': 'EducationalOrganization',
+      name: 'Alpha Kids',
+      sameAs: 'https://alphakids.id',
+    },
+    offers: {
+      '@type': 'Offer',
+      price: program.price,
+      priceCurrency: 'IDR',
+      category: program.categoryName || 'Education',
+    },
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FFFDF9] dark:bg-slate-950 font-sans antialiased text-slate-900 dark:text-white selection:bg-cyan-200 selection:text-cyan-900">
+      {/* Course Structured Data for Google Rich Snippets */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseJsonLd) }}
+      />
+
       {/* 1. Official Floating Capsule Navbar */}
       <LandingNavbar
         user={user}

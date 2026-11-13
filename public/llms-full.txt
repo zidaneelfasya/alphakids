@@ -1,0 +1,29 @@
+# Alpha Kids — Dokumentasi Lengkap & Kurikulum Platform
+
+Alpha Kids adalah platform bimbingan belajar dan persiapan Olimpiade Sains Nasional (OSN) terdepan untuk anak-anak jenjang Sekolah Dasar (SD) dan Sekolah Menengah Pertama (SMP) di Indonesia.
+
+## Visi & Misi
+Mencetak generasi anak Indonesia yang tangguh, berpikir kritis, gemar belajar, dan berprestasi di tingkat nasional melalui bimbingan yang terstruktur, interaktif, dan penuh kegembiraan.
+
+## Fitur & Metode Belajar
+1. **Kurikulum Terarah**: Silabus dirancang sistematis mengacu pada standar kompetisi Pusat Prestasi Nasional (Puspresnas) Kemendikbudristek.
+2. **Mentor Berprestasi**: Dibimbing langsung oleh para peraih medali olimpiade nasional dan lulusan universitas ternama.
+3. **Pendampingan Personal & Progress Terukur**: Setiap siswa dipantau perkembangannya melalui latihan bertahap, simulasi ujian, dan feedback berkala.
+4. **Gamifikasi & Eksperimen**: Materi disampaikan dengan pendekatan visual, analogi cerita, dan kuis interaktif sehingga anak tidak merasa jenuh.
+
+## Mata Pelajaran & Jenjang
+- **Matematika SD**: Kelas 3–6 SD (Aritmatika, Teori Bilangan, Aljabar Awal, Geometri & Kombinatorika).
+- **IPA SD**: Kelas 3–6 SD (Makhluk Hidup & Lingkungan, Mekanika Sederhana, Tata Surya, Sains Terapan).
+- **Matematika SMP**: Kelas 7–9 SMP (Aljabar Lanjut, Teori Peluang, Teorema Geometri, Persamaan Diophantine).
+- **IPA SMP**: Kelas 7–9 SMP (Fisika Mekanika & Termal, Kimia Unsur, Biologi Seluler & Genetika).
+- **IPS SMP**: Kelas 7–9 SMP (Geografi Keruangan, Interaksi Sosial, Dinamika Kependudukan, Ekonomi Pembangunan).
+
+## Sertifikasi & Akses Materi
+Peserta yang menyelesaikan modul bimbingan dan evaluasi akhir mendapatkan sertifikat digital resmi yang dapat diverifikasi melalui platform Alpha Kids.
+
+## Navigasi Web
+- Beranda: https://alphakids.id
+- Program: https://alphakids.id/programs
+- Blog: https://alphakids.id/blog
+- Bantuan: https://alphakids.id/bantuan
+- Akun & Dashboard: https://alphakids.id/dashboard

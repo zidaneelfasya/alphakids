@@ -38,9 +38,38 @@ export async function generateMetadata({
     };
   }
 
+  const title = `${article.title} — Alpha Kids Blog`;
+  const desc = (article.excerpt || '').slice(0, 160);
+  const imgUrl = article.coverImage || '/opengraph-image.png';
+
   return {
-    title: `${article.title} — Alpha Kids Blog`,
-    description: article.excerpt,
+    title,
+    description: desc,
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
+    openGraph: {
+      title,
+      description: desc,
+      url: `/blog/${slug}`,
+      images: [
+        {
+          url: imgUrl,
+          width: 1200,
+          height: 630,
+          alt: article.title,
+        },
+      ],
+      type: 'article',
+      publishedTime: article.publishedAt,
+      authors: [article.author?.name || 'Tim Alpha Kids'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: desc,
+      images: [imgUrl],
+    },
   };
 }
 
@@ -73,8 +102,32 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   // 4. Extract headings for Table of Contents
   const tocItems = extractTableOfContents(article.content || '');
 
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: article.title,
+    description: article.excerpt,
+    image: article.coverImage || '/opengraph-image.png',
+    datePublished: article.publishedAt,
+    author: {
+      '@type': 'Person',
+      name: article.author?.name || 'Tim Alpha Kids',
+    },
+    publisher: {
+      '@type': 'EducationalOrganization',
+      name: 'Alpha Kids',
+      logo: '/assets/img/logo.png',
+    },
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-[#FFFDF9] dark:bg-slate-950 font-sans antialiased text-slate-900 dark:text-white selection:bg-pink-200 selection:text-pink-900">
+      {/* Search Engine Rich Results: BlogPosting Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+
       {/* 1. Official Floating Capsule Navbar */}
       <LandingNavbar user={user} programs={activePrograms} />
 

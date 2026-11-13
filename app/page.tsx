@@ -46,8 +46,28 @@ export default async function HomePage() {
     orderBy: [categories.name],
   });
 
+  // 4. Generate FAQ Schema JSON-LD for rich snippets
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: (cmsData.faq?.items || []).map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans antialiased selection:bg-cyan-200 selection:text-cyan-900">
+      {/* Search Engine Rich Results: FAQPage Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+
       {/* 1. Floating Capsule Navbar */}
       <LandingNavbar user={user} programs={activePrograms} />
 
