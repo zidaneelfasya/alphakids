@@ -40,7 +40,7 @@ export async function generateMetadata({
 
   const title = `${article.title} — Alpha Kids Blog`;
   const desc = (article.excerpt || '').slice(0, 160);
-  const imgUrl = article.coverImage || '/opengraph-image.png';
+  const imgUrl = article.imageUrl || '/opengraph-image.png';
 
   return {
     title,
@@ -62,7 +62,7 @@ export async function generateMetadata({
       ],
       type: 'article',
       publishedTime: article.publishedAt,
-      authors: [article.author?.name || 'Tim Alpha Kids'],
+      authors: [article.author || 'Tim Alpha Kids'],
     },
     twitter: {
       card: 'summary_large_image',
@@ -107,11 +107,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     '@type': 'BlogPosting',
     headline: article.title,
     description: article.excerpt,
-    image: article.coverImage || '/opengraph-image.png',
+    image: article.imageUrl || '/opengraph-image.png',
     datePublished: article.publishedAt,
     author: {
       '@type': 'Person',
-      name: article.author?.name || 'Tim Alpha Kids',
+      name: article.author || 'Tim Alpha Kids',
     },
     publisher: {
       '@type': 'EducationalOrganization',
