@@ -57,5 +57,16 @@ describe('Performance Budget & LCP Asset Verification', () => {
       const content = fs.readFileSync(fullPath, 'utf-8');
       assert.ok(content.length > 500, 'llms-full.txt must provide in-depth platform details');
     });
+
+    it('should provide valid Agent Resource Discovery manifests (.well-known/ai-catalog.json and ard.json)', () => {
+      const catalogPath = path.join(rootDir, 'public/.well-known/ai-catalog.json');
+      const ardPath = path.join(rootDir, 'public/.well-known/ard.json');
+      assert.ok(fs.existsSync(catalogPath), 'ai-catalog.json must exist in .well-known');
+      assert.ok(fs.existsSync(ardPath), 'ard.json must exist in .well-known');
+
+      const catalog = JSON.parse(fs.readFileSync(catalogPath, 'utf-8'));
+      assert.equal(catalog.identifier, 'urn:air:alphakids.id:catalog:main');
+      assert.ok(Array.isArray(catalog.resources), 'ai-catalog.json must contain resources list');
+    });
   });
 });

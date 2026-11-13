@@ -1,0 +1,47 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://www.alphakids.id/.well-known/ai-catalog.json",
+  "identifier": "urn:air:alphakids.id:catalog:main",
+  "displayName": "Alpha Kids Platform Catalog",
+  "description": "Platform edukasi digital dan bimbingan persiapan Olimpiade Sains Nasional (OSN) Matematika, Sains, dan IPS untuk jenjang SD & SMP di Indonesia.",
+  "version": "1.0.0",
+  "publisher": {
+    "@type": "EducationalOrganization",
+    "name": "Alpha Kids",
+    "url": "https://www.alphakids.id"
+  },
+  "resources": [
+    {
+      "@id": "https://www.alphakids.id/programs",
+      "identifier": "urn:air:alphakids.id:resources:programs-catalog",
+      "displayName": "Katalog Program Bimbingan OSN",
+      "type": "text/html",
+      "description": "Daftar kurikulum bimbingan belajar, kelas persiapan OSN Matematika, Sains, dan IPS untuk jenjang SD & SMP.",
+      "url": "https://www.alphakids.id/programs"
+    },
+    {
+      "@id": "https://www.alphakids.id/llms.txt",
+      "identifier": "urn:air:alphakids.id:resources:llms-txt",
+      "displayName": "Alpha Kids LLMs Documentation",
+      "type": "text/markdown",
+      "description": "Dokumentasi machine-readable terstruktur platform Alpha Kids untuk AI agents dan LLMs.",
+      "url": "https://www.alphakids.id/llms.txt"
+    },
+    {
+      "@id": "https://www.alphakids.id/llms-full.txt",
+      "identifier": "urn:air:alphakids.id:resources:llms-full-txt",
+      "displayName": "Alpha Kids Full Platform Documentation",
+      "type": "text/markdown",
+      "description": "Dokumentasi komprehensif mengenai silabus, fitur platform, alur pendaftaran, dan metode pembelajaran.",
+      "url": "https://www.alphakids.id/llms-full.txt"
+    },
+    {
+      "@id": "https://www.alphakids.id/sitemap.xml",
+      "identifier": "urn:air:alphakids.id:resources:sitemap",
+      "displayName": "Alpha Kids Sitemap XML",
+      "type": "application/xml",
+      "description": "Daftar URL dan indeks konten publik platform Alpha Kids.",
+      "url": "https://www.alphakids.id/sitemap.xml"
+    }
+  ]
+}

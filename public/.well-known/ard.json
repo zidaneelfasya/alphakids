@@ -1,0 +1,25 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://www.alphakids.id/.well-known/ard.json",
+  "identifier": "urn:air:alphakids.id:catalog:main",
+  "displayName": "Alpha Kids Platform Catalog",
+  "description": "Platform edukasi digital dan bimbingan persiapan Olimpiade Sains Nasional (OSN) Matematika, Sains, dan IPS untuk jenjang SD & SMP di Indonesia.",
+  "version": "1.0.0",
+  "catalogUrl": "https://www.alphakids.id/.well-known/ai-catalog.json",
+  "resources": [
+    {
+      "@id": "https://www.alphakids.id/programs",
+      "identifier": "urn:air:alphakids.id:resources:programs-catalog",
+      "displayName": "Katalog Program Bimbingan OSN",
+      "type": "text/html",
+      "url": "https://www.alphakids.id/programs"
+    },
+    {
+      "@id": "https://www.alphakids.id/llms.txt",
+      "identifier": "urn:air:alphakids.id:resources:llms-txt",
+      "displayName": "Alpha Kids LLMs Documentation",
+      "type": "text/markdown",
+      "url": "https://www.alphakids.id/llms.txt"
+    }
+  ]
+}
