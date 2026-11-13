@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import {
   PaymentGateway,
   PaymentProvider,
@@ -116,7 +117,18 @@ export class MayarGatewayAdapter implements PaymentGateway {
         headers.get('authorization')?.replace('Bearer ', '') ||
         urlParams?.get('secret');
 
-      if (!providedSecret || providedSecret !== this.config.webhookSecret) {
+      if (!providedSecret) {
+        return {
+          isValid: false,
+          errorMessage: 'Missing Mayar webhook secret/token',
+          statusCode: 401,
+        };
+      }
+
+      const providedHash = crypto.createHash('sha256').update(providedSecret).digest();
+      const expectedHash = crypto.createHash('sha256').update(this.config.webhookSecret).digest();
+
+      if (!crypto.timingSafeEqual(providedHash, expectedHash)) {
         return {
           isValid: false,
           errorMessage: 'Invalid Mayar webhook secret/token',

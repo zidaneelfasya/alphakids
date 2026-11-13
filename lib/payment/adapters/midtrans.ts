@@ -120,10 +120,12 @@ export class MidtransGatewayAdapter implements PaymentGateway {
       .update(`${orderId}${statusCode}${grossAmount}${this.config.serverKey}`)
       .digest('hex');
 
-    const signatureValid = crypto.timingSafeEqual(
-      Buffer.from(signatureKey, 'utf8'),
-      Buffer.from(expectedSignature, 'utf8')
-    );
+    const providedBuf = Buffer.from(signatureKey, 'utf8');
+    const expectedBuf = Buffer.from(expectedSignature, 'utf8');
+
+    const signatureValid =
+      providedBuf.length === expectedBuf.length &&
+      crypto.timingSafeEqual(providedBuf, expectedBuf);
 
     if (!signatureValid) {
       return { isValid: false, errorMessage: 'Invalid Midtrans signature key', statusCode: 401 };
