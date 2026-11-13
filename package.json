@@ -5,6 +5,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "test": "tsx --test 'tests/**/*.test.ts'",
     "make-admin": "node scripts/make-admin.mjs",
     "seed": "node scripts/seed-programs.mjs && node scripts/seed-blogs.mjs && node scripts/seed-storage-cms.mjs",
     "seed:programs": "node scripts/seed-programs.mjs",

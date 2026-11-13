@@ -1,29 +1,95 @@
 {
-  "version": 1,
+  "version": 2,
   "skills": {
+    "agent-browser": {
+      "source": "vercel-labs/agent-browser",
+      "sourceType": "github",
+      "skillPath": "skills/agent-browser/SKILL.md",
+      "computedHash": "e24abc7a631250d49f24036ada4cd4bd8c44c313c92510b3ad7388416a66d405"
+    },
+    "database-testing": {
+      "source": "petrkindlmann/qa-skills",
+      "sourceType": "github",
+      "skillPath": "skills/database-testing/SKILL.md",
+      "computedHash": "7a60dd312a35f4ea0ba1e760beb772b9594d78ae940ea675b995b30e72890e22"
+    },
     "find-skills": {
       "source": "vercel-labs/skills",
       "sourceType": "github",
       "skillPath": "skills/find-skills/SKILL.md",
-      "computedHash": "b146008599c31057cef1c145774cea5d5afb30e8f43fa802e47a4b461419aaaf"
+      "computedHash": ""
     },
     "next-best-practices": {
       "source": "vercel-labs/openreview",
       "sourceType": "github",
       "skillPath": ".agents/skills/next-best-practices/SKILL.md",
-      "computedHash": "db85045827ebeb83ac8dbc992b69188755eeb74dcf01cbf5e694d58aa494a106"
+      "computedHash": ""
+    },
+    "payment-testing": {
+      "source": "petrkindlmann/qa-skills",
+      "sourceType": "github",
+      "skillPath": "skills/payment-testing/SKILL.md",
+      "computedHash": "5a10bc8b336b32a19c196129a4361aa6f6dd0cf0831eaba8fd684431d9493fc8"
+    },
+    "performance-testing": {
+      "source": "petrkindlmann/qa-skills",
+      "sourceType": "github",
+      "skillPath": "skills/performance-testing/SKILL.md",
+      "computedHash": "ced5ac70072731c11f1929c568cb7831db39d2bbb54118950f5a696aad1f2da9"
+    },
+    "playwright-automation": {
+      "source": "petrkindlmann/qa-skills",
+      "sourceType": "github",
+      "skillPath": "skills/playwright-automation/SKILL.md",
+      "computedHash": "cb42d6a67228a5e8bbd7f0679b61014b4d1bf8e987e8fd153f4aa1767a510994"
+    },
+    "qa-project-context": {
+      "source": "petrkindlmann/qa-skills",
+      "sourceType": "github",
+      "skillPath": "skills/qa-project-context/SKILL.md",
+      "computedHash": "c223a349cdce28a4d660396036405e236e30fd58694c9bab2d93c60db6a4b80e"
+    },
+    "qa-start": {
+      "source": "petrkindlmann/qa-skills",
+      "sourceType": "github",
+      "skillPath": "skills/qa-start/SKILL.md",
+      "computedHash": "a7a97a1a72ce982e3f07be66c96527bfac808d125b4a5c4b3cceef6912708c5d"
+    },
+    "security-testing": {
+      "source": "petrkindlmann/qa-skills",
+      "sourceType": "github",
+      "skillPath": "skills/security-testing/SKILL.md",
+      "computedHash": "c1eafc066006d7f122122b140bb020ccf2ab8d0f4af5ba7d331dbb388c38ad3e"
+    },
+    "test-planning": {
+      "source": "petrkindlmann/qa-skills",
+      "sourceType": "github",
+      "skillPath": "skills/test-planning/SKILL.md",
+      "computedHash": "df20261733b9ed6e0631e6037a856e7e17068f4e7106d1d66e1c88d8dcba1b8e"
+    },
+    "test-strategy": {
+      "source": "petrkindlmann/qa-skills",
+      "sourceType": "github",
+      "skillPath": "skills/test-strategy/SKILL.md",
+      "computedHash": "02136ba73e4c2af061792a2e5a135711aede9be3a15f2b777049f6e6af8d51f3"
     },
     "ui-ux-pro-max": {
       "source": "nextlevelbuilder/ui-ux-pro-max-skill",
       "sourceType": "github",
       "skillPath": ".claude/skills/ui-ux-pro-max/SKILL.md",
-      "computedHash": "27b1e8c953e26f962e3314281601959b04787edf3fd7fccadce176ff844c688d"
+      "computedHash": ""
+    },
+    "unit-testing": {
+      "source": "petrkindlmann/qa-skills",
+      "sourceType": "github",
+      "skillPath": "skills/unit-testing/SKILL.md",
+      "computedHash": "5e20433f5aa1018d9283a761c6ffefa63dc771d9aa9d6fb16f01dcdfcee4c067"
     },
     "using-superpowers": {
       "source": "obra/superpowers",
       "sourceType": "github",
       "skillPath": "skills/using-superpowers/SKILL.md",
-      "computedHash": "ef8670c2a2d8e2f6ed52d6f3219759903300ca13afc5ec2e25826a735112562b"
+      "computedHash": "6a9104fac7e16c3cec2bc118943aefd331cac35b4cfabd427cea4dc16337c6a5"
     }
   }
 }
