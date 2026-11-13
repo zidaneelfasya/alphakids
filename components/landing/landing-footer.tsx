@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Instagram, Linkedin } from 'lucide-react';
+import { Instagram } from 'lucide-react';
 
 function TikTokIcon({ className }: { className?: string }) {
   return (
@@ -56,9 +56,9 @@ export function LandingFooter() {
           <div className="grid grid-cols-2 xs:grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 flex-1 w-full items-start">
             {/* Column 1: Program (#21b1db) */}
             <div className="space-y-4">
-              <h4 className="font-sans font-semibold text-xs sm:text-sm tracking-wider uppercase text-[#21b1db]">
+              <h3 className="font-sans font-semibold text-xs sm:text-sm tracking-wider uppercase text-[#21b1db]">
                 Program
-              </h4>
+              </h3>
               <ul className="space-y-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-400">
                 <li>
                   <Link href="/programs" className="hover:text-[#21b1db] transition-colors">
@@ -95,9 +95,9 @@ export function LandingFooter() {
 
             {/* Column 2: Fitur & Informasi (#ef599a) */}
             <div className="space-y-4">
-              <h4 className="font-sans font-semibold text-xs sm:text-sm tracking-wider uppercase text-[#ef599a]">
+              <h3 className="font-sans font-semibold text-xs sm:text-sm tracking-wider uppercase text-[#ef599a]">
                 Fitur & Info
-              </h4>
+              </h3>
               <ul className="space-y-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-400">
                 <li>
                   <Link href="#fitur" className="hover:text-[#ef599a] transition-colors">
@@ -129,9 +129,9 @@ export function LandingFooter() {
 
             {/* Column 3: Bantuan (#ca8a04 / #FFCC07) */}
             <div className="space-y-4">
-              <h4 className="font-sans font-semibold text-xs sm:text-sm tracking-wider uppercase text-[#ca8a04] dark:text-[#FFCC07]">
+              <h3 className="font-sans font-semibold text-xs sm:text-sm tracking-wider uppercase text-[#ca8a04] dark:text-[#FFCC07]">
                 Bantuan
-              </h4>
+              </h3>
               <ul className="space-y-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-400">
                 <li>
                   <a
@@ -163,9 +163,9 @@ export function LandingFooter() {
 
             {/* Column 4: Kebijakan (#21b1db) */}
             <div className="space-y-4">
-              <h4 className="font-sans font-semibold text-xs sm:text-sm tracking-wider uppercase text-[#21b1db]">
+              <h3 className="font-sans font-semibold text-xs sm:text-sm tracking-wider uppercase text-[#21b1db]">
                 Kebijakan
-              </h4>
+              </h3>
               <ul className="space-y-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-400">
                 <li>
                   <Link href="/terms" className="hover:text-[#21b1db] transition-colors">

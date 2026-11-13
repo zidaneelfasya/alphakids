@@ -42,7 +42,6 @@ interface LandingProgramShowcaseProps {
 
 export function LandingProgramShowcase({
   programs,
-  categories,
 }: LandingProgramShowcaseProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const shouldReduceMotion = useReducedMotion();
@@ -108,11 +107,18 @@ export function LandingProgramShowcase({
           </div>
 
           {/* Category Filter Capsule Pills: Semua | Private 1-on-1 | Kelas Grup | Matematika | IPA | IPS */}
-          <div className="flex flex-wrap items-center gap-2 py-2.5 px-1">
+          <div
+            role="tablist"
+            aria-label="Filter kategori program"
+            className="flex flex-wrap items-center gap-2 py-2.5 px-1"
+          >
             {FILTER_TABS.map((tab) => (
               <button
                 key={tab.slug}
                 type="button"
+                role="tab"
+                aria-selected={selectedCategory === tab.slug}
+                aria-controls="program-catalog-grid"
                 onClick={() => setSelectedCategory(tab.slug)}
                 className={`relative px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-colors duration-200 cursor-pointer ${
                   selectedCategory === tab.slug

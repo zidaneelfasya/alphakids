@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, LayoutDashboard } from 'lucide-react';
+import { LayoutDashboard } from 'lucide-react';
 import {
   Navbar,
   NavBody,

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Quote, Star, Award } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { ScallopedBadge, ConcentricRings } from '@/components/landing/wonder-decorations';
-import type { TestimonialsSectionContent, TestimonialItem } from '@/lib/cms';
+import type { TestimonialsSectionContent } from '@/lib/cms';
 
 interface LandingTestimonialsProps {
   content: TestimonialsSectionContent;
@@ -189,9 +189,9 @@ export function LandingTestimonials({ content }: LandingTestimonialsProps) {
 
                       {/* Name & School */}
                       <div className="flex-1 min-w-0 space-y-1">
-                        <h4 className="font-sans font-semibold text-base sm:text-lg text-slate-900 dark:text-white truncate">
+                        <h3 className="font-sans font-semibold text-base sm:text-lg text-slate-900 dark:text-white truncate">
                           {item.name}
-                        </h4>
+                        </h3>
                         <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 truncate">
                           {item.role} &bull; {item.school}
                         </p>
