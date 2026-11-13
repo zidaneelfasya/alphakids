@@ -8,7 +8,6 @@ import {
   profiles,
 } from '@/lib/db';
 import { eq, desc, sql, count } from 'drizzle-orm';
-import { AdminShell } from '@/components/admin/admin-shell';
 import {
   DollarSign,
   GraduationCap,
@@ -74,8 +73,7 @@ export default async function AdminDashboardPage() {
   });
 
   return (
-    <AdminShell breadcrumbs={[{ label: 'Admin', href: '/admin' }]}>
-      <div className="max-w-6xl mx-auto space-y-8">
+    <div className="max-w-6xl mx-auto space-y-8">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -314,6 +312,5 @@ export default async function AdminDashboardPage() {
           </div>
         </div>
       </div>
-    </AdminShell>
   );
 }

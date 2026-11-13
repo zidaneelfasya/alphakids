@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { requireAuth } from '@/lib/auth/guards';
 import { db, programAccess, programs } from '@/lib/db';
 import { eq, and, desc } from 'drizzle-orm';
-import { DashboardShell } from '@/components/dashboard/dashboard-shell';
 import { GraduationCap, ArrowRight, BookOpen, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -31,13 +30,7 @@ export default async function MemberProgramsPage() {
     .orderBy(desc(programAccess.grantedAt));
 
   return (
-    <DashboardShell
-      breadcrumbs={[
-        { label: 'Dashboard', href: '/dashboard' },
-        { label: 'Program Saya' },
-      ]}
-    >
-      <div className="space-y-6 max-w-6xl mx-auto">
+    <div className="space-y-6 max-w-6xl mx-auto">
         <div>
           <h1 className="text-2xl font-bold font-heading text-slate-900">
             Program Belajar Saya
@@ -130,6 +123,5 @@ export default async function MemberProgramsPage() {
           </div>
         )}
       </div>
-    </DashboardShell>
   );
 }

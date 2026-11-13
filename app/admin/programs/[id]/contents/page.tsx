@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation';
 import { requireAdmin } from '@/lib/auth/guards';
 import { db, programs, programContents } from '@/lib/db';
 import { eq, asc } from 'drizzle-orm';
-import { AdminShell } from '@/components/admin/admin-shell';
 import { ProgramContentsManager } from '@/components/admin/program-contents-manager';
 
 interface PageProps {
@@ -31,20 +30,12 @@ export default async function AdminProgramContentsPage({ params }: PageProps) {
     .orderBy(asc(programContents.sortOrder));
 
   return (
-    <AdminShell
-      breadcrumbs={[
-        { label: 'Admin', href: '/admin' },
-        { label: 'Kelola Program', href: '/admin/programs' },
-        { label: 'Konten & Link' },
-      ]}
-    >
-      <div className="max-w-5xl mx-auto">
-        <ProgramContentsManager
-          programId={prog.id}
-          programTitle={prog.title}
-          contents={contents}
-        />
-      </div>
-    </AdminShell>
+    <div className="max-w-5xl mx-auto">
+      <ProgramContentsManager
+        programId={prog.id}
+        programTitle={prog.title}
+        contents={contents}
+      />
+    </div>
   );
 }

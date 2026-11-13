@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { requireAuth } from '@/lib/auth/guards';
 import { db, orders, orderItems, programs, payments } from '@/lib/db';
 import { eq, desc } from 'drizzle-orm';
-import { DashboardShell } from '@/components/dashboard/dashboard-shell';
 import { formatRupiah } from '@/lib/utils';
 import { CheckCircle2, Clock, XCircle, ArrowRight, ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -37,13 +36,7 @@ export default async function TransactionsPage() {
     .orderBy(desc(orders.createdAt));
 
   return (
-    <DashboardShell
-      breadcrumbs={[
-        { label: 'Dashboard', href: '/dashboard' },
-        { label: 'Riwayat Transaksi' },
-      ]}
-    >
-      <div className="space-y-6 max-w-5xl mx-auto">
+    <div className="space-y-6 max-w-5xl mx-auto">
         <div>
           <h1 className="text-2xl font-semibold font-sans text-slate-900 dark:text-white">
             Riwayat Transaksi & Pembayaran
@@ -174,6 +167,5 @@ export default async function TransactionsPage() {
           </div>
         )}
       </div>
-    </DashboardShell>
   );
 }

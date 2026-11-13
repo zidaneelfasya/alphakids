@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { requireAuth } from '@/lib/auth/guards';
 import { db, programs, programAccess, programContents } from '@/lib/db';
 import { eq, and, asc } from 'drizzle-orm';
-import { DashboardShell } from '@/components/dashboard/dashboard-shell';
+import { SetBreadcrumbTitle } from '@/components/breadcrumb-title-context';
 import { Button } from '@/components/ui/button';
 import {
   MessageCircle,
@@ -56,13 +56,8 @@ export default async function MemberProgramDetailPage({
   // If user does not have active access, show restricted access banner
   if (!access) {
     return (
-      <DashboardShell
-        breadcrumbs={[
-          { label: 'Dashboard', href: '/dashboard' },
-          { label: 'Program Saya', href: '/dashboard/programs' },
-          { label: program.title },
-        ]}
-      >
+      <>
+        <SetBreadcrumbTitle title={program.title} />
         <div className="max-w-lg mx-auto my-12 p-8 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 text-center shadow-sm">
           <div className="size-16 rounded-2xl bg-[#E8F8FA] dark:bg-cyan-950/60 text-[#21b1db] flex items-center justify-center mx-auto mb-4">
             <Lock className="size-8 stroke-[1.75]" />
@@ -82,7 +77,7 @@ export default async function MemberProgramDetailPage({
             </Button>
           </div>
         </div>
-      </DashboardShell>
+      </>
     );
   }
 
@@ -102,13 +97,8 @@ export default async function MemberProgramDetailPage({
   );
 
   return (
-    <DashboardShell
-      breadcrumbs={[
-        { label: 'Dashboard', href: '/dashboard' },
-        { label: 'Program Saya', href: '/dashboard/programs' },
-        { label: program.title },
-      ]}
-    >
+    <>
+      <SetBreadcrumbTitle title={program.title} />
       <div className="max-w-5xl mx-auto space-y-8">
         {/* Header Hero */}
         <div className="bg-slate-900 border border-slate-800 text-white rounded-3xl p-6 sm:p-8 shadow-sm">
@@ -281,6 +271,6 @@ export default async function MemberProgramDetailPage({
           )}
         </div>
       </div>
-    </DashboardShell>
+    </>
   );
 }

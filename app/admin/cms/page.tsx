@@ -1,6 +1,5 @@
 import { requireAdmin } from '@/lib/auth/guards';
 import { getAllCmsData } from '@/lib/cms';
-import { AdminShell } from '@/components/admin/admin-shell';
 import { CmsManager } from '@/components/admin/cms-manager';
 
 export const metadata = {
@@ -16,15 +15,8 @@ export default async function AdminCmsPage() {
   const cmsData = await getAllCmsData();
 
   return (
-    <AdminShell
-      breadcrumbs={[
-        { label: 'Admin', href: '/admin' },
-        { label: 'CMS & Landing Page' },
-      ]}
-    >
-      <div className="max-w-7xl 2xl:max-w-[1700px] mx-auto space-y-6">
-        <CmsManager initialData={cmsData} />
-      </div>
-    </AdminShell>
+    <div className="max-w-7xl 2xl:max-w-[1700px] mx-auto space-y-6">
+      <CmsManager initialData={cmsData} />
+    </div>
   );
 }

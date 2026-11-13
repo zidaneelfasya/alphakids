@@ -1,7 +1,6 @@
 import { requireAdmin } from '@/lib/auth/guards';
 import { db, programs, categories } from '@/lib/db';
 import { eq, desc } from 'drizzle-orm';
-import { AdminShell } from '@/components/admin/admin-shell';
 import { ProgramsManager } from '@/components/admin/programs-manager';
 
 export const metadata = {
@@ -42,24 +41,17 @@ export default async function AdminProgramsPage() {
     .orderBy(categories.name);
 
   return (
-    <AdminShell
-      breadcrumbs={[
-        { label: 'Admin', href: '/admin' },
-        { label: 'Kelola Program' },
-      ]}
-    >
-      <div className="space-y-6 max-w-6xl mx-auto">
-        <div>
-          <h1 className="text-2xl font-bold font-heading text-slate-900">
-            Kelola Program Pelatihan
-          </h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Tambah, sunting, dan atur kurikulum serta materi kelas untuk setiap program.
-          </p>
-        </div>
-
-        <ProgramsManager programs={programList} categories={categoryOptions} />
+    <div className="space-y-6 max-w-6xl mx-auto">
+      <div>
+        <h1 className="text-2xl font-bold font-heading text-slate-900">
+          Kelola Program Pelatihan
+        </h1>
+        <p className="text-xs text-slate-500 mt-1">
+          Tambah, sunting, dan atur kurikulum serta materi kelas untuk setiap program.
+        </p>
       </div>
-    </AdminShell>
+
+      <ProgramsManager programs={programList} categories={categoryOptions} />
+    </div>
   );
 }

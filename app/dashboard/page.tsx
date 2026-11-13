@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { requireAuth } from '@/lib/auth/guards';
 import { db, programAccess, orders, programs } from '@/lib/db';
 import { eq, and, desc, count } from 'drizzle-orm';
-import { DashboardShell } from '@/components/dashboard/dashboard-shell';
 import { GraduationCap, CreditCard, ArrowRight, CheckCircle2, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { getDicebearMoodsAvatar } from '@/lib/avatar';
@@ -60,8 +59,7 @@ export default async function DashboardPage() {
       : null) || getDicebearMoodsAvatar(user.email || userName);
 
   return (
-    <DashboardShell breadcrumbs={[{ label: 'Dashboard' }]}>
-      <div className="max-w-6xl mx-auto space-y-8">
+    <div className="max-w-6xl mx-auto space-y-8">
         {/* ================================================================= */}
         {/* CREATIVE WELCOME CARD (NO GAUDY GRADIENTS, NO EMOJIS)             */}
         {/* Left: DiceBear Moods Avatar + Greeting; Right: Alpha Kids Objects */}
@@ -292,6 +290,5 @@ export default async function DashboardPage() {
           )}
         </div>
       </div>
-    </DashboardShell>
   );
 }

@@ -1,7 +1,6 @@
 import { requireAdmin } from '@/lib/auth/guards';
 import { db, orders } from '@/lib/db';
 import { desc } from 'drizzle-orm';
-import { AdminShell } from '@/components/admin/admin-shell';
 import {
   TransactionsManager,
   AdminOrderItem,
@@ -59,15 +58,8 @@ export default async function AdminTransactionsPage() {
   });
 
   return (
-    <AdminShell
-      breadcrumbs={[
-        { label: 'Admin', href: '/admin' },
-        { label: 'Daftar Transaksi' },
-      ]}
-    >
-      <div className="max-w-6xl mx-auto">
-        <TransactionsManager orders={formattedOrders} />
-      </div>
-    </AdminShell>
+    <div className="max-w-6xl mx-auto">
+      <TransactionsManager orders={formattedOrders} />
+    </div>
   );
 }

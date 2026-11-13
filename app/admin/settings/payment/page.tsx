@@ -1,6 +1,5 @@
 import { requireAdmin } from '@/lib/auth/guards';
 import { db, paymentGatewayConfigs } from '@/lib/db';
-import { AdminShell } from '@/components/admin/admin-shell';
 import { PaymentSettingsView } from '@/components/admin/payment-settings-view';
 
 export const metadata = {
@@ -19,25 +18,17 @@ export default async function AdminPaymentSettingsPage() {
   const siteUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
   return (
-    <AdminShell
-      breadcrumbs={[
-        { label: 'Admin', href: '/admin' },
-        { label: 'Pengaturan' },
-        { label: 'Gateway Pembayaran' },
-      ]}
-    >
-      <div className="space-y-6 max-w-5xl mx-auto">
-        <div>
-          <h1 className="text-2xl font-bold font-heading text-slate-900">
-            Pengaturan Gateway Pembayaran
-          </h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Konfigurasi Midtrans dan Mayar. Pilih penyedia aktif yang digunakan untuk memproses checkout pelanggan.
-          </p>
-        </div>
-
-        <PaymentSettingsView configs={configs} siteUrl={siteUrl} />
+    <div className="space-y-6 max-w-5xl mx-auto">
+      <div>
+        <h1 className="text-2xl font-bold font-heading text-slate-900">
+          Pengaturan Gateway Pembayaran
+        </h1>
+        <p className="text-xs text-slate-500 mt-1">
+          Konfigurasi Midtrans dan Mayar. Pilih penyedia aktif yang digunakan untuk memproses checkout pelanggan.
+        </p>
       </div>
-    </AdminShell>
+
+      <PaymentSettingsView configs={configs} siteUrl={siteUrl} />
+    </div>
   );
 }

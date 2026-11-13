@@ -1,7 +1,6 @@
 import { requireAdmin } from '@/lib/auth/guards';
 import { db, profiles, programAccess } from '@/lib/db';
 import { desc, sql } from 'drizzle-orm';
-import { AdminShell } from '@/components/admin/admin-shell';
 import { UsersManager, AdminUserItem } from '@/components/admin/users-manager';
 
 export const dynamic = 'force-dynamic';
@@ -37,15 +36,8 @@ export default async function AdminUsersPage() {
   }));
 
   return (
-    <AdminShell
-      breadcrumbs={[
-        { label: 'Admin', href: '/admin' },
-        { label: 'Kelola Pengguna' },
-      ]}
-    >
-      <div className="max-w-5xl mx-auto">
-        <UsersManager users={formattedUsers} currentUserId={user.id} />
-      </div>
-    </AdminShell>
+    <div className="max-w-5xl mx-auto">
+      <UsersManager users={formattedUsers} currentUserId={user.id} />
+    </div>
   );
 }

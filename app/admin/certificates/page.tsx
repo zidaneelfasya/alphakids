@@ -1,7 +1,6 @@
 import { requireAdmin } from '@/lib/auth/guards';
 import { db, certificates, programs, profiles } from '@/lib/db';
 import { desc, eq } from 'drizzle-orm';
-import { AdminShell } from '@/components/admin/admin-shell';
 import {
   CertificatesManager,
   CertificateItem,
@@ -46,19 +45,12 @@ export default async function AdminCertificatesPage() {
   }));
 
   return (
-    <AdminShell
-      breadcrumbs={[
-        { label: 'Admin', href: '/admin' },
-        { label: 'Penerbitan Sertifikat' },
-      ]}
-    >
-      <div className="max-w-5xl mx-auto">
-        <CertificatesManager
-          certificates={formattedCerts}
-          programs={allPrograms}
-          students={allStudents}
-        />
-      </div>
-    </AdminShell>
+    <div className="max-w-5xl mx-auto">
+      <CertificatesManager
+        certificates={formattedCerts}
+        programs={allPrograms}
+        students={allStudents}
+      />
+    </div>
   );
 }
